@@ -19,8 +19,10 @@ const deviceStorage = {
     return deviceStorage.get(key).then((item) => {
       value = typeof value === 'string' ? value : Object.assign({}, item, value);
       return AsyncStorage.setItem(key, JSON.stringify(value));
-    }).catch((e) => {
+    }, () => {
       return AsyncStorage.setItem(key, JSON.stringify(value));
+    }).catch((e) => {
+      console.log(e);
     });
   },
 

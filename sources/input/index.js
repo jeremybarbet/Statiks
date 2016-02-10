@@ -31,7 +31,7 @@ export default React.createClass({
   },
 
   render() {
-    const { network, focus, value } = this.props;
+    const { network, focus, value, onFocus } = this.props;
     const { username, isLoading, isSuccess } = this.state;
 
     const loading = (isLoading == true) ? <ActivityIndicatorIOS style={ style.itemFeedback } animating={ isLoading } color={ _variables.white } hidesWhenStopped size="small" /> : undefined;
@@ -49,9 +49,10 @@ export default React.createClass({
             <View>
               <TextInput
                 style={[ style.itemInfoMajor, global.alignRight ]}
+                onFocus={ onFocus }
                 onChangeText={ this._onChange }
-                value={ value }
                 onSubmitEditing={ () => this._onSubmit(network) }
+                value={ value }
                 returnKeyType="done"
                 enablesReturnKeyAutomatically={ true }
                 clearButtonMode="always"
@@ -59,6 +60,7 @@ export default React.createClass({
                 placeholderTextColor="rgba(255, 255, 255, 0.25)"
                 autoCorrect={ false }
                 autoCapitalize="none"
+                clearTextOnFocus={ true }
               />
             </View>
           </View>

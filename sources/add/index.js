@@ -9,21 +9,31 @@ import Input from '../input'
 
 
 const {
+  Animated,
+  Easing,
+  Dimensions,
   Text,
   View,
   ScrollView,
+  DeviceEventEmitter,
 } = React;
+
+const { width, height } = Dimensions.get('window');
 
 export default React.createClass({
   getInitialState() {
     return {
       data: '',
-      isLoading: true
+      isLoading: true,
+      keyboardSpace: new Animated.Value(height)
     };
   },
 
   componentWillMount() {
     this._loadInitialState().done();
+
+    DeviceEventEmitter.addListener('keyboardWillShow', this._keyboardWillShow);
+    DeviceEventEmitter.addListener('keyboardWillHide', this._keyboardWillHide);
   },
 
   componentDidUpdate() {
@@ -59,7 +69,9 @@ export default React.createClass({
     */
     return (
       <Input
+        onFocus={ this._handleFocus.bind(this, item) }
         value={ value }
+        ref={ item }
         key={ i }
         network={ item }
       />  
@@ -67,20 +79,59 @@ export default React.createClass({
   },
 
   render() {
-    const { data, isLoading } = this.state;
+    const { data, isLoading, keyboardSpace } = this.state;
     const networks = ['dribbble', 'twitter', 'behance', 'cinqcentpx', 'github', 'vimeo', 'instagram', 'pinterest', 'soundcloud', 'producthunt'];
 
     return (
-      <ScrollView style={[ global.layout, style.addContainer ]} keyboardShouldPersistTaps={ true }>
-        {
-          networks.map((item, i) => {
-            let username;
-            if (!isLoading) username = (data.hasOwnProperty(item)) ? data[item].username : undefined;
+      <Animated.View style={{ height: keyboardSpace }}>
+        <ScrollView
+          ref="addScrollView"
+          style={[ global.layout, style.addContainer ]}
+          keyboardShouldPersistTaps={ true }
+          keyboardDismissMode="interactive"
+        >
+          {
+            networks.map((item, i) => {
+              let username;
+              if (!isLoading) username = (data.hasOwnProperty(item)) ? data[item].username : undefined;
 
-            return this._renderRow(item, username, i);
-          })
-        }
-      </ScrollView>
+              return this._renderRow(item, username, i);
+            })
+          }
+        </ScrollView>
+      </Animated.View>
     );
-  }
+  },
+
+  _keyboardWillShow(e) {
+    const { keyboardSpace } = this.state;
+    const newSize = (height - 64) - e.endCoordinates.height;
+
+    Animated.timing(this.state.keyboardSpace, {
+      easing: Easing.inOut(Easing.ease),
+      duration: 250,
+      toValue: newSize
+    }).start();
+  },
+
+  _keyboardWillHide() {
+    const { keyboardSpace } = this.state;
+
+    Animated.timing(keyboardSpace, {
+      easing: Easing.inOut(Easing.ease),
+      duration: 250,
+      toValue: height
+    }).start();
+  },
+
+  /*
+  * Measure function doesn't work
+  * What the actuel f**k
+  */
+  _handleFocus(item) {
+    const scrollView = this.refs.addScrollView.getScrollResponder();
+    // const inputToScroll = React.findNodeHandle(this.refs[item]);
+
+    // scrollView.scrollTo(inputToScroll, 0, true);
+  },
 });

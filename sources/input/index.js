@@ -24,7 +24,7 @@ const Icon = createIconSetFromFontello(fontelloConfig);
 export default React.createClass({
   getInitialState() {
     return {
-      username: '',
+      username: undefined,
       isLoading: false,
       isSuccess: false
     };

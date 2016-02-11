@@ -19,13 +19,16 @@ const {
 } = React;
 
 const { width, height } = Dimensions.get('window');
+const HEADER_HEIGHT = 64;
 
 export default React.createClass({
   getInitialState() {
+    const screenHeight = height - HEADER_HEIGHT;
+
     return {
       data: '',
       isLoading: true,
-      keyboardSpace: new Animated.Value(height)
+      keyboardSpace: new Animated.Value(screenHeight)
     };
   },
 
@@ -105,12 +108,12 @@ export default React.createClass({
 
   _keyboardWillShow(e) {
     const { keyboardSpace } = this.state;
-    const newSize = (height - 64) - e.endCoordinates.height;
+    const newHeight = (height - HEADER_HEIGHT) - e.endCoordinates.height;
 
     Animated.timing(this.state.keyboardSpace, {
       easing: Easing.inOut(Easing.ease),
       duration: 250,
-      toValue: newSize
+      toValue: newHeight
     }).start();
   },
 
@@ -120,7 +123,7 @@ export default React.createClass({
     Animated.timing(keyboardSpace, {
       easing: Easing.inOut(Easing.ease),
       duration: 250,
-      toValue: height
+      toValue: height - HEADER_HEIGHT
     }).start();
   },
 

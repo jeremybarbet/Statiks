@@ -32,9 +32,3 @@ local.properties
 #
 node_modules/
 npm-debug.log
-
-# ressources
-#
-ios/din-medium-webfont.ttf
-ios/din-regular-webfont.ttf
-ios/din-bold-webfont.ttf

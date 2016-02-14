@@ -179,11 +179,6 @@ export default React.createClass({
     );
   },
 
-  /*
-  * TODO
-  * - When release pressure remove item
-  * - Interpolate x offset to scale the delete icon with gesture value instead of a fix value
-  */
   _animateScroll(index, e) {
     const { pan } = this.state;
 

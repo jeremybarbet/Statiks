@@ -1,77 +1,5 @@
 import Storage from '../_utils/storage';
 
-/*
-* TODO:
-* - Save on AsyncStorage before making an update
-* - Export the fetch logic with parse.res() and catch(err)
-*/
-
-// const data = {
-//   username: 'username',
-//   followers: 'stats.followers',
-//   following: 'stats.following',
-//   likes: 'stats.appreciations',
-//   comments: 'stats.comments',
-//   views: 'stats.views',
-// }
-
-// fetchy(uri, data, '.user');
-
-export function fetchy(uri, model, endpoint) {
-  // console.log(uri);
-  console.log(model);
-
-  fetch(uri).then((res) => {
-    console.log(res);
-
-    const data = endpoint ? JSON.parse(res._bodyText) + endpoint : JSON.parse(res._bodyText);
-    const objNetwork = {};
-
-    console.log(data);
-
-
-    Object.keys(data).map(item => {
-      // console.log(model);
-      // console.log(item);
-      // console.log(model[item]);
-
-      let username = (model.hasOwnProperty(item)) ? model[item] : undefined;
-
-      console.log(username);
-
-      // return this._renderRow(item, username);
-    })
-
-    // const details = Object.keys(data).map(item => {
-    //   console.log(item);
-    //   console.log(data[item]);
-
-    //   // return item: data[item]
-    // });
-
-    // console.log(details);
-
-    // const details = {
-    //   username: data.username,
-    //   followers: data.stats.followers,
-    //   following: data.stats.following,
-    //   likes: data.stats.appreciations,
-    //   comments: data.stats.comments,
-    //   views: data.stats.views,
-    // }
-
-    // objNetwork[network] = details;
-    // console.log(objNetwork);
-
-    // // Save before update
-
-    // Storage.update('userData', objNetwork);
-  })
-  .catch((err) => {
-    console.log('Error :(');
-    console.log(err);
-  });
-}
 
 const api = {
   /**
@@ -96,8 +24,6 @@ const api = {
       }
 
       objNetwork[network] = details;
-      // console.log(objNetwork);
-
       Storage.actualize('userData', objNetwork);
     })
     .catch((err) => {
@@ -128,8 +54,6 @@ const api = {
       }
 
       objNetwork[network] = details;
-      // console.log(objNetwork);
-
       Storage.actualize('userData', objNetwork);
     })
     .catch((err) => {
@@ -167,8 +91,6 @@ const api = {
       }
 
       objNetwork[network] = details;
-      // console.log(objNetwork);
-
       Storage.actualize('userData', objNetwork);
     })
     .catch((err) => {
@@ -198,8 +120,6 @@ const api = {
       }
 
       objNetwork[network] = details;
-      // console.log(objNetwork);
-
       Storage.actualize('userData', objNetwork);
     }).catch((err) => {
       console.log('Error :(');
@@ -227,8 +147,6 @@ const api = {
       }
 
       objNetwork[network] = details;
-      // console.log(objNetwork);
-
       Storage.actualize('userData', objNetwork);
     }).catch((err) => {
       console.log('Error :(');
@@ -257,8 +175,6 @@ const api = {
       }
 
       objNetwork[network] = details;
-      // console.log(objNetwork);
-
       Storage.actualize('userData', objNetwork);
     }).catch((err) => {
       console.log('Error :(');
@@ -286,8 +202,6 @@ const api = {
       }
 
       objNetwork[network] = details;
-      // console.log(objNetwork);
-
       Storage.actualize('userData', objNetwork);
     })
     .catch((err) => {
@@ -318,8 +232,6 @@ const api = {
       }
 
       objNetwork[network] = details;
-      // console.log(objNetwork);
-
       Storage.actualize('userData', objNetwork);
     })
     .catch((err) => {
@@ -357,8 +269,6 @@ const api = {
       }
 
       objNetwork[network] = details;
-      // console.log(objNetwork);
-
       Storage.actualize('userData', objNetwork);
     }).catch((err) => {
       console.log('Error :(');
@@ -396,8 +306,6 @@ const api = {
       }
 
       objNetwork[network] = details;
-      // console.log(objNetwork);
-
       Storage.actualize('userData', objNetwork);
     }).catch((err) => {
       console.log('Error :(');

@@ -81,6 +81,7 @@ export default React.createClass({
                 placeholderTextColor="rgba(255, 255, 255, 0.25)"
                 autoCorrect={ false }
                 autoCapitalize="none"
+                selectionColor="rgba(255, 255, 255, 0.8)"
               />
             </View>
           </View>

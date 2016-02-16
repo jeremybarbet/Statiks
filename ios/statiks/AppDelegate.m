@@ -50,7 +50,6 @@
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
-  self.window.tintColor = [UIColor whiteColor];
   [self.window makeKeyAndVisible];
   return YES;
 }

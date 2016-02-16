@@ -3,7 +3,8 @@ import React, {
   Text,
   TextInput,
   View,
-  ActivityIndicatorIOS
+  ActivityIndicatorIOS,
+  AsyncStorage,
 } from 'react-native';
 
 import { createIconSetFromFontello } from 'react-native-vector-icons';
@@ -20,17 +21,40 @@ import fontelloConfig from '../config.json';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 export default React.createClass({
+  componentDidMount() {
+    this._loadStorage().done();
+  },
+
+  async _loadStorage() {
+    const { network } = this.props;
+
+    try {
+      let storage = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(storage);
+      let networkData = json[network];
+
+      if (storage !== null && networkData !== undefined) {
+        this.setState({ data: networkData, dataLoaded: true });
+      }
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+  },
+
   getInitialState() {
     return {
-      username: undefined,
+      value: '',
+      data: '',
+      oldValue: '',
+      dataLoaded: false,
+      isSuccess: false,
       isLoading: false,
-      isSuccess: false
     };
   },
 
   render() {
-    const { network, focus, value, onFocus } = this.props;
-    const { username, isLoading, isSuccess } = this.state;
+    const { network } = this.props;
+    const { value, data, oldValue, dataLoaded, isSuccess, isLoading } = this.state;
 
     const loading = (isLoading == true) ? <ActivityIndicatorIOS style={ style.itemFeedback } animating={ isLoading } color={ _variables.white } hidesWhenStopped size="small" /> : undefined;
     const success = (isSuccess === true) ? <View style={[ style.itemFeedback, style.itemSuccess ]}><Icon style={ style.itemSuccessIcon } name="check" color={ colors(network) } size={ 12 }></Icon></View> : undefined;
@@ -47,18 +71,17 @@ export default React.createClass({
             <View>
               <TextInput
                 style={[ style.itemInfoMajor, global.alignRight ]}
-                onFocus={ onFocus }
-                onChangeText={ this._onChange }
-                onSubmitEditing={ () => this._onSubmit(network) }
-                value={ value }
+                onFocus={ () => this._handleFocus(data) }
+                onChangeText={ (text) => this._handleChange(text) }
+                onSubmitEditing={ () => this._handleSubmit(value, network) }
+                onBlur={ () => this._handleBlur() }
+                value={ data.username }
                 returnKeyType="done"
                 enablesReturnKeyAutomatically={ true }
-                clearButtonMode="always"
                 placeholder={ network }
                 placeholderTextColor="rgba(255, 255, 255, 0.25)"
                 autoCorrect={ false }
                 autoCapitalize="none"
-                clearTextOnFocus={ true }
               />
             </View>
           </View>
@@ -67,13 +90,23 @@ export default React.createClass({
     );
   },
 
-  _onSubmit(network) {
-    const { username } = this.state;
-    // this.setState({ isLoading: true });
+  _handleFocus(old) {
+    this.setState({
+      data: {},
+      oldValue: old
+    });
+  },
+
+  async _handleChange(text) {
+    this.setState({ value: text });
+  },
+
+  async _handleSubmit(username, network) {
     api[network](network, username);
   },
 
-  _onChange(username) {
-    this.setState({ username });
+  _handleBlur() {
+    const { value, oldValue } = this.state;
+    if (value === '') this.setState({ data: oldValue })
   },
 });

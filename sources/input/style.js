@@ -10,8 +10,7 @@ export default StyleSheet.create({
   // Item container
   itemContainer: {
     marginHorizontal: 15,
-    paddingLeft: 20,
-    paddingRight: 10,
+    paddingHorizontal: 20,
     paddingVertical: 15,
     borderRadius: 2,
     marginBottom: 15,

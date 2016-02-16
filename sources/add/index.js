@@ -19,71 +19,22 @@ const {
 } = React;
 
 const { width, height } = Dimensions.get('window');
+const NETWORKS = ['dribbble', 'twitter', 'behance', 'cinqcentpx', 'github', 'vimeo', 'instagram', 'pinterest', 'soundcloud', 'producthunt'];
 const HEADER_HEIGHT = 64;
 
 export default React.createClass({
   getInitialState() {
     const screenHeight = height - HEADER_HEIGHT;
-
-    return {
-      data: '',
-      isLoading: true,
-      keyboardSpace: new Animated.Value(screenHeight)
-    };
+    return { keyboardSpace: new Animated.Value(screenHeight) }
   },
 
   componentWillMount() {
-    this._loadInitialState().done();
-
     DeviceEventEmitter.addListener('keyboardWillShow', this._keyboardWillShow);
     DeviceEventEmitter.addListener('keyboardWillHide', this._keyboardWillHide);
   },
 
-  componentDidUpdate() {
-    // this._loadInitialState().done();
-  },
-
-  async _loadInitialState() {
-    try {
-      const value = await Storage.get('userData');
-
-      if (value !== null) {
-        // console.log('Recovered selection from disk');
-
-        this.setState({
-          data: value,
-          isLoading: false
-        });
-      } else {
-        // console.log('Initialized with no selection on disk.');
-      }
-    } catch (err) {
-      // console.log('AsyncStorage error :(');
-      // console.log(err);
-    }
-  },
-
-  _renderRow(item, username, i) {
-    const value = (username !== undefined) ? username : undefined;
-
-    /*
-    * TODO
-    * - Change text props
-    */
-    return (
-      <Input
-        onFocus={ this._handleFocus.bind(this, item) }
-        value={ value }
-        ref={ item }
-        key={ i }
-        network={ item }
-      />  
-    );
-  },
-
   render() {
-    const { data, isLoading, keyboardSpace } = this.state;
-    const networks = ['dribbble', 'twitter', 'behance', 'cinqcentpx', 'github', 'vimeo', 'instagram', 'pinterest', 'soundcloud', 'producthunt'];
+    const { keyboardSpace } = this.state;
 
     return (
       <Animated.View style={{ height: keyboardSpace }}>
@@ -93,14 +44,7 @@ export default React.createClass({
           keyboardShouldPersistTaps={ true }
           keyboardDismissMode="interactive"
         >
-          {
-            networks.map((item, i) => {
-              let username;
-              if (!isLoading) username = (data.hasOwnProperty(item)) ? data[item].username : undefined;
-
-              return this._renderRow(item, username, i);
-            })
-          }
+          { NETWORKS.map((item, i) => { return <Input network={ item } key={ i } /> }) }
         </ScrollView>
       </Animated.View>
     );
@@ -125,16 +69,5 @@ export default React.createClass({
       duration: 250,
       toValue: height - HEADER_HEIGHT
     }).start();
-  },
-
-  /*
-  * Measure function doesn't work
-  * What the actuel f**k
-  */
-  _handleFocus(item) {
-    const scrollView = this.refs.addScrollView.getScrollResponder();
-    // const inputToScroll = React.findNodeHandle(this.refs[item]);
-
-    // scrollView.scrollTo(inputToScroll, 0, true);
   },
 });

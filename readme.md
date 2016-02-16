@@ -24,6 +24,8 @@ const inputToScroll = React.findNodeHandle(this.refs[item]);
 scrollView.scrollTo(inputToScroll, 0, true);
 ```
 
+* Refactoring the api for something more generic
+
 Changelog
 ---------
 

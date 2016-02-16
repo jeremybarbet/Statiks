@@ -1,3 +1,7 @@
+import React, {
+  AlertIOS,
+} from 'react-native';
+
 import Storage from '../_utils/storage';
 
 
@@ -27,14 +31,14 @@ export default api = {
         objNetwork[network] = details;
         Storage.actualize('userData', objNetwork);
       } else if (res.status === 404) {
-        console.log('User not found.');
+        AlertIOS.prompt(`${ username } not found.`, null, null, null, 'default');
       } else {
         const errorMessage = JSON.parse(res._bodyText).message;
-        console.log(errorMessage);
+        AlertIOS.prompt(`${ errorMessage }`, null, null, null, 'default');
       }
     })
     .catch((error) => {
-      console.log(error.message);
+      AlertIOS.prompt(`${ error.message } not found.`, null, null, null, 'default');
     });
   },
 
@@ -63,13 +67,13 @@ export default api = {
         objNetwork[network] = details;
         Storage.actualize('userData', objNetwork);
       } else if (res.status === 404) {
-        console.log('User not found.');
+        AlertIOS.prompt(`${ username } not found.`, null, null, null, 'default');
       } else {
-        console.log('Error scrapper.');
+        AlertIOS.prompt('Error scrapper.', null, null, null, 'default');
       }
     })
     .catch((error) => {
-      console.log(error.message);
+      AlertIOS.prompt(`${ error.message } not found.`, null, null, null, 'default');
     });
   },
 
@@ -105,14 +109,14 @@ export default api = {
         objNetwork[network] = details;
         Storage.actualize('userData', objNetwork);
       } else if (res.status === 404) {
-        console.log('User not found.');
+        AlertIOS.prompt(`${ username } not found.`, null, null, null, 'default');
       } else {
         const errorMessage = JSON.parse(res._bodyText).message;
-        console.log(errorMessage);
+        AlertIOS.prompt(`${ errorMessage }`, null, null, null, 'default');
       }
     })
     .catch((error) => {
-      console.log(error.message);
+      AlertIOS.prompt(`${ error.message } not found.`, null, null, null, 'default');
     });
   },
 
@@ -140,13 +144,13 @@ export default api = {
         objNetwork[network] = details;
         Storage.actualize('userData', objNetwork);
       } else if (res.status === 404) {
-        console.log('User not found.');
+        AlertIOS.prompt(`${ username } not found.`, null, null, null, 'default');
       } else {
         const errorMessage = JSON.parse(res._bodyText).message;
-        console.log(errorMessage);
+        AlertIOS.prompt(`${ errorMessage }`, null, null, null, 'default');
       }
     }).catch((error) => {
-      console.log(error.message);
+      AlertIOS.prompt(`${ error.message } not found.`, null, null, null, 'default');
     });
   },
 
@@ -173,13 +177,13 @@ export default api = {
         objNetwork[network] = details;
         Storage.actualize('userData', objNetwork);
       } else if (res.status === 404) {
-        console.log('User not found.');
+        AlertIOS.prompt(`${ username } not found.`, null, null, null, 'default');
       } else {
         const errorMessage = JSON.parse(res._bodyText).message;
-        console.log(errorMessage);
+        AlertIOS.prompt(`${ errorMessage }`, null, null, null, 'default');
       }
     }).catch((error) => {
-      console.log(error.message);
+      AlertIOS.prompt(`${ error.message } not found.`, null, null, null, 'default');
     });
   },
 
@@ -207,13 +211,13 @@ export default api = {
         objNetwork[network] = details;
         Storage.actualize('userData', objNetwork);
       } else if (res.status === 404) {
-        console.log('User not found.');
+        AlertIOS.prompt(`${ username } not found.`, null, null, null, 'default');
       } else {
         const errorMessage = JSON.parse(res._bodyText).message;
-        console.log(errorMessage);
+        AlertIOS.prompt(`${ errorMessage }`, null, null, null, 'default');
       }
     }).catch((error) => {
-      console.log(error.message);
+      AlertIOS.prompt(`${ error.message } not found.`, null, null, null, 'default');
     });
   },
 
@@ -240,13 +244,13 @@ export default api = {
         objNetwork[network] = details;
         Storage.actualize('userData', objNetwork);
       } else if (res.status === 404) {
-        console.log('User not found.');
+        AlertIOS.prompt(`${ username } not found.`, null, null, null, 'default');
       } else {
-        console.log('Error scrapper.');
+        AlertIOS.prompt('Error scrapper.', null, null, null, 'default');
       }
     })
     .catch((error) => {
-      console.log(error.message);
+      AlertIOS.prompt(`${ error.message } not found.`, null, null, null, 'default');
     });
   },
 
@@ -275,13 +279,13 @@ export default api = {
         objNetwork[network] = details;
         Storage.actualize('userData', objNetwork);
       } else if (res.status === 404) {
-        console.log('User not found.');
+        AlertIOS.prompt(`${ username } not found.`, null, null, null, 'default');
       } else {
-        console.log('Error scrapper.');
+        AlertIOS.prompt('Error scrapper.', null, null, null, 'default');
       }
     })
     .catch((error) => {
-      console.log(error.message);
+      AlertIOS.prompt(`${ error.message } not found.`, null, null, null, 'default');
     });
   },
 
@@ -317,13 +321,13 @@ export default api = {
         objNetwork[network] = details;
         Storage.actualize('userData', objNetwork);
       } else if (res.status === 404) {
-        console.log('User not found.');
+        AlertIOS.prompt(`${ username } not found.`, null, null, null, 'default');
       } else {
         const errorMessage = JSON.parse(res._bodyText).message;
-        console.log(errorMessage);
+        AlertIOS.prompt(`${ errorMessage }`, null, null, null, 'default');
       }
     }).catch((error) => {
-      console.log(error.message);
+      AlertIOS.prompt(`${ error.message } not found.`, null, null, null, 'default');
     });
   },
 
@@ -360,13 +364,13 @@ export default api = {
         objNetwork[network] = details;
         Storage.actualize('userData', objNetwork);
       } else if (res.status === 404) {
-        console.log('User not found.');
+        AlertIOS.prompt(`${ username } not found.`, null, null, null, 'default');
       } else {
         const errorMessage = JSON.parse(res._bodyText).message;
-        console.log(errorMessage);
+        AlertIOS.prompt(`${ errorMessage }`, null, null, null, 'default');
       }
     }).catch((error) => {
-      console.log(error.message);
+      AlertIOS.prompt(`${ error.message } not found.`, null, null, null, 'default');
     });
   },
 }

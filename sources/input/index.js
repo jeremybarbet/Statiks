@@ -4,7 +4,6 @@ import React, {
   TextInput,
   View,
   ActivityIndicatorIOS,
-  AsyncStorage,
 } from 'react-native';
 
 import { createIconSetFromFontello } from 'react-native-vector-icons';
@@ -14,6 +13,7 @@ import global from '../_styles/global';
 import style from './style';
 
 import api from '../_utils/api';
+import Storage from '../_utils/storage';
 import { colors } from '../_utils/networksColors';
 import fontelloConfig from '../config.json';
 
@@ -29,15 +29,14 @@ export default React.createClass({
     const { network } = this.props;
 
     try {
-      let storage = await AsyncStorage.getItem('userData');
-      let json = JSON.parse(storage);
-      let networkData = json[network];
+      let storage = await Storage.get('userData');
+      let networkData = storage[network];
 
       if (storage !== null && networkData !== undefined) {
         this.setState({ data: networkData, dataLoaded: true });
       }
     } catch (error) {
-      console.log('AsyncStorage error: ' + error.message);
+      console.log('Storage error: ' + error.message);
     }
   },
 

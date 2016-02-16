@@ -1,6 +1,5 @@
 import React, {
   Dimensions,
-  AsyncStorage,
   ScrollView,
   Image,
   Text,
@@ -139,7 +138,7 @@ export default React.createClass({
         });
       }
     } catch (err) {
-      // console.log('AsyncStorage error :(');
+      // console.log('Storage error :(');
       // console.log(err);
 
       this.setState({

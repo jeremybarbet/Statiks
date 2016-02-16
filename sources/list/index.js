@@ -219,6 +219,13 @@ export default React.createClass({
   _deleteItem(index) {
     // console.log('Delete moi !!');
 
+    /*
+    * Get the object `userData`
+    * Get the swipe network name
+    * Remove from the object the network
+    * Push the new dataObject to state and storage
+    */
+
     const toto = Storage.get('userData').then(item => {
       let itemToDelete = Object.keys(item)[index];
       // console.log(itemToDelete);

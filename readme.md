@@ -16,6 +16,13 @@ TODO
 * Add response ok check and throw error otherwise
 * When release pressure remove item
 * Interpolate x offset to scale the delete icon with gesture value instead of a fix value
+* Measure input offset y position and apply `scrollTop` function to focus on top of this input after tap
+
+```js
+const scrollView = this.refs.addScrollView.getScrollResponder();
+const inputToScroll = React.findNodeHandle(this.refs[item]);
+scrollView.scrollTo(inputToScroll, 0, true);
+```
 
 Changelog
 ---------
@@ -36,13 +43,13 @@ You need first to [fork](https://github.com/statiks/statiks-react-native/fork) t
 
 Now, make a clone of this fork on your computer.
 
-`git clone https://github.com/[your_github_username]/statiks-react-native.git`  
+`git clone https://github.com/[your_github_username]/statiks-react-native.git`
 
 __Running__
 
 Statiks run with react-native npm dependencies.
 
-`npm install`  
+`npm install`
 `npm start`
 
 __Launching__

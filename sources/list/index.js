@@ -1,4 +1,15 @@
-import React from 'react-native';
+import React, {
+  Dimensions,
+  AsyncStorage,
+  ScrollView,
+  Image,
+  Text,
+  ListView,
+  View,
+  Animated,
+  PanResponder,
+  TouchableOpacity
+} from 'react-native';
 
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 import { Actions } from 'react-native-router-flux';
@@ -11,19 +22,6 @@ import fontelloConfig from '../config.json';
 import Storage from '../_utils/storage';
 import Item from '../item'
 
-
-const {
-  Dimensions,
-  AsyncStorage,
-  ScrollView,
-  Image,
-  Text,
-  ListView,
-  View,
-  Animated,
-  PanResponder,
-  TouchableOpacity
-} = React;
 
 const { width } = Dimensions.get('window');
 const Icon = createIconSetFromFontello(fontelloConfig);
@@ -105,11 +103,11 @@ export default React.createClass({
         //   toValue: 0,
         // }).start();
       },
-    }); 
+    });
   },
 
   componentWillUnmount() {
-    this.state.pan.x.removeAllListeners();  
+    this.state.pan.x.removeAllListeners();
   },
 
   componentWillReceiveProps(nextProps) {

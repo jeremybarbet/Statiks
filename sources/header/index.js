@@ -1,4 +1,9 @@
-import React from 'react-native';
+import React, {
+  View,
+  Text,
+  StatusBarIOS,
+  TouchableOpacity,
+} from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
@@ -8,13 +13,6 @@ import style from './style';
 
 import fontelloConfig from '../config.json';
 
-
-const {
-  View,
-  Text,
-  StatusBarIOS,
-  TouchableOpacity,
-} = React;
 
 const Icon = createIconSetFromFontello(fontelloConfig);
 

@@ -1,12 +1,10 @@
-import React from 'react-native';
+import React, {
+  PixelRatio,
+  StyleSheet
+} from 'react-native';
 
 import _variables from '../_styles/variables';
 
-
-const {
-  PixelRatio,
-  StyleSheet
-} = React;
 
 export default StyleSheet.create({
   // Item container

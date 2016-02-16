@@ -1,7 +1,7 @@
 import Storage from '../_utils/storage';
 
 
-const api = {
+export default api = {
   /**
   * Dribbble API connection
   */
@@ -370,5 +370,3 @@ const api = {
     });
   },
 }
-
-export default api;

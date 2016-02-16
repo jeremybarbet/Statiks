@@ -1,12 +1,10 @@
-import React from 'react-native';
+import React, {
+  Dimensions,
+  StyleSheet
+} from 'react-native';
 
 import _variables from '../_styles/variables';
 
-
-const {
-  Dimensions,
-  StyleSheet
-} = React;
 
 const { width } = Dimensions.get('window');
 

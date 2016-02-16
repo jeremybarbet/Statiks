@@ -1,11 +1,9 @@
-import React from 'react-native';
+import React, {
+  StyleSheet
+} from 'react-native';
 
 import _variables from './variables';
 
-
-const {
-  StyleSheet
-} = React;
 
 export default StyleSheet.create({
   /*

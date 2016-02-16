@@ -1,13 +1,11 @@
-import React from 'react-native';
-
-import _variables from '../_styles/variables';
-
-
-const {
+import React, {
   Dimensions,
   PixelRatio,
   StyleSheet
-} = React;
+} from 'react-native';
+
+import _variables from '../_styles/variables';
+
 
 const { width } = Dimensions.get('window');
 

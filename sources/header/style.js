@@ -1,11 +1,9 @@
-import React from 'react-native';
+import React, {
+  StyleSheet
+} from 'react-native';
 
 import _variables from '../_styles/variables';
 
-
-const {
-  StyleSheet
-} = React;
 
 const NAV_BAR_HEIGHT = 39;
 const STATUS_BAR_HEIGHT = 20;

@@ -1,4 +1,10 @@
-import React from 'react-native';
+import React, {
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+  ActivityIndicatorIOS
+} from 'react-native';
 
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 
@@ -10,14 +16,6 @@ import api from '../_utils/api';
 import { colors } from '../_utils/networksColors';
 import fontelloConfig from '../config.json';
 
-
-const {
-  ScrollView,
-  Text,
-  TextInput,
-  View,
-  ActivityIndicatorIOS
-} = React;
 
 const Icon = createIconSetFromFontello(fontelloConfig);
 

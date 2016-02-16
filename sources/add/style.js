@@ -1,9 +1,7 @@
-import React from 'react-native';
-
-
-const {
+import React, {
   StyleSheet
-} = React;
+} from 'react-native';
+
 
 export default StyleSheet.create({
   addContainer: {

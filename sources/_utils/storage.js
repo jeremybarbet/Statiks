@@ -1,9 +1,9 @@
-import React from 'react-native';
+import React, {
+  AsyncStorage
+} from 'react-native';
 
 
-const { AsyncStorage } = React;
-
-const deviceStorage = {
+export default deviceStorage = {
   get(key) {
     return AsyncStorage.getItem(key).then(value => {
       if (value === null || value === undefined) throw 'error';
@@ -30,5 +30,3 @@ const deviceStorage = {
     return AsyncStorage.removeItem(key);
   }
 };
-
-export default deviceStorage;

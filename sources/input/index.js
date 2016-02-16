@@ -4,6 +4,7 @@ import React, {
   TextInput,
   View,
   ActivityIndicatorIOS,
+  TouchableOpacity,
 } from 'react-native';
 
 import { createIconSetFromFontello } from 'react-native-vector-icons';
@@ -19,6 +20,57 @@ import fontelloConfig from '../config.json';
 
 
 const Icon = createIconSetFromFontello(fontelloConfig);
+
+const LoadingIcon = React.createClass({
+  render() {
+    return (
+      <ActivityIndicatorIOS
+        style={ style.itemFeedback }
+        animating={ this.props.loaded }
+        color={ _variables.white }
+        hidesWhenStopped
+        size="small"
+      />
+    );
+  }
+})
+
+const SuccessIcon = React.createClass({
+  render() {
+    return (
+      <TouchableOpacity
+        activeOpacity={ 0.85 }
+        style={[ style.itemFeedback, style.itemSuccess ]}
+      >
+        <Icon
+          style={[ style.itemIcon, style.itemSuccessIcon ]}
+          name="check"
+          color={ colors(this.props.network) }
+          size={ 12 }
+        />
+      </TouchableOpacity>
+    );
+  }
+});
+
+const RemoveIcon = React.createClass({
+  render() {
+    return (
+      <TouchableOpacity
+        activeOpacity={ 0.85 }
+        style={[ style.itemFeedback, style.itemRemove ]}
+        onPress={ this.props.onPress }
+      >
+        <Icon
+          style={[ style.itemIcon, style.itemRemoveIcon ]}
+          name="cross"
+          color={ colors(this.props.network) }
+          size={ 8 }
+        />
+      </TouchableOpacity>
+    );
+  }
+})
 
 export default React.createClass({
   componentDidMount() {
@@ -55,8 +107,13 @@ export default React.createClass({
     const { network } = this.props;
     const { value, data, oldValue, dataLoaded, isSuccess, isLoading } = this.state;
 
-    const loading = (isLoading == true) ? <ActivityIndicatorIOS style={ style.itemFeedback } animating={ isLoading } color={ _variables.white } hidesWhenStopped size="small" /> : undefined;
-    const success = (isSuccess === true) ? <View style={[ style.itemFeedback, style.itemSuccess ]}><Icon style={ style.itemSuccessIcon } name="check" color={ colors(network) } size={ 12 }></Icon></View> : undefined;
+    const loadedWithUsername = (dataLoaded === true && data.username !== '');
+    const marginForRemoveIcon = loadedWithUsername ? { marginRight: 46 } : { marginRight: 20 }
+    const inputValue = (value === '') ? data.username : value; // If remove all the letters of username input value go to default value coz egal to empty string ''
+
+    const loading = (isLoading === true) ? <LoadingIcon loaded={ isLoading } /> : undefined;
+    const success = (isSuccess === true) ? <SuccessIcon network={ network } /> : undefined;
+    const remove = loadedWithUsername ? <RemoveIcon onPress={ () => this._removeItem(data, network) } network={ network } /> : undefined;
 
     return (
       <View style={[ style.itemContainer, { backgroundColor: colors(network) } ]}>
@@ -67,34 +124,44 @@ export default React.createClass({
             { loading }
             { success }
 
-            <View>
-              <TextInput
-                style={[ style.itemInfoMajor, global.alignRight ]}
-                onFocus={ () => this._handleFocus(data) }
-                onChangeText={ (text) => this._handleChange(text) }
-                onSubmitEditing={ () => this._handleSubmit(value, network) }
-                onBlur={ () => this._handleBlur() }
-                value={ data.username }
-                returnKeyType="done"
-                enablesReturnKeyAutomatically={ true }
-                placeholder={ network }
-                placeholderTextColor="rgba(255, 255, 255, 0.25)"
-                autoCorrect={ false }
-                autoCapitalize="none"
-                selectionColor="rgba(255, 255, 255, 0.8)"
-              />
-            </View>
+            <TextInput
+              ref={ network }
+              style={[ style.itemInfoMajor, global.alignRight, marginForRemoveIcon ]}
+              onFocus={ () => this._handleFocus(data) }
+              onChangeText={ (text) => this._handleChange(text) }
+              onSubmitEditing={ () => this._handleSubmit(value, network) }
+              value={ inputValue }
+              returnKeyType="done"
+              enablesReturnKeyAutomatically={ true }
+              placeholder={ network }
+              placeholderTextColor="rgba(255, 255, 255, 0.25)"
+              autoCorrect={ false }
+              autoCapitalize="none"
+              selectionColor="rgba(255, 255, 255, 0.8)"
+            />
+
+            { remove }
           </View>
         </View>
       </View>
     );
   },
 
-  _handleFocus(old) {
+  _removeItem(old, network) {
+    this.refs[network].focus();
+
     this.setState({
       data: {},
       oldValue: old
     });
+  },
+
+  async _handleFocus(old) {
+    if (old !== '') {
+      this.setState({
+        value: old.username
+      });
+    }
   },
 
   async _handleChange(text) {

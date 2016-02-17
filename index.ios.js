@@ -9,7 +9,7 @@ import List from './sources/list/index';
 import Add from './sources/add/index';
 import Test from './sources/test';
 import Header from './sources/header/index';
-import { FloatFromRight } from './sources/_utils/customNavigatorSceneConfigs';
+import { FloatFromRight } from './sources/_utils/sceneConfigs';
 
 
 const statiks = React.createClass({

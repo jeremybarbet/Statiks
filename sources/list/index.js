@@ -61,11 +61,7 @@ export default React.createClass({
   componentWillMount() {
     const { pan } = this.state;
 
-    // console.log('----------PAN---------');
-    // console.log(pan);
-
-    // Load data
-    this._loadInitialState().done();
+    this._loadStorage().done();
 
     // Define default swipe value
     this._animatedValueX = 0;
@@ -109,18 +105,16 @@ export default React.createClass({
     this.state.pan.x.removeAllListeners();
   },
 
-  componentWillReceiveProps(nextProps) {
-    this._loadInitialState().done();
+  componentWillReceiveProps() {
+    this._loadStorage().done();
   },
 
-  async _loadInitialState() {
+  async _loadStorage() {
     try {
-      const value = await Storage.get('userData');
+      let value = await Storage.get('userData');
 
-      // console.log(value);
-
-      if (value !== null) {
-        // console.log('Recovered selection from disk');
+      if (value !== null && Object.keys(value).length > 0) {
+        console.log('Recovered selection from disk');
 
         this.setState({
           data: value,
@@ -129,7 +123,7 @@ export default React.createClass({
           isEmpty: false
         });
       } else {
-        // console.log('Initialized with no selection on disk.');
+        console.log('Initialized with no selection on disk.');
 
         this.setState({
           isLoading: false,
@@ -137,9 +131,8 @@ export default React.createClass({
           isEmpty: true
         });
       }
-    } catch (err) {
-      // console.log('Storage error :(');
-      // console.log(err);
+    } catch (error) {
+      console.log(error);
 
       this.setState({
         isLoading: false,
@@ -151,7 +144,7 @@ export default React.createClass({
   render() {
     const { data, isLoading, isError, isEmpty } = this.state;
 
-    // console.log(this.state);
+    console.log(data);
 
     if (isLoading) {
       return (
@@ -168,6 +161,7 @@ export default React.createClass({
       <ScrollView style={[ global.layout, style.listContainer ]}>
         {
           Object.keys(data).map((item, i) => {
+            console.log(item);
             const dataNetwork = data[item];
             return this._renderRow(item, dataNetwork, i);
           })

@@ -14,6 +14,7 @@ import global from '../_styles/global';
 import style from './style';
 
 import api from '../_utils/api';
+import { omit } from '../_utils/object';
 import Storage from '../_utils/storage';
 import { colors } from '../_utils/networksColors';
 import fontelloConfig from '../config.json';
@@ -85,7 +86,7 @@ export default React.createClass({
       let networkData = storage[network];
 
       if (storage !== null && networkData !== undefined) {
-        this.setState({ data: networkData, dataLoaded: true });
+        this.setState({ allData: storage, networkData: networkData, dataLoaded: true });
       }
     } catch (error) {
       console.log('Storage error: ' + error.message);
@@ -95,8 +96,8 @@ export default React.createClass({
   getInitialState() {
     return {
       value: '',
-      data: '',
-      oldValue: '',
+      allData: '',
+      networkData: '',
       dataLoaded: false,
       isSuccess: false,
       isLoading: false,
@@ -105,15 +106,15 @@ export default React.createClass({
 
   render() {
     const { network } = this.props;
-    const { value, data, oldValue, dataLoaded, isSuccess, isLoading } = this.state;
+    const { value, networkData, dataLoaded, isSuccess, isLoading } = this.state;
 
-    const loadedWithUsername = (dataLoaded === true && data.username !== '');
+    const loadedWithUsername = (dataLoaded === true && networkData.username !== '');
     const marginForRemoveIcon = loadedWithUsername ? { marginRight: 46 } : { marginRight: 20 }
-    const inputValue = (value === '') ? data.username : value; // If remove all the letters of username input value go to default value coz egal to empty string ''
+    const inputValue = (value === '') ? networkData.username : value; // If remove all the letters of username input value go to default value coz egal to empty string ''
 
     const loading = (isLoading === true) ? <LoadingIcon loaded={ isLoading } /> : undefined;
     const success = (isSuccess === true) ? <SuccessIcon network={ network } /> : undefined;
-    const remove = loadedWithUsername ? <RemoveIcon onPress={ () => this._removeItem(data, network) } network={ network } /> : undefined;
+    const remove = loadedWithUsername ? <RemoveIcon onPress={ () => this._removeItem(networkData, network) } network={ network } /> : undefined;
 
     return (
       <View style={[ style.itemContainer, { backgroundColor: colors(network) } ]}>
@@ -127,7 +128,7 @@ export default React.createClass({
             <TextInput
               ref={ network }
               style={[ style.itemInfoMajor, global.alignRight, marginForRemoveIcon ]}
-              onFocus={ () => this._handleFocus(data) }
+              onFocus={ () => this._handleFocus(networkData) }
               onChangeText={ (text) => this._handleChange(text) }
               onSubmitEditing={ () => this._handleSubmit(value, network) }
               value={ inputValue }
@@ -150,9 +151,14 @@ export default React.createClass({
   _removeItem(old, network) {
     this.refs[network].focus();
 
+    const oldNetworks = this.state.allData;
+    const newNetworks = omit(oldNetworks, network);
+
+    Storage.save('userData', newNetworks);
+
     this.setState({
-      data: {},
-      oldValue: old
+      allData: newNetworks,
+      networkData: {},
     });
   },
 
@@ -170,10 +176,5 @@ export default React.createClass({
 
   async _handleSubmit(username, network) {
     api[network](network, username);
-  },
-
-  _handleBlur() {
-    const { value, oldValue } = this.state;
-    if (value === '') this.setState({ data: oldValue })
   },
 });

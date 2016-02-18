@@ -110,7 +110,7 @@ export default React.createClass({
 
     const loadedWithUsername = (dataLoaded === true && networkData.Username !== '');
     const marginForRemoveIcon = loadedWithUsername ? { marginRight: 46 } : { marginRight: 20 }
-    const inputValue = (value === '') ? networkData.Username : value; // If remove all the letters of username input value go to default value coz egal to empty string ''
+    const inputValue = (value === '') ? networkData.Username : value;
 
     const loading = (isLoading === true) ? <LoadingIcon loaded={ isLoading } /> : undefined;
     const success = (isSuccess === true) ? <SuccessIcon network={ network } /> : undefined;
@@ -128,7 +128,6 @@ export default React.createClass({
             <TextInput
               ref={ network }
               style={[ style.itemInfoMajor, global.alignRight, marginForRemoveIcon ]}
-              onFocus={ () => this._handleFocus(networkData) }
               onChangeText={ (text) => this._handleChange(text) }
               onSubmitEditing={ () => this._handleSubmit(value, network) }
               value={ inputValue }
@@ -163,11 +162,9 @@ export default React.createClass({
     });
   },
 
-  async _handleFocus(old) {
-    if (old !== '') this.setState({ value: old.Username });
-  },
-
   async _handleChange(text) {
+    // If all username is removed hide the remove icon slide/fade to right
+    if (text === '') this.setState({ value: '', networkData: {} });
     this.setState({ value: text });
   },
 

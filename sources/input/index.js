@@ -114,7 +114,7 @@ export default React.createClass({
 
     const loading = (isLoading === true) ? <LoadingIcon loaded={ isLoading } /> : undefined;
     const success = (isSuccess === true) ? <SuccessIcon network={ network } /> : undefined;
-    const remove = loadedWithUsername ? <RemoveIcon onPress={ () => this._removeItem(networkData, network) } network={ network } /> : undefined;
+    const remove = loadedWithUsername ? <RemoveIcon onPress={ () => this._removeItem(network) } network={ network } /> : undefined;
 
     return (
       <View style={[ style.itemContainer, { backgroundColor: colors(network) } ]}>
@@ -148,7 +148,7 @@ export default React.createClass({
     );
   },
 
-  _removeItem(old, network) {
+  _removeItem(network) {
     this.refs[network].focus();
 
     const oldNetworks = this.state.allData;
@@ -159,15 +159,12 @@ export default React.createClass({
     this.setState({
       allData: newNetworks,
       networkData: {},
+      value: ''
     });
   },
 
   async _handleFocus(old) {
-    if (old !== '') {
-      this.setState({
-        value: old.Username
-      });
-    }
+    if (old !== '') this.setState({ value: old.Username });
   },
 
   async _handleChange(text) {

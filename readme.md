@@ -8,12 +8,12 @@ I keep improving, fixing, adding new networks and more stats. Feel free to contr
 
 [Visit the application's website](http://statiks.jeremybarbet.com)
 
-TODO
+ROADMAP
 ----
 
-* Save on AsyncStorage before making an update
-* Export the fetch logic with parse.res() and catch(err)
-* Add response ok check and throw error otherwise
+* ~~Save on AsyncStorage before making an update~~
+* ~~Export the fetch logic with parse.res() and catch(err)~~
+* ~~Add response ok check and throw error otherwise~~
 * When release pressure remove item
 * Interpolate x offset to scale the delete icon with gesture value instead of a fix value
 * Measure input offset y position and apply `scrollTop` function to focus on top of this input after tap
@@ -24,7 +24,9 @@ const inputToScroll = React.findNodeHandle(this.refs[item]);
 scrollView.scrollTo(inputToScroll, 0, true);
 ```
 
-* Refactoring the api for something more generic
+* ~~Refactoring the api for something more generic~~
+* Hide remove icon after delete of a network ?
+* Fetch data on the `add.js` view, send it trough props to individual `input.js` -> Add a [skeleton loading view](https://pbs.twimg.com/media/CbS-oOUVIAAsgtS.png:large) before data are ready !
 
 Changelog
 ---------

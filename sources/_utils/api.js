@@ -20,7 +20,7 @@ export function fetchy(uri, username, network, details) {
       AlertIOS.prompt(`${ (errorMessage) ? errorMessage : 'Error scrappy scrapper.' }`, null, null, null, 'default');
     }
   }).catch((error) => {
-    AlertIOS.prompt(`${ error.message } not found.`, null, null, null, 'default');
+    AlertIOS.prompt(`${ error.message }.`, null, null, null, 'default');
   });
 }
 

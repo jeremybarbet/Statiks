@@ -196,15 +196,13 @@ export default api = {
 
     function details(res) {
       const data = res._bodyText;
-      const dataReplace = data.replace(/\\/g, '');
 
       return details = {
         "Username": username,
-        "Followers": parseInt((/\"follower_count\": ([\d]+)/g).exec(dataReplace)[1]),
-        "Following": parseInt((/\"following_count\": ([\d]+)/g).exec(dataReplace)[1]),
-        "Pins": parseInt((/\"pin_count\": ([\d]+)/g).exec(dataReplace)[1]),
-        "Boards": parseInt((/\"board_count\": ([\d]+)/g).exec(dataReplace)[1]),
-        "Likes": parseInt((/\"like_count\": ([\d]+)/g).exec(dataReplace)[1]),
+        "Followers": (/followers" content="([\d]+)"/g).exec(data)[1],
+        "Following": (/following" content="([\d]+)"/g).exec(data)[1],
+        "Pins": (/pins" content="([\d]+)"/g).exec(data)[1],
+        "Boards": (/boards" content="([\d]+)"/g).exec(data)[1],
       }
     }
 

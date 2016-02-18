@@ -35,7 +35,7 @@ const NetworkDetail = React.createClass({
     return (
       <View style={ style.itemDetail }>
         {
-          Object.keys(data).filter(item => item !== 'username' && item !== 'followers').map((item, i) => {
+          Object.keys(data).filter(item => item !== 'Username' && item !== 'Followers').map((item, i) => {
             const detail = data[item];
             return this._renderRow(data, item, detail, i);
           })
@@ -77,11 +77,11 @@ export default React.createClass({
             <View style={ global.inlineBlock }>
               <View style={ style.itemInfoLeft }>
                 <Text style={ style.itemInfoMajor }>{ network === 'cinqcentpx' ? '500px' : network }</Text>
-                <Text style={ style.itemInfoMinor }>{ data.username }</Text>
+                <Text style={ style.itemInfoMinor }>{ data.Username }</Text>
               </View>
 
               <View style={ style.itemInfoRight }>
-                <Text style={[ style.itemInfoMajor, global.alignRight ]}>{ data.followers }</Text>
+                <Text style={[ style.itemInfoMajor, global.alignRight ]}>{ data.Followers }</Text>
                 <Text style={[ style.itemInfoMinor, global.alignRight ]}>followers</Text>
               </View>
             </View>

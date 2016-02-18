@@ -108,9 +108,9 @@ export default React.createClass({
     const { network } = this.props;
     const { value, networkData, dataLoaded, isSuccess, isLoading } = this.state;
 
-    const loadedWithUsername = (dataLoaded === true && networkData.username !== '');
+    const loadedWithUsername = (dataLoaded === true && networkData.Username !== '');
     const marginForRemoveIcon = loadedWithUsername ? { marginRight: 46 } : { marginRight: 20 }
-    const inputValue = (value === '') ? networkData.username : value; // If remove all the letters of username input value go to default value coz egal to empty string ''
+    const inputValue = (value === '') ? networkData.Username : value; // If remove all the letters of username input value go to default value coz egal to empty string ''
 
     const loading = (isLoading === true) ? <LoadingIcon loaded={ isLoading } /> : undefined;
     const success = (isSuccess === true) ? <SuccessIcon network={ network } /> : undefined;
@@ -165,7 +165,7 @@ export default React.createClass({
   async _handleFocus(old) {
     if (old !== '') {
       this.setState({
-        value: old.username
+        value: old.Username
       });
     }
   },

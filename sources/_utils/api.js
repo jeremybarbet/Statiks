@@ -35,13 +35,13 @@ export default api = {
       const data = JSON.parse(res._bodyText);
 
       return details = {
-        username: data.username,
-        followers: data.followers_count,
-        following: data.followings_count,
-        likes: data.likes_count,
-        likesReceived: data.likes_received_count,
-        shots: data.shots_count,
-        projects: data.projects_count,
+        "Username": data.username,
+        "Followers": data.followers_count,
+        "Following": data.followings_count,
+        "Likes": data.likes_count,
+        "Likes received": data.likes_received_count,
+        "Shots": data.shots_count,
+        "Projects": data.projects_count,
       }
     }
 
@@ -59,12 +59,12 @@ export default api = {
       const dataReplace = data.replace(/&quot;/g, '"');
 
       return details = {
-        username: username,
-        followers: parseInt((/\"followers_count\":([\d]+)/g).exec(dataReplace)[1]),
-        following: parseInt((/\"friends_count\":([\d]+)/g).exec(dataReplace)[1]),
-        tweets: parseInt((/\"statuses_count\":([\d]+)/g).exec(dataReplace)[1]),
-        favorites: parseInt((/\"favourites_count\":([\d]+)/g).exec(dataReplace)[1]),
-        listed: parseInt((/\"listed_count\":([\d]+)/g).exec(dataReplace)[1]),
+        "Username": username,
+        "Followers": parseInt((/\"followers_count\":([\d]+)/g).exec(dataReplace)[1]),
+        "Following": parseInt((/\"friends_count\":([\d]+)/g).exec(dataReplace)[1]),
+        "Tweets": parseInt((/\"statuses_count\":([\d]+)/g).exec(dataReplace)[1]),
+        "Favorites": parseInt((/\"favourites_count\":([\d]+)/g).exec(dataReplace)[1]),
+        "Listed": parseInt((/\"listed_count\":([\d]+)/g).exec(dataReplace)[1]),
       }
     }
 
@@ -89,12 +89,12 @@ export default api = {
       const data = JSON.parse(res._bodyText).user;
 
       return details = {
-        username: data.username,
-        followers: data.stats.followers,
-        following: data.stats.following,
-        likes: data.stats.appreciations,
-        comments: data.stats.comments,
-        views: data.stats.views,
+        "Username": data.username,
+        "Followers": data.stats.followers,
+        "Following": data.stats.following,
+        "Likes": data.stats.appreciations,
+        "Comments": data.stats.comments,
+        "Views": data.stats.views,
       }
     }
 
@@ -111,12 +111,12 @@ export default api = {
       const data = JSON.parse(res._bodyText).user;
 
       return details = {
-        username: data.username,
-        followers: data.followers_count,
-        following: data.friends_count,
-        affection: data.affection,
-        favorites: data.in_favorites_count,
-        photos: data.photos_count,
+        "Username": data.username,
+        "Followers": data.followers_count,
+        "Following": data.friends_count,
+        "Affection": data.affection,
+        "Favorites": data.in_favorites_count,
+        "Photos": data.photos_count,
       }
     }
 
@@ -133,11 +133,11 @@ export default api = {
       const data = JSON.parse(res._bodyText);
 
       return details = {
-        username: data.login,
-        followers: data.followers,
-        following: data.following,
-        repo: data.public_repos,
-        gist: data.public_gists,
+        "Username": data.login,
+        "Followers": data.followers,
+        "Following": data.following,
+        "Repository": data.public_repos,
+        "Gist": data.public_gists,
       }
     }
 
@@ -154,12 +154,13 @@ export default api = {
       const data = JSON.parse(res._bodyText);
 
       return details = {
-        username: username,
-        followers: data.total_contacts,
-        // following: data.following,
-        videos: data.total_videos_uploaded,
-        likes: data.total_videos_liked,
-        albums: data.total_albums
+        "Username": username,
+        "Followers": data.total_contacts,
+        // "Following": data.following,
+        "Videos": data.total_videos_uploaded,
+        "Channels": data.total_channels,
+        "Likes": data.total_videos_liked,
+        "Albums": data.total_albums
       }
     }
 
@@ -177,10 +178,10 @@ export default api = {
       const dataReplace = data.replace(/\\/g, '');
 
       return details = {
-        username: username,
-        followers: parseInt((/\"followed_by\":{\"count\":([\d]+)/g).exec(dataReplace)[1]),
-        following: parseInt((/\"follows\":{\"count\":([\d]+)/g).exec(dataReplace)[1]),
-        medias: parseInt((/\"media\":{\"count\":([\d]+)/g).exec(dataReplace)[1]),
+        "Username": username,
+        "Followers": parseInt((/\"followed_by\":{\"count\":([\d]+)/g).exec(dataReplace)[1]),
+        "Following": parseInt((/\"follows\":{\"count\":([\d]+)/g).exec(dataReplace)[1]),
+        "Medias": parseInt((/\"media\":{\"count\":([\d]+)/g).exec(dataReplace)[1]),
       }
     }
 
@@ -198,12 +199,12 @@ export default api = {
       const dataReplace = data.replace(/\\/g, '');
 
       return details = {
-        username: username,
-        followers: parseInt((/\"follower_count\": ([\d]+)/g).exec(dataReplace)[1]),
-        following: parseInt((/\"following_count\": ([\d]+)/g).exec(dataReplace)[1]),
-        pins: parseInt((/\"pin_count\": ([\d]+)/g).exec(dataReplace)[1]),
-        boards: parseInt((/\"board_count\": ([\d]+)/g).exec(dataReplace)[1]),
-        likes: parseInt((/\"like_count\": ([\d]+)/g).exec(dataReplace)[1]),
+        "Username": username,
+        "Followers": parseInt((/\"follower_count\": ([\d]+)/g).exec(dataReplace)[1]),
+        "Following": parseInt((/\"following_count\": ([\d]+)/g).exec(dataReplace)[1]),
+        "Pins": parseInt((/\"pin_count\": ([\d]+)/g).exec(dataReplace)[1]),
+        "Boards": parseInt((/\"board_count\": ([\d]+)/g).exec(dataReplace)[1]),
+        "Likes": parseInt((/\"like_count\": ([\d]+)/g).exec(dataReplace)[1]),
       }
     }
 
@@ -228,12 +229,12 @@ export default api = {
       const data = JSON.parse(res._bodyText);
 
       return details = {
-        username: data.username,
-        followers: data.followers_count,
-        following: data.followings_count,
-        tracks: data.track_count,
-        playlist: data.playlist_count,
-        favorites: data.public_favorites_count,
+        "Username": data.username,
+        "Followers": data.followers_count,
+        "Following": data.followings_count,
+        "Tracks": data.track_count,
+        "Playlist": data.playlist_count,
+        "Favorites": data.public_favorites_count,
       }
     }
 
@@ -258,13 +259,13 @@ export default api = {
       const data = JSON.parse(res._bodyText).user;
 
       return details = {
-        username: username,
-        followers: data.followers_count,
-        following: data.followings_count,
-        votes: data.votes_count,
-        posts: data.posts_count,
-        maker: data.maker_of_count,
-        collections: data.collections_count,
+        "Username": username,
+        "Followers": data.followers_count,
+        "Following": data.followings_count,
+        "Votes": data.votes_count,
+        "Posts": data.posts_count,
+        "Maker": data.maker_of_count,
+        "Collections": data.collections_count,
       }
     }
 

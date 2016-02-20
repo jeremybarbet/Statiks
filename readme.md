@@ -26,7 +26,8 @@ scrollView.scrollTo(inputToScroll, 0, true);
 
 * ~~Refactoring the api for something more generic~~
 * Hide remove icon after delete of a network ?
-* Fetch data on the `add.js` view, send it trough props to individual `input.js` -> Add a [skeleton loading view](https://pbs.twimg.com/media/CbS-oOUVIAAsgtS.png:large) before data are ready !
+* Fetch data on the `add.js` view, send it trough props to individual `input.js` -> Add a [skeleton loading view](https://pbs.twimg.com/media/CbS-oOUVIAAsgtS.png:large) before data are ready ! Don't know if it's a good idea with delete and edit function
+* Block the left swipe gesture
 
 Changelog
 ---------

@@ -46,6 +46,11 @@ export default StyleSheet.create({
     paddingHorizontal: 50,
   },
 
+  welcomeParagraphLink: {
+    fontFamily: _variables.dinMedium,
+    color: _variables.green,
+  },
+
   welcomeButton: {
     marginTop: 40,
     backgroundColor: _variables.buttonGreen,

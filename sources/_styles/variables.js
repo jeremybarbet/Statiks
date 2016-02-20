@@ -1,6 +1,6 @@
 module.exports = {
   bgWhite: '#FFFFFF',
-  bgBlue: '#F5F9FC',
+  bgBlue: '#F0F6FA',
 
   white: '#FFFFFF',
   green: '#46c340',

@@ -2,6 +2,8 @@ import React, {
   AlertIOS,
 } from 'react-native';
 
+// import { Utf8Decode, decode_utf8 } from '../_utils/utils';
+import { removeTag } from '../_utils/utils';
 import Storage from '../_utils/storage';
 
 
@@ -42,6 +44,10 @@ export default api = {
         "Likes received": data.likes_received_count,
         "Shots": data.shots_count,
         "Projects": data.projects_count,
+        "Avatar": data.avatar_url,
+        "Location": data.location,
+        "Bio": removeTag(data.bio),
+        "Name": data.name,
       }
     }
 
@@ -55,16 +61,20 @@ export default api = {
     const uri = `https://twitter.com/${ username }`;
 
     function details(res) {
-      const data = res._bodyText;
-      const dataReplace = data.replace(/&quot;/g, '"');
+      const data = (res._bodyText).replace(/&quot;/g, '"');
 
+      // Decode UTF8 string for `name` and `bio`
       return details = {
         "Username": username,
-        "Followers": parseInt((/\"followers_count\":([\d]+)/g).exec(dataReplace)[1]),
-        "Following": parseInt((/\"friends_count\":([\d]+)/g).exec(dataReplace)[1]),
-        "Tweets": parseInt((/\"statuses_count\":([\d]+)/g).exec(dataReplace)[1]),
-        "Favorites": parseInt((/\"favourites_count\":([\d]+)/g).exec(dataReplace)[1]),
-        "Listed": parseInt((/\"listed_count\":([\d]+)/g).exec(dataReplace)[1]),
+        "Followers": parseInt((/\"followers_count\":([\d]+)/g).exec(data)[1]),
+        "Following": parseInt((/\"friends_count\":([\d]+)/g).exec(data)[1]),
+        "Tweets": parseInt((/\"statuses_count\":([\d]+)/g).exec(data)[1]),
+        "Favorites": parseInt((/\"favourites_count\":([\d]+)/g).exec(data)[1]),
+        "Listed": parseInt((/\"listed_count\":([\d]+)/g).exec(data)[1]),
+        "Avatar": (((/\"profile_image_url\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, '')).replace(/_normal/g, ''),
+        "Location": (/\"location\":"(.*?)"/g).exec(data)[1],
+        "Bio": ((/\"description\":"(.*?)"/g).exec(data)[1]).replace(/\\n/g, ' ').replace(/\\/g, ''),
+        "Name": ((/\"name\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, ''),
       }
     }
 
@@ -95,6 +105,10 @@ export default api = {
         "Likes": data.stats.appreciations,
         "Comments": data.stats.comments,
         "Views": data.stats.views,
+        "Avatar": data.images['230'],
+        "Location": data.location,
+        "Bio": data.sections.About,
+        "Name": data.display_name,
       }
     }
 
@@ -117,6 +131,11 @@ export default api = {
         "Affection": data.affection,
         "Favorites": data.in_favorites_count,
         "Photos": data.photos_count,
+        "Avatar": data.userpic_url,
+        "City": data.city,
+        "Country": data.country,
+        "Bio": data.about,
+        "Name": data.fullname,
       }
     }
 
@@ -138,6 +157,10 @@ export default api = {
         "Following": data.following,
         "Repository": data.public_repos,
         "Gist": data.public_gists,
+        "Avatar": data.avatar_url,
+        "Location": data.location,
+        "Bio": data.bio,
+        "Name": data.name,
       }
     }
 
@@ -160,7 +183,11 @@ export default api = {
         "Videos": data.total_videos_uploaded,
         "Channels": data.total_channels,
         "Likes": data.total_videos_liked,
-        "Albums": data.total_albums
+        "Albums": data.total_albums,
+        "Avatar": data.portrait_huge,
+        "Location": data.location,
+        "Bio": data.bio,
+        "Name": data.display_name,
       }
     }
 
@@ -174,14 +201,16 @@ export default api = {
     const uri = `http://instagram.com/${ username }`;
 
     function details(res) {
-      const data = res._bodyText;
-      const dataReplace = data.replace(/\\/g, '');
+      const data = (res._bodyText).replace(/\\/g, '');
 
       return details = {
         "Username": username,
-        "Followers": parseInt((/\"followed_by\":{\"count\":([\d]+)/g).exec(dataReplace)[1]),
-        "Following": parseInt((/\"follows\":{\"count\":([\d]+)/g).exec(dataReplace)[1]),
-        "Medias": parseInt((/\"media\":{\"count\":([\d]+)/g).exec(dataReplace)[1]),
+        "Followers": parseInt((/\"followed_by\":{\"count\":([\d]+)/g).exec(data)[1]),
+        "Following": parseInt((/\"follows\":{\"count\":([\d]+)/g).exec(data)[1]),
+        "Medias": parseInt((/\"media\":{\"count\":([\d]+)/g).exec(data)[1]),
+        "Avatar": (/\"profile_pic_url\":"(.*?)"/g).exec(data)[1],
+        "Bio": (/\"biography\":"(.*?)"/g).exec(data)[1],
+        "Name": (/\"full_name\":"(.*?)"/g).exec(data)[1],
       }
     }
 
@@ -203,6 +232,9 @@ export default api = {
         "Following": (/following" content="([\d]+)"/g).exec(data)[1],
         "Pins": (/pins" content="([\d]+)"/g).exec(data)[1],
         "Boards": (/boards" content="([\d]+)"/g).exec(data)[1],
+        "Avatar": (/image:src" content="(.*?)"/g).exec(data)[1],
+        "Bio": (/about" content="(.*?)"/g).exec(data)[1],
+        "Name": ((/og:title" content="(.*?)"/g).exec(data)[1]).replace(/\s*\(.*?\)\s*/g, ''),
       }
     }
 
@@ -233,6 +265,11 @@ export default api = {
         "Tracks": data.track_count,
         "Playlist": data.playlist_count,
         "Favorites": data.public_favorites_count,
+        "Avatar": data.avatar_url,
+        "City": data.city,
+        "Country": data.country,
+        "Bio": data.description,
+        "Name": data.full_name,
       }
     }
 
@@ -264,6 +301,9 @@ export default api = {
         "Posts": data.posts_count,
         "Maker": data.maker_of_count,
         "Collections": data.collections_count,
+        "Avatar": data.image_url['220px'],
+        "Bio": data.headline,
+        "Name": data.name,
       }
     }
 

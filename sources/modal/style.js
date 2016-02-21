@@ -136,11 +136,11 @@ export default StyleSheet.create({
 
   itemDetailGrowth: {
     position: 'absolute',
-    top: 24,
+    top: 30,
     right: 25,
-    width: 36,
-    height: 36,
-    borderRadius: 36 / PixelRatio.get(),
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 4,
   },
 
   itemDetailGrowthNumber: {
@@ -149,7 +149,5 @@ export default StyleSheet.create({
     color: _variables.white,
     backgroundColor: 'transparent',
     textAlign: 'center',
-    marginTop: 11,
   },
-
 });

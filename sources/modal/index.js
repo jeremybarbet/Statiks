@@ -22,6 +22,16 @@ import fontelloConfig from '../config.json';
 
 const Icon = createIconSetFromFontello(fontelloConfig);
 
+const NetworkGraph = React.createClass({
+  render() {
+    return (
+      <View>
+        <Text>GRAPH</Text>
+      </View>
+    );
+  }
+})
+
 const NetworkStats = React.createClass({
   _renderRow(data, item, detail, network, i) {
     return (
@@ -129,6 +139,7 @@ export default React.createClass({
 
             <View style={ style.itemDetail }>
               <Text style={ style.itemTitle }>{ "Graphics".toUpperCase() }</Text>
+              <NetworkGraph network={ network } data={ networkData } />
             </View>
           </ScrollView>
         </View>

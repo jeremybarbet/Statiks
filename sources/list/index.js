@@ -8,7 +8,8 @@ import React, {
   Animated,
   PanResponder,
   TouchableOpacity,
-  Linking
+  Linking,
+  StatusBarIOS
 } from 'react-native';
 
 import { createIconSetFromFontello } from 'react-native-vector-icons';
@@ -74,6 +75,10 @@ export const ErrorPlaceholder = React.createClass({
 });
 
 export default React.createClass({
+  componentDidMount() {
+    StatusBarIOS.setHidden(false);
+  },
+
   componentWillMount() {
     this._loadStorage().done();
 
@@ -94,7 +99,7 @@ export default React.createClass({
 
       onPanResponderRelease: () => {
         // Remove item if x value is enough
-        // if (this.state.pan.x._value < -150) this._deleteItem(this.state.currentSwipeItem)
+        if (this.state.pan.x._value < -150) this._deleteItem(this.state.currentSwipeItem)
 
         // Reset to default value
         Animated.spring(this.state.pan, { toValue: 0 }).start();

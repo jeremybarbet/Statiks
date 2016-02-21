@@ -129,7 +129,7 @@ export default React.createClass({
               ref={ network }
               style={[ style.itemInfoMajor, global.alignRight, marginForRemoveIcon ]}
               onChangeText={ (text) => this._handleChange(text) }
-              onSubmitEditing={ () => this._handleSubmit(value, network) }
+              onSubmitEditing={ () => this._handleSubmit(inputValue, network) }
               value={ inputValue }
               returnKeyType="done"
               enablesReturnKeyAutomatically={ true }

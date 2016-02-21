@@ -1,3 +1,5 @@
+// #E1EBF5
+
 module.exports = {
   bgWhite: '#FFFFFF',
   bgBlue: '#F0F6FA',

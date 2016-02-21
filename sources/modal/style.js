@@ -32,23 +32,40 @@ export default StyleSheet.create({
   modalHeaderArrow: {
     backgroundColor: 'transparent',
     position: 'absolute',
-    width: 44,
-    height: 44,
-    top: 30,
-    left: 20,
+    top: 16,
+    left: 10,
   },
 
   modalHeaderArrowIcon: {
-    color: '#E1EBF5',
+    color: '#CAD8E6',
+    padding: 14,
+  },
+
+  modalHeaderReload: {
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+
+  modalHeaderReloadIcon: {
+    color: '#CAD8E6',
+    padding: 14,
   },
 
   modalHeaderTitle: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    marginTop: 23,
+    alignSelf: 'center',
+  },
+
+  modalHeaderTitleName: {
     backgroundColor: 'transparent',
     fontFamily: _variables.dinBold,
     fontSize: 16,
-    textAlign: 'center',
-    marginTop: 24,
-    marginHorizontal: 40
+    marginLeft: 4,
   },
 
   /*
@@ -68,6 +85,7 @@ export default StyleSheet.create({
   },
 
   userInfoName: {
+    backgroundColor: 'transparent',
     fontFamily: _variables.dinBold,
     fontSize: 18,
     color: _variables.dark,
@@ -75,9 +93,9 @@ export default StyleSheet.create({
   },
 
   userInfoText: {
+    backgroundColor: 'transparent',
     fontFamily: _variables.din,
     fontSize: 16,
-    lineHeight: 20,
     color: _variables.lightBlue,
     textAlign: 'center',
     marginTop: 6,
@@ -86,6 +104,8 @@ export default StyleSheet.create({
 
   userInfoAbout: {
     marginTop: 20,
+    fontSize: 14,
+    lineHeight: 22,
   },
 
   /*

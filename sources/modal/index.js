@@ -16,7 +16,7 @@ import style from './style';
 
 import Storage from '../_utils/storage';
 import { capitalize } from '../_utils/utils';
-import { colors } from '../_utils/networksColors';
+import { luminosity, colors } from '../_utils/networksColors';
 import fontelloConfig from '../config.json';
 
 
@@ -109,19 +109,26 @@ export default React.createClass({
     const network = this.props.data;
     const networkData = this.state[network];
 
-    const username = (networkData.Name) ? <Text style={ style.userInfoName }>{ networkData.Name }</Text> : undefined;
-    const location = (networkData.Location) ? <Text style={ style.userInfoText }>{ networkData.Location }</Text> : undefined;
-    const about = (networkData.Bio) ? <Text style={[ style.userInfoText, style.userInfoAbout ]}>{ networkData.Bio }</Text> : undefined;
+    const username = networkData.Name ? <Text style={ style.userInfoName }>{ networkData.Name }</Text> : undefined;
+    const location = networkData.Location ? <Text style={ style.userInfoText }>{ networkData.Location }</Text> : undefined;
+    const about = networkData.Bio ? <Text style={[ style.userInfoText, style.userInfoAbout ]}>{ networkData.Bio }</Text> : undefined;
 
     return (
-      <View style={{ backgroundColor: '#000', flex: 1 }}>
+      <View style={{ backgroundColor: _variables.black, flex: 1 }}>
         <View style={[ global.layout, style.modalGlobal ]}>
           <View style={ style.modalHeader }>
-            <TouchableOpacity activeOpacity={ 0.85 } onPress={ Actions.pop } style={ style.modalHeaderArrow }>
-              <Icon name="arrow-bottom" size={ 10 } style={ style.modalHeaderArrowIcon } />
+            <TouchableOpacity onPress={ Actions.pop } style={ style.modalHeaderArrow }>
+              <Icon name="arrow-bottom" size={ 10 } color="#CAD8E6" style={ style.modalHeaderArrowIcon } />
             </TouchableOpacity>
 
-            <Text style={[ style.modalHeaderTitle, { color: colors(network) } ]}>{ capitalize(network) }</Text>
+            <View style={ style.modalHeaderTitle }>
+              <Icon name={ network } size={ 20 } color={ colors(network) } />
+              <Text style={[ style.modalHeaderTitleName, { color: colors(network) } ]}> { capitalize(network) }</Text>
+            </View>
+
+            <TouchableOpacity onPress={ () => {} } style={ style.modalHeaderReload }>
+              <Icon name="reload" size={ 18 } color="#CAD8E6" style={ style.modalHeaderReloadIcon } />
+            </TouchableOpacity>
           </View>
 
           <ScrollView>

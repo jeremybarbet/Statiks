@@ -11,6 +11,7 @@ import { createIconSetFromFontello } from 'react-native-vector-icons';
 import _variables from '../_styles/variables';
 import style from './style';
 
+import Storage from '../_utils/storage';
 import fontelloConfig from '../config.json';
 
 
@@ -32,6 +33,12 @@ export default React.createClass({
       </TouchableOpacity>
     ) : undefined;
 
+    const removeData = title === 'Options' ? (
+      <TouchableOpacity activeOpacity={ 0.85 } onPress={ () => Storage.delete('userData') } style={[ style.navBarButton, style.navBarButtonRight ]}>
+        <Text>Clear all</Text>
+      </TouchableOpacity>
+    ) : undefined;
+
     return (
       <View style={ style.navBarContainer }>
         <View style={ style.statusBar } />
@@ -41,6 +48,7 @@ export default React.createClass({
 
           { prevButton }
           { addNetwork }
+          { removeData }
         </View>
       </View>
     );

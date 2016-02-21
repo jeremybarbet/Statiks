@@ -22,7 +22,7 @@ export const FloatFromBottom = {
   gestures: {
     pop: {
       ...Navigator.SceneConfigs.FloatFromBottom.gestures.pop,
-      edgeHitWidth: 150,
+      edgeHitWidth: 225,
     },
   },
 };

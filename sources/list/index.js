@@ -21,6 +21,8 @@ import style from './style';
 
 import { omit } from '../_utils/object';
 import fontelloConfig from '../config.json';
+import api from '../_utils/api';
+import objectDiff from '../_utils/diff';
 import Storage from '../_utils/storage';
 import Item from '../item'
 
@@ -152,6 +154,8 @@ export default React.createClass({
 
     return (
       <ScrollView style={[ global.layout, style.listContainer ]}>
+        <Text onPress={ this._reloadData }>RELOAD</Text>
+
         {
           Object.keys(data).map((item, i) => {
             const dataNetwork = data[item];
@@ -160,6 +164,33 @@ export default React.createClass({
         }
       </ScrollView>
     );
+  },
+
+  _reloadData() {
+    console.log(this.state.data);
+    const { data } = this.state;
+    const reloadObj = {};
+
+
+    // console.log(objectDiff.diff(oldData, data));
+
+    return Object.keys(data).map(item => {
+      const networkName = item;
+      const username = data[item].Username;
+      console.log(username);
+
+      // return api[networkName](networkName, username);
+      return api['dribbble']('dribbble', username);
+
+      // console.log(item);
+    });
+
+    console.log(test);
+
+
+    // If new -> save to storage // else nothing to do
+
+
   },
 
   _deleteItem(item) {

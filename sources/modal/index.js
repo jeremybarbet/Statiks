@@ -75,24 +75,24 @@ const NetworkStats = React.createClass({
 
 export default React.createClass({
   componentDidMount() {
-    this._loadStorage().done();
+    // this._loadStorage().done();
     StatusBarIOS.setHidden(true);
   },
 
-  async _loadStorage() {
-    const network = this.props.data;
+  // async _loadStorage() {
+  //   const network = this.props.data;
 
-    try {
-      let storage = await Storage.get('userData');
-      let networkData = storage[network];
+  //   try {
+  //     let storage = await Storage.get('userData');
+  //     let networkData = storage[network];
 
-      if (storage !== null && networkData !== undefined) {
-        this.setState({ [network]: networkData, dataLoaded: true });
-      }
-    } catch (error) {
-      console.log('Storage error: ' + error.message);
-    }
-  },
+  //     if (storage !== null && networkData !== undefined) {
+  //       this.setState({ [network]: networkData, dataLoaded: true });
+  //     }
+  //   } catch (error) {
+  //     console.log('Storage error: ' + error.message);
+  //   }
+  // },
 
   componentWillUnmount() {
     StatusBarIOS.setHidden(false);
@@ -106,8 +106,13 @@ export default React.createClass({
   },
 
   render() {
-    const network = this.props.data;
-    const networkData = this.state[network];
+    // const network = this.props.data;
+    // const networkData = this.state[network];
+
+    const { network, data } = this.props;
+    const networkData = data;
+
+    console.log(this.props);
 
     const username = networkData.Name ? <Text style={ style.userInfoName }>{ networkData.Name }</Text> : undefined;
     const location = networkData.Location ? <Text style={ style.userInfoText }>{ networkData.Location }</Text> : undefined;

@@ -31,6 +31,7 @@ export default api = {
   * Dribbble API connection
   */
   dribbble(network, username) {
+    console.log('-----dribbble-----');
     const uri = `https://api.dribbble.com/v1/users/${ username }?access_token=419f6f1f2113f0328d44c3269232d69a9d55c87dd04c939b2ca9f3416dd89d2c`;
 
     function details(res) {
@@ -58,6 +59,7 @@ export default api = {
   * Twitter API connection
   */
   twitter(network, username) {
+    console.log('-----twitter-----');
     const uri = `https://twitter.com/${ username }`;
 
     function details(res) {
@@ -92,6 +94,7 @@ export default api = {
   * Behance API connection
   */
   behance(network, username) {
+    console.log('-----behance-----');
     const uri = `https://www.behance.net/v2/users/${ username }?api_key=pEb2TjTxS31kT7fv2TPma6WK8WF8Mlgf`;
 
     function details(res) {
@@ -118,6 +121,7 @@ export default api = {
   * 500px API connection
   */
   cinqcentpx(network, username) {
+    console.log('-----cinqcentpx-----');
     const uri = `https://api.500px.com/v1/users/show?username=${ username }&consumer_key=GKHCkl4MdEE2rCFLVeIOWbYxhgk06s69xKnUzad3`;
 
     function details(res) {
@@ -145,6 +149,7 @@ export default api = {
   * GitHub API connection
   */
   github(network, username) {
+    console.log('-----github-----');
     const uri = `https://api.github.com/users/${ username }`;
 
     function details(res) {
@@ -170,6 +175,7 @@ export default api = {
   * Vimeo API connection
   */
   vimeo(network, username) {
+    console.log('-----vimeo-----');
     const uri = `http://vimeo.com/api/v2/${ username }/info.json`;
 
     function details(res) {
@@ -197,6 +203,7 @@ export default api = {
   * Instagram API connection
   */
   instagram(network, username) {
+    console.log('-----instagram-----');
     const uri = `http://instagram.com/${ username }`;
 
     function details(res) {
@@ -220,6 +227,7 @@ export default api = {
   * Pinterest API connection
   */
   pinterest(network, username) {
+    console.log('-----pinterest-----');
     const uri = `https://pinterest.com/${ username }`;
 
     function details(res) {
@@ -252,6 +260,7 @@ export default api = {
   * Soundcloud API connection
   */
   soundcloud(network, username) {
+    console.log('-----soundcloud-----');
     const uri = `http://api.soundcloud.com/users/${ username }.json?client_id=6ff9d7c484c5e5d5517d1965ca18eca9`;
 
     function details(res) {
@@ -287,6 +296,7 @@ export default api = {
   * Product Hunt API connection
   */
   producthunt(network, username) {
+    console.log('-----producthunt-----');
     const uri = `https://api.producthunt.com/v1/users/${ username }?access_token=4671783399e1265f34e04e335283fefe896bec9e3a5a7f89f41080adf155c034`;
 
     function details(res) {

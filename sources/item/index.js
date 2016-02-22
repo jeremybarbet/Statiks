@@ -81,7 +81,7 @@ export default React.createClass({
         onLongPress={ this._onLongPress.bind(this, network) }
         onPressIn={ this._handlePressIn.bind(this, network) }
         onPressOut={ this._handlePressOut.bind(this, network) }
-        onPress={ this._handlePress.bind(this, network) }
+        onPress={ this._handlePress.bind(this, network, data) }
       >
         <View style={[ style.itemContainer, { backgroundColor: pressColor } ]}>
           <View>
@@ -123,8 +123,7 @@ export default React.createClass({
     this.setState({ darker: colors(item) });
   },
 
-  _handlePress(network) {
-    Actions.modal(network);
-    // this.setState({ expanded: !this.state.expanded });
+  _handlePress(network, data) {
+    Actions.modal({ network, data });
   },
 });

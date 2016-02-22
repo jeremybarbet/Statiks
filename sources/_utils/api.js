@@ -2,7 +2,7 @@ import React, {
   AlertIOS,
 } from 'react-native';
 
-// import { Utf8Decode, decode_utf8 } from '../_utils/utils';
+// import { decode } from '../_utils/utils';
 import { removeTag } from '../_utils/utils';
 import Storage from '../_utils/storage';
 
@@ -63,7 +63,6 @@ export default api = {
     function details(res) {
       const data = (res._bodyText).replace(/&quot;/g, '"');
 
-      // Decode UTF8 string for `name` and `bio`
       return details = {
         "Username": username,
         "Followers": parseInt((/\"followers_count\":([\d]+)/g).exec(data)[1]),

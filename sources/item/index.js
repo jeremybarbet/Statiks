@@ -18,43 +18,6 @@ import fontelloConfig from '../config.json';
 
 const Icon = createIconSetFromFontello(fontelloConfig);
 
-const NetworkDetail = React.createClass({
-  _renderRow(data, item, detail, i) {
-    const lastItem = Object.keys(data).length - 1 === i ? style.itemDetailRowLast : undefined;
-
-    return (
-      <View key={ i } style={[ style.itemDetailRow, global.inlineBlock, lastItem ]}>
-        <Text style={[ style.itemInfoMinor, style.itemDetailRowText ]}>{ item }</Text>
-        <Text style={[ style.itemInfoMinor, style.itemDetailRowText ]}>{ detail }</Text>
-      </View>
-    );
-  },
-
-  render() {
-    const { data } = this.props;
-
-    return (
-      <View style={ style.itemDetail }>
-        {
-          Object.keys(data).filter(item =>
-            item !== 'Username' &&
-            item !== 'Followers' &&
-            item !== 'Avatar' &&
-            item !== 'Bio' &&
-            item !== 'Location' &&
-            item !== 'Name' &&
-            item !== 'City' &&
-            item !== 'Country'
-          ).map((item, i) => {
-            const detail = data[item];
-            return this._renderRow(data, item, detail, i);
-          })
-        }
-      </View>
-    );
-  }
-});
-
 export default React.createClass({
   getInitialState() {
     const { network } = this.props;
@@ -66,10 +29,9 @@ export default React.createClass({
   },
 
   render() {
-    const { network, data } = this.props;
+    const { network, data, sync } = this.props;
     const { darker } = this.state;
 
-    const detail = this.state.expanded ? <NetworkDetail data={ data } /> : undefined;
     const pressColor = darker === colors(network).backgroundColor ? colors(network) : darker;
 
     let iconSize;
@@ -81,7 +43,7 @@ export default React.createClass({
         onLongPress={ this._onLongPress.bind(this, network) }
         onPressIn={ this._handlePressIn.bind(this, network) }
         onPressOut={ this._handlePressOut.bind(this, network) }
-        onPress={ this._handlePress.bind(this, network, data) }
+        onPress={ this._handlePress.bind(this, network, data, sync) }
       >
         <View style={[ style.itemContainer, { backgroundColor: pressColor } ]}>
           <View>
@@ -101,8 +63,6 @@ export default React.createClass({
               </View>
             </View>
           </View>
-
-          { detail }
         </View>
       </TouchableWithoutFeedback>
     );
@@ -123,7 +83,7 @@ export default React.createClass({
     this.setState({ darker: colors(item) });
   },
 
-  _handlePress(network, data) {
-    Actions.modal({ network, data });
+  _handlePress(network, data, sync) {
+    Actions.modal({ network, data, sync });
   },
 });

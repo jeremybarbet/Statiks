@@ -9,6 +9,7 @@ import React, {
 
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 import { Actions } from 'react-native-router-flux';
+import moment from 'moment';
 
 import _variables from '../_styles/variables';
 import global from '../_styles/global';
@@ -75,44 +76,22 @@ const NetworkStats = React.createClass({
 
 export default React.createClass({
   componentDidMount() {
-    // this._loadStorage().done();
     StatusBarIOS.setHidden(true);
   },
-
-  // async _loadStorage() {
-  //   const network = this.props.data;
-
-  //   try {
-  //     let storage = await Storage.get('userData');
-  //     let networkData = storage[network];
-
-  //     if (storage !== null && networkData !== undefined) {
-  //       this.setState({ [network]: networkData, dataLoaded: true });
-  //     }
-  //   } catch (error) {
-  //     console.log('Storage error: ' + error.message);
-  //   }
-  // },
 
   componentWillUnmount() {
     StatusBarIOS.setHidden(false);
   },
 
-  getInitialState() {
-    return {
-      [this.props.data]: '',
-      dataLoaded: false,
-    };
-  },
-
   render() {
-    // const network = this.props.data;
-    // const networkData = this.state[network];
-
-    const { network, data } = this.props;
+    const { network, data, sync } = this.props;
     const networkData = data;
 
-    console.log(this.props);
+    const calendarConfig = {
+      sameDay: '[Today], LTS',
+      lastDay: '[Yesterday], LTS',
+      sameElse: 'dddd, MMMM Do YYYY, h:mm:ss a'
+    };
 
     const username = networkData.Name ? <Text style={ style.userInfoName }>{ networkData.Name }</Text> : undefined;
     const location = networkData.Location ? <Text style={ style.userInfoText }>{ networkData.Location }</Text> : undefined;
@@ -131,9 +110,11 @@ export default React.createClass({
               <Text style={[ style.modalHeaderTitleName, { color: colors(network) } ]}> { capitalize(network) }</Text>
             </View>
 
+            {/*
             <TouchableOpacity onPress={ () => {} } style={ style.modalHeaderReload }>
               <Icon name="reload" size={ 18 } color="#CAD8E6" style={ style.modalHeaderReloadIcon } />
             </TouchableOpacity>
+            */}
           </View>
 
           <ScrollView>
@@ -152,6 +133,10 @@ export default React.createClass({
             <View style={ style.itemDetail }>
               <Text style={ style.itemTitle }>{ "Graphics".toUpperCase() }</Text>
               <NetworkGraph network={ network } data={ networkData } />
+            </View>
+
+            <View>
+              <Text style={ style.itemSyncTime }>Last updated: { moment.unix(sync).calendar(null, calendarConfig) }</Text>
             </View>
           </ScrollView>
         </View>

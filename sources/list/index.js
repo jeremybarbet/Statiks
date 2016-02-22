@@ -14,6 +14,7 @@ import React, {
 
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 import { Actions } from 'react-native-router-flux';
+import moment from 'moment';
 
 import _variables from '../_styles/variables';
 import global from '../_styles/global';
@@ -123,7 +124,7 @@ export default React.createClass({
 
       if (value !== null && Object.keys(value).length > 0) {
         console.log('Recovered selection from disk');
-        this.setState({ data: value, isLoading: false, isError: false, isEmpty: false });
+        this.setState({ data: value, syncDate: value['preferences'].syncDate, isLoading: false, isError: false, isEmpty: false });
       } else {
         console.log('Initialized with no selection on disk.');
         this.setState({ isLoading: false, isError: false, isEmpty: true });
@@ -141,12 +142,13 @@ export default React.createClass({
       isError: false,
       isEmpty: true,
       pan: new Animated.ValueXY(),
-      currentSwipeItem: ''
+      currentSwipeItem: '',
+      syncDate: undefined
     };
   },
 
   render() {
-    const { data, isLoading, isError, isEmpty } = this.state;
+    const { data, isLoading, isError, isEmpty, syncDate } = this.state;
 
     if (isLoading) return <LoadingPlaceholder />
     if (isEmpty) return <EmptyPlaceholder />
@@ -157,40 +159,34 @@ export default React.createClass({
         <Text onPress={ this._reloadData }>RELOAD</Text>
 
         {
-          Object.keys(data).map((item, i) => {
-            const dataNetwork = data[item];
-            return this._renderRow(item, dataNetwork, i);
+          Object.keys(data).filter(item => item !== 'preferences').map((item, i) => {
+            return this._renderRow(item, data[item], syncDate, i);
           })
         }
       </ScrollView>
     );
   },
 
+  _saveEditedDate() {
+    const obj = {};
+    const date = moment().unix();
+    const detail = { 'syncDate': date };
+
+    obj['preferences'] = detail;
+    this.setState({ syncDate: date })
+    Storage.actualize('userData', obj);
+  },
+
   _reloadData() {
-    console.log(this.state.data);
     const { data } = this.state;
-    const reloadObj = {};
 
+    // Save date of last sync -> to move for each detail of network or not dunno
+    this._saveEditedDate();
 
-    // console.log(objectDiff.diff(oldData, data));
-
-    return Object.keys(data).map(item => {
-      const networkName = item;
-      const username = data[item].Username;
-      console.log(username);
-
-      // return api[networkName](networkName, username);
-      return api['dribbble']('dribbble', username);
-
-      // console.log(item);
+    // Reload api for each networks added
+    Object.keys(data).filter(item => item !== 'preferences').map(item => {
+      api[item](item, data[item].Username, data[item]); // Just for development right now
     });
-
-    console.log(test);
-
-
-    // If new -> save to storage // else nothing to do
-
-
   },
 
   _deleteItem(item) {
@@ -198,7 +194,6 @@ export default React.createClass({
     const newNetworks = omit(oldNetworks, item);
 
     Storage.save('userData', newNetworks);
-
     this.setState({ data: newNetworks });
   },
 
@@ -219,7 +214,7 @@ export default React.createClass({
     this.setState({ currentSwipeItem: item });
   },
 
-  _renderRow(item, dataNetwork, index) {
+  _renderRow(item, dataNetwork, syncDate, index) {
     return (
       <View key={ index }>
         <Animated.View style={[ style.deleteContainer, this._scaleDeleteIcon() ]} { ...this._panResponder.panHandlers }>
@@ -236,6 +231,7 @@ export default React.createClass({
             key={ index }
             network={ item }
             data={ dataNetwork }
+            sync={ syncDate }
           />
         </AnimatedScrollView>
       </View>

@@ -170,4 +170,20 @@ export default StyleSheet.create({
     backgroundColor: 'transparent',
     textAlign: 'center',
   },
+
+  /*
+  * Sync date
+  */
+
+  itemSyncTime: {
+    backgroundColor: 'transparent',
+    fontFamily: _variables.din,
+    fontSize: 12,
+    color: _variables.lightBlue,
+    textAlign: 'center',
+    marginTop: 6,
+    paddingHorizontal: 40,
+    marginBottom: 20
+  },
+
 });

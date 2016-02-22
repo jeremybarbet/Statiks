@@ -8,6 +8,7 @@
   "dependencies": {
     "react-native": "^0.20.0",
     "react-native-router-flux": "^2.2.5",
-    "react-native-vector-icons": "^1.2.0"
+    "react-native-vector-icons": "^1.2.0",
+    "moment": "2.11.2"
   }
 }

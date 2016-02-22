@@ -44,7 +44,7 @@ export default StyleSheet.create({
   * Icons
   */
   navBarButton: {
-    marginTop: 12,
+    marginTop: 10,
     paddingHorizontal: 12,
     paddingVertical: 6,
   },

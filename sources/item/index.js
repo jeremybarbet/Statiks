@@ -6,6 +6,7 @@ import React, {
 } from 'react-native';
 
 import { createIconSetFromFontello } from 'react-native-vector-icons';
+import { Actions } from 'react-native-router-flux';
 
 import _variables from '../_styles/variables';
 import global from '../_styles/global';
@@ -35,7 +36,16 @@ const NetworkDetail = React.createClass({
     return (
       <View style={ style.itemDetail }>
         {
-          Object.keys(data).filter(item => item !== 'Username' && item !== 'Followers').map((item, i) => {
+          Object.keys(data).filter(item =>
+            item !== 'Username' &&
+            item !== 'Followers' &&
+            item !== 'Avatar' &&
+            item !== 'Bio' &&
+            item !== 'Location' &&
+            item !== 'Name' &&
+            item !== 'City' &&
+            item !== 'Country'
+          ).map((item, i) => {
             const detail = data[item];
             return this._renderRow(data, item, detail, i);
           })
@@ -67,7 +77,12 @@ export default React.createClass({
     else iconSize = 26;
 
     return (
-      <TouchableWithoutFeedback  onLongPress={ this._onLongPress } onPressIn={ this._handlePressIn.bind(this, network) } onPressOut={ this._handlePressOut.bind(this, network) } onPress={ this._handlePress }>
+      <TouchableWithoutFeedback
+        onLongPress={ this._onLongPress.bind(this, network) }
+        onPressIn={ this._handlePressIn.bind(this, network) }
+        onPressOut={ this._handlePressOut.bind(this, network) }
+        onPress={ this._handlePress.bind(this, network) }
+      >
         <View style={[ style.itemContainer, { backgroundColor: pressColor } ]}>
           <View>
             <View style={ style.itemIconNetwork }>
@@ -93,8 +108,8 @@ export default React.createClass({
     );
   },
 
-  _onLongPress() {
-    console.log('reorder item list');
+  _onLongPress(network) {
+    // Re-order
   },
 
   _handlePressIn(item) {
@@ -108,7 +123,8 @@ export default React.createClass({
     this.setState({ darker: colors(item) });
   },
 
-  _handlePress() {
-    this.setState({ expanded: !this.state.expanded });
+  _handlePress(network) {
+    Actions.modal(network);
+    // this.setState({ expanded: !this.state.expanded });
   },
 });

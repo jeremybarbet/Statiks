@@ -15,3 +15,14 @@ export const FloatFromRight = {
     },
   },
 };
+
+// Remove scale on back scene
+export const FloatFromBottom = {
+  ...Navigator.SceneConfigs.FloatFromBottom,
+  gestures: {
+    pop: {
+      ...Navigator.SceneConfigs.FloatFromBottom.gestures.pop,
+      edgeHitWidth: 225,
+    },
+  },
+};

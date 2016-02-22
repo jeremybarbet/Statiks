@@ -12,7 +12,7 @@ export default StyleSheet.create({
     marginHorizontal: 15,
     paddingLeft: 20,
     paddingVertical: 15,
-    borderRadius: 2,
+    borderRadius: 4,
     marginBottom: 15,
   },
 

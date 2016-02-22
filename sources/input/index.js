@@ -14,6 +14,7 @@ import global from '../_styles/global';
 import style from './style';
 
 import api from '../_utils/api';
+import { dataIsEmpty } from '../_utils/utils';
 import { omit } from '../_utils/object';
 import Storage from '../_utils/storage';
 import { colors } from '../_utils/networksColors';
@@ -101,20 +102,21 @@ export default React.createClass({
       dataLoaded: false,
       isSuccess: false,
       isLoading: false,
+      showRemoveIcon: false
     };
   },
 
   render() {
     const { network } = this.props;
-    const { value, networkData, dataLoaded, isSuccess, isLoading } = this.state;
+    const { value, networkData, dataLoaded, isSuccess, isLoading, showRemoveIcon } = this.state;
 
-    const loadedWithUsername = (dataLoaded === true && networkData.Username !== '');
-    const marginForRemoveIcon = loadedWithUsername ? { marginRight: 46 } : { marginRight: 20 }
+    const condition = showRemoveIcon || !dataIsEmpty(networkData.Username);
+    const marginForRemoveIcon = condition ? { marginRight: 46 } : { marginRight: 20 }
     const inputValue = (value === '') ? networkData.Username : value;
 
     const loading = (isLoading === true) ? <LoadingIcon loaded={ isLoading } /> : undefined;
     const success = (isSuccess === true) ? <SuccessIcon network={ network } /> : undefined;
-    const remove = loadedWithUsername ? <RemoveIcon onPress={ () => this._removeItem(network) } network={ network } /> : undefined;
+    const remove = condition ? <RemoveIcon onPress={ () => this._removeItem(network) } network={ network } /> : undefined;
 
     return (
       <View style={[ style.itemContainer, { backgroundColor: colors(network) } ]}>
@@ -129,7 +131,7 @@ export default React.createClass({
               ref={ network }
               style={[ style.itemInfoMajor, global.alignRight, marginForRemoveIcon ]}
               onChangeText={ (text) => this._handleChange(text) }
-              onSubmitEditing={ () => this._handleSubmit(value, network) }
+              onSubmitEditing={ () => this._handleSubmit(inputValue, network) }
               value={ inputValue }
               returnKeyType="done"
               enablesReturnKeyAutomatically={ true }
@@ -158,13 +160,14 @@ export default React.createClass({
     this.setState({
       allData: newNetworks,
       networkData: {},
-      value: ''
+      value: '',
+      showRemoveIcon: false
     });
   },
 
   async _handleChange(text) {
-    // If all username is removed hide the remove icon slide/fade to right
-    if (text === '') this.setState({ value: '', networkData: {} });
+    if (text === '') this.setState({ value: '', networkData: {}, showRemoveIcon: false });
+    else this.setState({ showRemoveIcon: true });
     this.setState({ value: text });
   },
 

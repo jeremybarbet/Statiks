@@ -38,15 +38,6 @@ export default StyleSheet.create({
     backgroundColor: _variables.bgGreen,
   },
 
-  // Colors
-  grayText: {
-    color: _variables.gray
-  },
-
-  whiteText: {
-    color: _variables.white,
-  },
-
   // Inline block items
   inlineBlock: {
     flexDirection: 'row',

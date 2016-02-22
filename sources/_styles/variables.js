@@ -1,13 +1,14 @@
+// #E1EBF5
+
 module.exports = {
-  bgWhite: '#FFFFFF',
   bgBlue: '#F0F6FA',
 
   white: '#FFFFFF',
-  green: '#46c340',
-  gray: '#EEEEEE',
+  black: '#000000',
+  dark: '#143D66',
   graySaturate: '#617385',
   lightBlue: '#ADC3D9',
-  dark: '#143D66',
+  green: '#46c340',
   buttonGreen: '#67D861',
 
   din: 'DIN-Regular',

@@ -15,7 +15,7 @@ import global from '../_styles/global';
 import style from './style';
 
 import Storage from '../_utils/storage';
-import { capitalize } from '../_utils/utils';
+import { capitalize, format } from '../_utils/utils';
 import { luminosity, colors } from '../_utils/networksColors';
 import fontelloConfig from '../config.json';
 
@@ -37,7 +37,7 @@ const NetworkStats = React.createClass({
     return (
       <View key={ i } style={[ style.itemDetailRow ]}>
         <View>
-          <Text style={[ style.itemDetailRowText, style.itemDetailNumber ]}>{ detail }</Text>
+          <Text style={[ style.itemDetailRowText, style.itemDetailNumber ]}>{ format(detail) }</Text>
           <Text style={[ style.itemDetailRowText, style.itemDetailLabel ]}>{ item }</Text>
         </View>
 

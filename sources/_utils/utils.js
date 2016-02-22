@@ -20,6 +20,13 @@ export function capitalize(s) {
   return s && s[0].toUpperCase() + s.slice(1);
 }
 
+/**
+* Formatting big numbers
+*/
+export function format(nbr) {
+  return (nbr + '').replace(/.(?=(?:.{3})+$)/g, '$& ');
+}
+
 /*
 * Function to decode UTF-8 string
 * Not working yet

@@ -2,18 +2,39 @@ import React, {
   AlertIOS,
 } from 'react-native';
 
-// import { decode } from '../_utils/utils';
-import { removeTag } from '../_utils/utils';
-import Storage from '../_utils/storage';
+// import { decode } from './utils';
+import { diff } from './diff';
+import { removeTag } from './utils';
+import { extend } from './object';
+import Storage from './storage';
 
 
-export function fetchy(uri, username, network, details) {
+export function fetchy(uri, username, network, details, current, sync) {
   const objNetwork = {};
+  const objHistory = {};
+  const timestampDiff = {};
 
   fetch(uri).then((res) => {
     if (res.ok) {
-      details(res);
-      objNetwork[network] = details(res);
+      const _detail = details(res);
+      // objNetwork[network] = { stats: _detail };
+
+      objNetwork[network] = _detail;
+
+      // If already data let's make a diff and save it to history
+      if (current) {
+        const _diff = diff(current, _detail);
+        timestampDiff[sync] = _diff;
+        console.log(timestampDiff);
+
+        objHistory['history'] = timestampDiff;
+        // Object.assign(objHistory['history'], timestampDiff);
+
+        // console.log(objHistory);
+        extend(objNetwork[network], objHistory);
+      }
+
+      console.log(objNetwork);
       Storage.actualize('userData', objNetwork);
     } else if (res.status === 404) {
       AlertIOS.prompt(`${ username } not found.`, null, null, null, 'default');
@@ -22,7 +43,8 @@ export function fetchy(uri, username, network, details) {
       AlertIOS.prompt(`${ (errorMessage) ? errorMessage : 'Error scrappy scrapper.' }`, null, null, null, 'default');
     }
   }).catch((error) => {
-    AlertIOS.prompt(`${ error.message }.`, null, null, null, 'default');
+    // AlertIOS.prompt(`${ error.message }.`, null, null, null, 'default');
+    console.log(error);
   });
 }
 
@@ -30,8 +52,7 @@ export default api = {
   /**
   * Dribbble API connection
   */
-  dribbble(network, username) {
-    console.log('-----dribbble-----');
+  dribbble(network, username, current, sync) {
     const uri = `https://api.dribbble.com/v1/users/${ username }?access_token=419f6f1f2113f0328d44c3269232d69a9d55c87dd04c939b2ca9f3416dd89d2c`;
 
     function details(res) {
@@ -52,14 +73,13 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details);
+    fetchy(uri, username, network, details, current, sync);
   },
 
   /**
   * Twitter API connection
   */
-  twitter(network, username) {
-    console.log('-----twitter-----');
+  twitter(network, username, current, sync) {
     const uri = `https://twitter.com/${ username }`;
 
     function details(res) {
@@ -79,7 +99,7 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details);
+    fetchy(uri, username, network, details, current, sync);
   },
 
   /**
@@ -93,8 +113,7 @@ export default api = {
   /**
   * Behance API connection
   */
-  behance(network, username) {
-    console.log('-----behance-----');
+  behance(network, username, current, sync) {
     const uri = `https://www.behance.net/v2/users/${ username }?api_key=pEb2TjTxS31kT7fv2TPma6WK8WF8Mlgf`;
 
     function details(res) {
@@ -114,14 +133,13 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details);
+    fetchy(uri, username, network, details, current, sync);
   },
 
   /**
   * 500px API connection
   */
-  cinqcentpx(network, username) {
-    console.log('-----cinqcentpx-----');
+  cinqcentpx(network, username, current, sync) {
     const uri = `https://api.500px.com/v1/users/show?username=${ username }&consumer_key=GKHCkl4MdEE2rCFLVeIOWbYxhgk06s69xKnUzad3`;
 
     function details(res) {
@@ -142,14 +160,13 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details);
+    fetchy(uri, username, network, details, current, sync);
   },
 
   /**
   * GitHub API connection
   */
-  github(network, username) {
-    console.log('-----github-----');
+  github(network, username, current, sync) {
     const uri = `https://api.github.com/users/${ username }`;
 
     function details(res) {
@@ -168,14 +185,13 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details);
+    fetchy(uri, username, network, details, current, sync);
   },
 
   /**
   * Vimeo API connection
   */
-  vimeo(network, username) {
-    console.log('-----vimeo-----');
+  vimeo(network, username, current, sync) {
     const uri = `http://vimeo.com/api/v2/${ username }/info.json`;
 
     function details(res) {
@@ -196,14 +212,13 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details);
+    fetchy(uri, username, network, details, current, sync);
   },
 
   /**
   * Instagram API connection
   */
-  instagram(network, username) {
-    console.log('-----instagram-----');
+  instagram(network, username, current, sync) {
     const uri = `http://instagram.com/${ username }`;
 
     function details(res) {
@@ -220,14 +235,13 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details);
+    fetchy(uri, username, network, details, current, sync);
   },
 
   /**
   * Pinterest API connection
   */
-  pinterest(network, username) {
-    console.log('-----pinterest-----');
+  pinterest(network, username, current, sync) {
     const uri = `https://pinterest.com/${ username }`;
 
     function details(res) {
@@ -245,22 +259,21 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details);
+    fetchy(uri, username, network, details, current, sync);
   },
 
   /**
   * Youtube API connection
   * TODO
   */
-  youtube(network, username) {
+  youtube() {
 
   },
 
   /**
   * Soundcloud API connection
   */
-  soundcloud(network, username) {
-    console.log('-----soundcloud-----');
+  soundcloud(network, username, current, sync) {
     const uri = `http://api.soundcloud.com/users/${ username }.json?client_id=6ff9d7c484c5e5d5517d1965ca18eca9`;
 
     function details(res) {
@@ -281,22 +294,21 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details);
+    fetchy(uri, username, network, details, current, sync);
   },
 
   /**
   * Deviantart API connection
   * TODO
   */
-  deviantart(network, username) {
+  deviantart() {
 
   },
 
   /**
   * Product Hunt API connection
   */
-  producthunt(network, username) {
-    console.log('-----producthunt-----');
+  producthunt(network, username, current, sync) {
     const uri = `https://api.producthunt.com/v1/users/${ username }?access_token=4671783399e1265f34e04e335283fefe896bec9e3a5a7f89f41080adf155c034`;
 
     function details(res) {
@@ -316,6 +328,6 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details);
+    fetchy(uri, username, network, details, current, sync);
   },
 }

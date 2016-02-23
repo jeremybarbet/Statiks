@@ -123,8 +123,11 @@ export default React.createClass({
       let value = await Storage.get('userData');
 
       if (value !== null && Object.keys(value).length > 0) {
+        // If a syncDate is set get the value
+        if (typeof Object.keys(value)['preferences'] !== 'undefined') this.setState({ syncDate: value.preferences.syncDate });
+
         console.log('Recovered selection from disk');
-        this.setState({ data: value, syncDate: value['preferences'].syncDate, isLoading: false, isError: false, isEmpty: false });
+        this.setState({ data: value, isLoading: false, isError: false, isEmpty: false });
       } else {
         console.log('Initialized with no selection on disk.');
         this.setState({ isLoading: false, isError: false, isEmpty: true });
@@ -156,7 +159,7 @@ export default React.createClass({
 
     return (
       <ScrollView style={[ global.layout, style.listContainer ]}>
-        <Text onPress={ this._reloadData }>RELOAD</Text>
+        <Text style={{ textAlign: 'center', marginBottom: 20 }} onPress={ this._reloadData }>RELOAD</Text>
 
         {
           Object.keys(data).filter(item => item !== 'preferences').map((item, i) => {
@@ -170,29 +173,29 @@ export default React.createClass({
   _saveEditedDate() {
     const obj = {};
     const date = moment().unix();
-    const detail = { 'syncDate': date };
 
-    obj['preferences'] = detail;
-    this.setState({ syncDate: date })
+    this.setState({ syncDate: date });
+
+    obj['preferences'] = { 'syncDate': date };
     Storage.actualize('userData', obj);
+
+    return date;
   },
 
   _reloadData() {
     const { data } = this.state;
 
-    // Save date of last sync -> to move for each detail of network or not dunno
-    this._saveEditedDate();
-
     // Reload api for each networks added
     Object.keys(data).filter(item => item !== 'preferences').map(item => {
-      api[item](item, data[item].Username, data[item]); // Just for development right now
+      api[item](item, data[item].Username, data[item], this._saveEditedDate());
     });
   },
 
   _deleteItem(item) {
-    const oldNetworks = this.state.data;
-    const newNetworks = omit(oldNetworks, item);
+    const { data } = this.state;
+    const newNetworks = omit(data, item);
 
+    // Bounce effet on remove icon when release touch
     Storage.save('userData', newNetworks);
     this.setState({ data: newNetworks });
   },

@@ -16,7 +16,7 @@ import global from '../_styles/global';
 import style from './style';
 
 import Storage from '../_utils/storage';
-import { capitalize, format } from '../_utils/utils';
+import { capitalize, format, dataIsEmpty } from '../_utils/utils';
 import { luminosity, colors } from '../_utils/networksColors';
 import fontelloConfig from '../config.json';
 
@@ -96,6 +96,7 @@ export default React.createClass({
     const username = networkData.Name ? <Text style={ style.userInfoName }>{ networkData.Name }</Text> : undefined;
     const location = networkData.Location ? <Text style={ style.userInfoText }>{ networkData.Location }</Text> : undefined;
     const about = networkData.Bio ? <Text style={[ style.userInfoText, style.userInfoAbout ]}>{ networkData.Bio }</Text> : undefined;
+    const syncDate = !dataIsEmpty(sync) ? <View><Text style={ style.itemSyncTime }>Last updated: { moment.unix(sync).calendar(null, calendarConfig) }</Text></View> : undefined;
 
     return (
       <View style={{ backgroundColor: _variables.black, flex: 1 }}>
@@ -135,9 +136,7 @@ export default React.createClass({
               <NetworkGraph network={ network } data={ networkData } />
             </View>
 
-            <View>
-              <Text style={ style.itemSyncTime }>Last updated: { moment.unix(sync).calendar(null, calendarConfig) }</Text>
-            </View>
+            { syncDate }
           </ScrollView>
         </View>
       </View>

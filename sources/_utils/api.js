@@ -17,11 +17,8 @@ export function fetchy(uri, username, network, details, current, sync) {
   fetch(uri).then((res) => {
     if (res.ok) {
       const _detail = details(res);
-      // objNetwork[network] = { stats: _detail };
+      objNetwork[network] = { stats: _detail };
 
-      objNetwork[network] = _detail;
-
-      // If already data let's make a diff and save it to history
       if (current) {
         const _diff = diff(current, _detail);
         timestampDiff[sync] = _diff;

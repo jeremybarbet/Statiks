@@ -20,6 +20,7 @@ import _variables from '../_styles/variables';
 import global from '../_styles/global';
 import style from './style';
 
+import { dataIsEmpty } from '../_utils/utils';
 import { omit } from '../_utils/object';
 import fontelloConfig from '../config.json';
 import api from '../_utils/api';
@@ -122,17 +123,15 @@ export default React.createClass({
     try {
       let value = await Storage.get('userData');
 
-      if (value !== null && Object.keys(value).length > 0) {
-        // If a syncDate is set get the value
-        if (typeof Object.keys(value)['preferences'] !== 'undefined') this.setState({ syncDate: value.preferences.syncDate });
-
+      if (Object.keys(value).filter(item => item !== 'preferences').length > 0) {
         console.log('Recovered selection from disk');
-        this.setState({ data: value, isLoading: false, isError: false, isEmpty: false });
+        const datetime = !dataIsEmpty(value.preferences) ? value.preferences.syncDate : '';
+        this.setState({ data: value, isLoading: false, isError: false, isEmpty: false, syncDate: datetime });
       } else {
         console.log('Initialized with no selection on disk.');
         this.setState({ isLoading: false, isError: false, isEmpty: true });
       }
-    } catch (error) {
+    } catch(error) {
       console.log('Storage error: ' + error.message);
       this.setState({ isLoading: false, isError: true });
     }
@@ -146,7 +145,7 @@ export default React.createClass({
       isEmpty: true,
       pan: new Animated.ValueXY(),
       currentSwipeItem: '',
-      syncDate: undefined
+      syncDate: ''
     };
   },
 
@@ -163,7 +162,7 @@ export default React.createClass({
 
         {
           Object.keys(data).filter(item => item !== 'preferences').map((item, i) => {
-            return this._renderRow(item, data[item], syncDate, i);
+            return this._renderRow(item, data[item].stats, syncDate, i);
           })
         }
       </ScrollView>
@@ -187,7 +186,7 @@ export default React.createClass({
 
     // Reload api for each networks added
     Object.keys(data).filter(item => item !== 'preferences').map(item => {
-      api[item](item, data[item].Username, data[item], this._saveEditedDate());
+      api[item](item, data[item].stats.Username, data[item].stats, this._saveEditedDate());
     });
   },
 

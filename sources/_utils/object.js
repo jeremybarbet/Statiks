@@ -4,9 +4,7 @@
 * Extends a base object with all the key/values of another.
 */
 export function extend(obj, other) {
-  let result = copy(obj);
-  Object.keys(other).forEach(key => result[key] = other[key]);
-  return result;
+  return Object.assign(obj, other);
 };
 
 /*

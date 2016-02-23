@@ -7,6 +7,13 @@ export function dataIsEmpty(data) {
 }
 
 /*
+* Function to display data on detail mission with placeholder when no data
+*/
+export function dataOrElse(data, empty) {
+  return data !== null && data !== undefined ? data : empty;
+}
+
+/*
 * Some API return html tag in their response (e.g. dribbble about key return <a href="#"></a> for link add)
 */
 export function removeTag(s) {

@@ -27,7 +27,7 @@ export function diff(a, b) {
           if (valueDiff.changed == 'equal') {
             value[key] = {
               changed: 'equal',
-              value: a[key]
+              // value: a[key]
             }
           } else {
             equal = false;
@@ -40,7 +40,7 @@ export function diff(a, b) {
             difference = b[key] - a[key];
           }
 
-          console.log(difference);
+          console.log(`${key}: ${difference}`);
 
           value[key] = {
             removed: a[key],
@@ -73,7 +73,7 @@ export function diff(a, b) {
   if (equal) {
     return {
       changed: 'equal',
-      value: a
+      // value: a
     }
   } else {
     return {

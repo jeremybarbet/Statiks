@@ -8,11 +8,12 @@ import { removeTag } from './utils';
 import { extend } from './object';
 import Storage from './storage';
 
+// let objHistory = {};
+let timestampDiff = {};
 
 export function fetchy(uri, username, network, details, current, sync) {
   const objNetwork = {};
   const objHistory = {};
-  const timestampDiff = {};
 
   fetch(uri).then((res) => {
     if (res.ok) {
@@ -22,17 +23,13 @@ export function fetchy(uri, username, network, details, current, sync) {
       if (current) {
         const _diff = diff(current, _detail);
         timestampDiff[sync] = _diff;
-        console.log(timestampDiff);
-
-        objHistory['history'] = timestampDiff;
-        // Object.assign(objHistory['history'], timestampDiff);
-
-        // console.log(objHistory);
+        objHistory[network] = timestampDiff;
         extend(objNetwork[network], objHistory);
       }
 
+      // console.log(objHistory);
       console.log(objNetwork);
-      Storage.actualize('userData', objNetwork);
+      // Storage.actualize('userData', objNetwork);
     } else if (res.status === 404) {
       AlertIOS.prompt(`${ username } not found.`, null, null, null, 'default');
     } else {

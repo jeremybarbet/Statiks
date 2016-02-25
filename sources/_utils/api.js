@@ -8,16 +8,16 @@ import { removeTag } from './utils';
 import { extend } from './object';
 import Storage from './storage';
 
-// let objHistory = {};
+
 let timestampDiff = {};
 
 export function fetchy(uri, username, network, details, current, sync) {
   const objNetwork = {};
   const objHistory = {};
 
-  fetch(uri).then((res) => {
-    if (res.ok) {
-      const _detail = details(res);
+  return fetch(uri).then((response) => {
+    if (response.ok) {
+      const _detail = details(response);
       objNetwork[network] = { stats: _detail };
 
       if (current) {
@@ -28,17 +28,18 @@ export function fetchy(uri, username, network, details, current, sync) {
       }
 
       // console.log(objHistory);
-      console.log(objNetwork);
-      // Storage.actualize('userData', objNetwork);
-    } else if (res.status === 404) {
+      // console.log(objNetwork);
+      Storage.actualize('userData', objNetwork);
+
+      return 'success';
+    } else if (response.status === 404) {
       AlertIOS.prompt(`${ username } not found.`, null, null, null, 'default');
     } else {
-      const errorMessage = JSON.parse(res._bodyText).message;
+      const errorMessage = JSON.parse(response._bodyText).message;
       AlertIOS.prompt(`${ (errorMessage) ? errorMessage : 'Error scrappy scrapper.' }`, null, null, null, 'default');
     }
   }).catch((error) => {
-    // AlertIOS.prompt(`${ error.message }.`, null, null, null, 'default');
-    console.log(error);
+    AlertIOS.prompt(`${ error.message }.`, null, null, null, 'default');
   });
 }
 
@@ -49,8 +50,8 @@ export default api = {
   dribbble(network, username, current, sync) {
     const uri = `https://api.dribbble.com/v1/users/${ username }?access_token=419f6f1f2113f0328d44c3269232d69a9d55c87dd04c939b2ca9f3416dd89d2c`;
 
-    function details(res) {
-      const data = JSON.parse(res._bodyText);
+    function details(response) {
+      const data = JSON.parse(response._bodyText);
 
       return details = {
         "Username": data.username,
@@ -67,7 +68,7 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details, current, sync);
+    return fetchy(uri, username, network, details, current, sync);
   },
 
   /**
@@ -76,8 +77,8 @@ export default api = {
   twitter(network, username, current, sync) {
     const uri = `https://twitter.com/${ username }`;
 
-    function details(res) {
-      const data = (res._bodyText).replace(/&quot;/g, '"');
+    function details(response) {
+      const data = (response._bodyText).replace(/&quot;/g, '"');
 
       return details = {
         "Username": username,
@@ -93,7 +94,7 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details, current, sync);
+    return fetchy(uri, username, network, details, current, sync);
   },
 
   /**
@@ -110,8 +111,8 @@ export default api = {
   behance(network, username, current, sync) {
     const uri = `https://www.behance.net/v2/users/${ username }?api_key=pEb2TjTxS31kT7fv2TPma6WK8WF8Mlgf`;
 
-    function details(res) {
-      const data = JSON.parse(res._bodyText).user;
+    function details(response) {
+      const data = JSON.parse(response._bodyText).user;
 
       return details = {
         "Username": data.username,
@@ -127,7 +128,7 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details, current, sync);
+    return fetchy(uri, username, network, details, current, sync);
   },
 
   /**
@@ -136,8 +137,8 @@ export default api = {
   cinqcentpx(network, username, current, sync) {
     const uri = `https://api.500px.com/v1/users/show?username=${ username }&consumer_key=GKHCkl4MdEE2rCFLVeIOWbYxhgk06s69xKnUzad3`;
 
-    function details(res) {
-      const data = JSON.parse(res._bodyText).user;
+    function details(response) {
+      const data = JSON.parse(response._bodyText).user;
 
       return details = {
         "Username": data.username,
@@ -154,7 +155,7 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details, current, sync);
+    return fetchy(uri, username, network, details, current, sync);
   },
 
   /**
@@ -163,8 +164,8 @@ export default api = {
   github(network, username, current, sync) {
     const uri = `https://api.github.com/users/${ username }`;
 
-    function details(res) {
-      const data = JSON.parse(res._bodyText);
+    function details(response) {
+      const data = JSON.parse(response._bodyText);
 
       return details = {
         "Username": data.login,
@@ -179,7 +180,7 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details, current, sync);
+    return fetchy(uri, username, network, details, current, sync);
   },
 
   /**
@@ -188,8 +189,8 @@ export default api = {
   vimeo(network, username, current, sync) {
     const uri = `http://vimeo.com/api/v2/${ username }/info.json`;
 
-    function details(res) {
-      const data = JSON.parse(res._bodyText);
+    function details(response) {
+      const data = JSON.parse(response._bodyText);
 
       return details = {
         "Username": username,
@@ -206,7 +207,7 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details, current, sync);
+    return fetchy(uri, username, network, details, current, sync);
   },
 
   /**
@@ -215,8 +216,8 @@ export default api = {
   instagram(network, username, current, sync) {
     const uri = `http://instagram.com/${ username }`;
 
-    function details(res) {
-      const data = (res._bodyText).replace(/\\/g, '');
+    function details(response) {
+      const data = (response._bodyText).replace(/\\/g, '');
 
       return details = {
         "Username": username,
@@ -229,7 +230,7 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details, current, sync);
+    return fetchy(uri, username, network, details, current, sync);
   },
 
   /**
@@ -238,8 +239,8 @@ export default api = {
   pinterest(network, username, current, sync) {
     const uri = `https://pinterest.com/${ username }`;
 
-    function details(res) {
-      const data = res._bodyText;
+    function details(response) {
+      const data = response._bodyText;
 
       return details = {
         "Username": username,
@@ -253,7 +254,7 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details, current, sync);
+    return fetchy(uri, username, network, details, current, sync);
   },
 
   /**
@@ -270,8 +271,8 @@ export default api = {
   soundcloud(network, username, current, sync) {
     const uri = `http://api.soundcloud.com/users/${ username }.json?client_id=6ff9d7c484c5e5d5517d1965ca18eca9`;
 
-    function details(res) {
-      const data = JSON.parse(res._bodyText);
+    function details(response) {
+      const data = JSON.parse(response._bodyText);
 
       return details = {
         "Username": data.username,
@@ -288,7 +289,7 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details, current, sync);
+    return fetchy(uri, username, network, details, current, sync);
   },
 
   /**
@@ -305,8 +306,8 @@ export default api = {
   producthunt(network, username, current, sync) {
     const uri = `https://api.producthunt.com/v1/users/${ username }?access_token=4671783399e1265f34e04e335283fefe896bec9e3a5a7f89f41080adf155c034`;
 
-    function details(res) {
-      const data = JSON.parse(res._bodyText).user;
+    function details(response) {
+      const data = JSON.parse(response._bodyText).user;
 
       return details = {
         "Username": username,
@@ -322,6 +323,6 @@ export default api = {
       }
     }
 
-    fetchy(uri, username, network, details, current, sync);
+    return fetchy(uri, username, network, details, current, sync);
   },
 }

@@ -8,6 +8,7 @@ import React, {
 } from 'react-native';
 
 import { createIconSetFromFontello } from 'react-native-vector-icons';
+import TimerMixin from 'react-timer-mixin';
 
 import _variables from '../_styles/variables';
 import global from '../_styles/global';
@@ -25,6 +26,8 @@ import fontelloConfig from '../config.json';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 export default React.createClass({
+  mixins: [TimerMixin],
+
   componentDidMount() {
     this._loadStorage().done();
   },
@@ -111,7 +114,8 @@ export default React.createClass({
       allData: newNetworks,
       networkData: {},
       value: '',
-      showRemoveIcon: false
+      showRemoveIcon: false,
+      isLoading: false
     });
   },
 
@@ -122,6 +126,20 @@ export default React.createClass({
   },
 
   async _handleSubmit(username, network) {
-    api[network](network, username);
+    const that = this;
+
+    this.setState({ isLoading: true });
+
+    Promise.resolve(api[network](network, username)).then((value) => {
+      if (value === 'success') {
+        that.setState({ isLoading: false, isSuccess: true });
+
+        that.setTimeout(() => {
+          that.setState({ isLoading: false, isSuccess: false });
+        }, 1500);
+      } else {
+        that.setState({ isLoading: false, isSuccess: false, value: '', showRemoveIcon: false });
+      }
+    });
   },
 });

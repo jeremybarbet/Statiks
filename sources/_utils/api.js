@@ -9,11 +9,11 @@ import { extend } from './object';
 import Storage from './storage';
 
 
-let timestampDiff = {};
 
 export function fetchy(uri, username, network, details, current, sync) {
   const objNetwork = {};
   const objHistory = {};
+  let timestampDiff = {};
 
   return fetch(uri).then((response) => {
     if (response.ok) {
@@ -22,13 +22,14 @@ export function fetchy(uri, username, network, details, current, sync) {
 
       if (current) {
         const _diff = diff(current, _detail);
+
         timestampDiff[sync] = _diff;
         objHistory[network] = timestampDiff;
         extend(objNetwork[network], objHistory);
+        console.log(objHistory);
       }
 
-      // console.log(objHistory);
-      console.log(objNetwork);
+      // console.log(objNetwork);
       Storage.actualize('userData', objNetwork);
 
       return 'success';

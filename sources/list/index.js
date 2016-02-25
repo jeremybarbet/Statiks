@@ -9,10 +9,12 @@ import React, {
   PanResponder,
   TouchableOpacity,
   Linking,
-  StatusBarIOS
+  StatusBarIOS,
+  RefreshControl
 } from 'react-native';
 
 import { createIconSetFromFontello } from 'react-native-vector-icons';
+import TimerMixin from 'react-timer-mixin';
 import moment from 'moment';
 
 import _variables from '../_styles/variables';
@@ -34,6 +36,8 @@ const Icon = createIconSetFromFontello(fontelloConfig);
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
 export default React.createClass({
+  mixins: [TimerMixin],
+
   componentDidMount() {
     StatusBarIOS.setHidden(false);
   },
@@ -95,6 +99,7 @@ export default React.createClass({
   getInitialState() {
     return {
       data: '',
+      isRefreshing: false,
       isLoading: true,
       isError: false,
       isEmpty: true,
@@ -105,16 +110,23 @@ export default React.createClass({
   },
 
   render() {
-    const { data, isLoading, isError, isEmpty, syncDate } = this.state;
+    const { data, isLoading, isError, isEmpty, syncDate, isRefreshing } = this.state;
 
     if (isLoading) return <LoadingPlaceholder />
     if (isEmpty) return <EmptyPlaceholder />
     if (isError) return <ErrorPlaceholder />
 
     return (
-      <ScrollView style={[ global.layout, style.listContainer ]}>
-        <Text style={{ textAlign: 'center', marginBottom: 20 }} onPress={ this._reloadData }>RELOAD</Text>
-
+      <ScrollView
+        style={[ global.layout, style.listContainer ]}
+        refreshControl={
+          <RefreshControl
+            refreshing={ isRefreshing }
+            onRefresh={ this._onRefresh }
+            tintColor={ _variables.graySaturateLighter }
+          />
+        }
+      >
         {
           Object.keys(data).filter(item => item !== 'preferences').map((item, i) => {
             return this._renderRow(item, data[item].stats, syncDate, i);
@@ -165,6 +177,25 @@ export default React.createClass({
         })
       }]
     }];
+  },
+
+  _onRefresh() {
+    const { data } = this.state;
+    const that = this;
+    this.setState({ isRefreshing: true });
+
+    Object.keys(data).filter(item => item !== 'preferences').map(item => {
+      Promise.resolve(api[item](item, data[item].stats.Username, data[item].stats, this._saveEditedDate())).then((value) => {
+        if (value === 'success') {
+          that.setTimeout(() => {
+            that.setState({ isRefreshing: false });
+          }, 300);
+        } else {
+          console.log('error');
+          that.setState({ isRefreshing: false });
+        }
+      });
+    });
   },
 
   _onSwipe(item) {

@@ -127,7 +127,6 @@ export default React.createClass({
 
   async _handleSubmit(username, network) {
     const that = this;
-
     this.setState({ isLoading: true });
 
     Promise.resolve(api[network](network, username)).then((value) => {

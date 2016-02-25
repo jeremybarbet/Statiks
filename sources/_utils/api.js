@@ -28,7 +28,7 @@ export function fetchy(uri, username, network, details, current, sync) {
       }
 
       // console.log(objHistory);
-      // console.log(objNetwork);
+      console.log(objNetwork);
       Storage.actualize('userData', objNetwork);
 
       return 'success';

@@ -18,61 +18,11 @@ import { dataIsEmpty } from '../_utils/utils';
 import { omit } from '../_utils/object';
 import Storage from '../_utils/storage';
 import { colors } from '../_utils/networksColors';
+import { Loading, Success, Remove } from '../indicators';
 import fontelloConfig from '../config.json';
 
 
 const Icon = createIconSetFromFontello(fontelloConfig);
-
-const LoadingIcon = React.createClass({
-  render() {
-    return (
-      <ActivityIndicatorIOS
-        style={ style.itemFeedback }
-        animating={ this.props.loaded }
-        color={ _variables.white }
-        hidesWhenStopped
-        size="small"
-      />
-    );
-  }
-})
-
-const SuccessIcon = React.createClass({
-  render() {
-    return (
-      <TouchableOpacity
-        activeOpacity={ 0.85 }
-        style={[ style.itemFeedback, style.itemSuccess ]}
-      >
-        <Icon
-          style={[ style.itemIcon, style.itemSuccessIcon ]}
-          name="check"
-          color={ colors(this.props.network) }
-          size={ 12 }
-        />
-      </TouchableOpacity>
-    );
-  }
-});
-
-const RemoveIcon = React.createClass({
-  render() {
-    return (
-      <TouchableOpacity
-        activeOpacity={ 0.85 }
-        style={[ style.itemFeedback, style.itemRemove ]}
-        onPress={ this.props.onPress }
-      >
-        <Icon
-          style={[ style.itemIcon, style.itemRemoveIcon ]}
-          name="cross"
-          color={ colors(this.props.network) }
-          size={ 8 }
-        />
-      </TouchableOpacity>
-    );
-  }
-})
 
 export default React.createClass({
   componentDidMount() {
@@ -114,9 +64,9 @@ export default React.createClass({
     const marginForRemoveIcon = condition ? { marginRight: 46 } : { marginRight: 20 }
     const inputValue = (value === '') ? networkData.Username : value;
 
-    const loading = (isLoading === true) ? <LoadingIcon loaded={ isLoading } /> : undefined;
-    const success = (isSuccess === true) ? <SuccessIcon network={ network } /> : undefined;
-    const remove = condition ? <RemoveIcon onPress={ () => this._removeItem(network) } network={ network } /> : undefined;
+    const loading = (isLoading === true) ? <Loading loaded={ isLoading } /> : undefined;
+    const success = (isSuccess === true) ? <Success network={ network } /> : undefined;
+    const remove = condition ? <Remove onPress={ () => this._removeItem(network) } network={ network } /> : undefined;
 
     return (
       <View style={[ style.itemContainer, { backgroundColor: colors(network) } ]}>

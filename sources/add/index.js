@@ -4,6 +4,7 @@ import _variables from '../_styles/variables';
 import global from '../_styles/global';
 import style from './style';
 
+import api from '../_utils/api';
 import Storage from '../_utils/storage';
 import Input from '../input'
 
@@ -19,7 +20,7 @@ const {
 } = React;
 
 const { width, height } = Dimensions.get('window');
-const NETWORKS = ['dribbble', 'twitter', 'behance', 'cinqcentpx', 'github', 'vimeo', 'instagram', 'pinterest', 'soundcloud', 'producthunt'];
+const NETWORKS = Object.keys(api);
 const HEADER_HEIGHT = 64;
 
 export default React.createClass({

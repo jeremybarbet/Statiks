@@ -101,7 +101,7 @@ export default api = {
   /**
   * Facebook API connection
   * TODO
-  */
+  *
   facebook() {
 
   },
@@ -261,7 +261,7 @@ export default api = {
   /**
   * Youtube API connection
   * TODO
-  */
+  *
   youtube() {
 
   },
@@ -296,7 +296,7 @@ export default api = {
   /**
   * Deviantart API connection
   * TODO
-  */
+  *
   deviantart() {
 
   },

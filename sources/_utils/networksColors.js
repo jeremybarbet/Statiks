@@ -24,6 +24,7 @@ export function colors(network) {
   const colors = {
     dribbble: '#ea4c89',
     twitter: '#55acee',
+    facebook: '#3b5998',
     behance: '#1769ff',
     cinqcentpx: '#222222',
     github: '#4183c4',

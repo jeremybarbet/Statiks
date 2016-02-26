@@ -54,11 +54,11 @@ export default React.createClass({
             <View style={ global.inlineBlock }>
               <View style={ style.itemInfoLeft }>
                 <Text style={ style.itemInfoMajor }>{ network === 'cinqcentpx' ? '500px' : network }</Text>
-                <Text style={ style.itemInfoMinor }>{ data.Username }</Text>
+                <Text style={ style.itemInfoMinor }>{ data.user.Username }</Text>
               </View>
 
               <View style={ style.itemInfoRight }>
-                <Text style={[ style.itemInfoMajor, global.alignRight ]}>{ data.Followers }</Text>
+                <Text style={[ style.itemInfoMajor, global.alignRight ]}>{ data.stats.Followers }</Text>
                 <Text style={[ style.itemInfoMinor, global.alignRight ]}>followers</Text>
               </View>
             </View>

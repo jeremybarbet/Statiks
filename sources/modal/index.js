@@ -55,16 +55,7 @@ const NetworkStats = React.createClass({
     return (
       <View>
         {
-          Object.keys(data).filter(item =>
-            item !== 'Username' &&
-            item !== 'Followers' &&
-            item !== 'Avatar' &&
-            item !== 'Bio' &&
-            item !== 'Location' &&
-            item !== 'Name' &&
-            item !== 'City' &&
-            item !== 'Country'
-          ).map((item, i) => {
+          Object.keys(data).filter(item => data[item] !== 0).map((item, i) => {
             const detail = data[item];
             return this._renderRow(data, item, detail, network, i);
           })
@@ -85,7 +76,7 @@ export default React.createClass({
 
   render() {
     const { network, data, sync } = this.props;
-    const networkData = data;
+    const networkData = data.user;
 
     const calendarConfig = {
       sameDay: '[Today], LTS',
@@ -128,12 +119,12 @@ export default React.createClass({
 
             <View style={ style.itemDetail }>
               <Text style={ style.itemTitle }>{ "User statistics".toUpperCase() }</Text>
-              <NetworkStats network={ network } data={ networkData } />
+              <NetworkStats network={ network } data={ data.stats } />
             </View>
 
             <View style={ style.itemDetail }>
               <Text style={ style.itemTitle }>{ "Graphics".toUpperCase() }</Text>
-              <NetworkGraph network={ network } data={ networkData } />
+              <NetworkGraph network={ network } data={ data.stats } />
             </View>
 
             { syncDate }

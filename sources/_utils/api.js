@@ -18,15 +18,15 @@ export function fetchy(uri, username, network, details, current, sync) {
   return fetch(uri).then((response) => {
     if (response.ok) {
       const _detail = details(response);
-      objNetwork[network] = { stats: _detail };
+      objNetwork[network] = { data: _detail };
 
       if (current) {
         const _diff = diff(current, _detail);
 
         timestampDiff[sync] = _diff;
-        objHistory[network] = timestampDiff;
+        objHistory['history'] = timestampDiff;
         extend(objNetwork[network], objHistory);
-        console.log(objHistory);
+        // console.log(objHistory);
       }
 
       // console.log(objNetwork);
@@ -55,17 +55,21 @@ export default api = {
       const data = JSON.parse(response._bodyText);
 
       return details = {
-        "Username": data.username,
-        "Followers": data.followers_count,
-        "Following": data.followings_count,
-        "Likes": data.likes_count,
-        "Likes received": data.likes_received_count,
-        "Shots": data.shots_count,
-        "Projects": data.projects_count,
-        "Avatar": data.avatar_url,
-        "Location": data.location,
-        "Bio": removeTag(data.bio),
-        "Name": data.name,
+        stats: {
+          "Followers": data.followers_count,
+          "Following": data.followings_count,
+          "Likes": data.likes_count,
+          "Likes received": data.likes_received_count,
+          "Shots": data.shots_count,
+          "Projects": data.projects_count,
+        },
+        user: {
+          "Username": data.username,
+          "Avatar": data.avatar_url,
+          "Location": data.location,
+          "Bio": removeTag(data.bio),
+          "Name": data.name,
+        }
       }
     }
 
@@ -82,16 +86,20 @@ export default api = {
       const data = (response._bodyText).replace(/&quot;/g, '"');
 
       return details = {
-        "Username": username,
-        "Followers": parseInt((/\"followers_count\":([\d]+)/g).exec(data)[1]),
-        "Following": parseInt((/\"friends_count\":([\d]+)/g).exec(data)[1]),
-        "Tweets": parseInt((/\"statuses_count\":([\d]+)/g).exec(data)[1]),
-        "Favorites": parseInt((/\"favourites_count\":([\d]+)/g).exec(data)[1]),
-        "Listed": parseInt((/\"listed_count\":([\d]+)/g).exec(data)[1]),
-        "Avatar": (((/\"profile_image_url\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, '')).replace(/_normal/g, ''),
-        "Location": (/\"location\":"(.*?)"/g).exec(data)[1],
-        "Bio": ((/\"description\":"(.*?)"/g).exec(data)[1]).replace(/\\n/g, ' ').replace(/\\/g, ''),
-        "Name": ((/\"name\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, ''),
+        stats: {
+          "Followers": parseInt((/\"followers_count\":([\d]+)/g).exec(data)[1]),
+          "Following": parseInt((/\"friends_count\":([\d]+)/g).exec(data)[1]),
+          "Tweets": parseInt((/\"statuses_count\":([\d]+)/g).exec(data)[1]),
+          "Favorites": parseInt((/\"favourites_count\":([\d]+)/g).exec(data)[1]),
+          "Listed": parseInt((/\"listed_count\":([\d]+)/g).exec(data)[1]),
+        },
+        user: {
+          "Username": username,
+          "Avatar": (((/\"profile_image_url\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, '')).replace(/_normal/g, ''),
+          "Location": (/\"location\":"(.*?)"/g).exec(data)[1],
+          "Bio": ((/\"description\":"(.*?)"/g).exec(data)[1]).replace(/\\n/g, ' ').replace(/\\/g, ''),
+          "Name": ((/\"name\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, ''),
+        }
       }
     }
 
@@ -116,16 +124,20 @@ export default api = {
       const data = JSON.parse(response._bodyText).user;
 
       return details = {
-        "Username": data.username,
-        "Followers": data.stats.followers,
-        "Following": data.stats.following,
-        "Likes": data.stats.appreciations,
-        "Comments": data.stats.comments,
-        "Views": data.stats.views,
-        "Avatar": data.images['230'],
-        "Location": data.location,
-        "Bio": data.sections.About,
-        "Name": data.display_name,
+        stats: {
+          "Followers": data.stats.followers,
+          "Following": data.stats.following,
+          "Likes": data.stats.appreciations,
+          "Comments": data.stats.comments,
+          "Views": data.stats.views,
+        },
+        user: {
+          "Username": data.username,
+          "Avatar": data.images['230'],
+          "Location": data.location,
+          "Bio": data.sections.About,
+          "Name": data.display_name,
+        }
       }
     }
 
@@ -142,17 +154,21 @@ export default api = {
       const data = JSON.parse(response._bodyText).user;
 
       return details = {
-        "Username": data.username,
-        "Followers": data.followers_count,
-        "Following": data.friends_count,
-        "Affection": data.affection,
-        "Favorites": data.in_favorites_count,
-        "Photos": data.photos_count,
-        "Avatar": data.userpic_url,
-        "City": data.city,
-        "Country": data.country,
-        "Bio": data.about,
-        "Name": data.fullname,
+        stats: {
+          "Followers": data.followers_count,
+          "Following": data.friends_count,
+          "Affection": data.affection,
+          "Favorites": data.in_favorites_count,
+          "Photos": data.photos_count,
+        },
+        user: {
+          "Username": data.username,
+          "Avatar": data.userpic_url,
+          "City": data.city,
+          "Country": data.country,
+          "Bio": data.about,
+          "Name": data.fullname,
+        }
       }
     }
 
@@ -169,15 +185,19 @@ export default api = {
       const data = JSON.parse(response._bodyText);
 
       return details = {
-        "Username": data.login,
-        "Followers": data.followers,
-        "Following": data.following,
-        "Repository": data.public_repos,
-        "Gist": data.public_gists,
-        "Avatar": data.avatar_url,
-        "Location": data.location,
-        "Bio": data.bio,
-        "Name": data.name,
+        stats: {
+          "Followers": data.followers,
+          "Following": data.following,
+          "Repository": data.public_repos,
+          "Gist": data.public_gists,
+        },
+        user: {
+          "Username": data.login,
+          "Avatar": data.avatar_url,
+          "Location": data.location,
+          "Bio": data.bio,
+          "Name": data.name,
+        }
       }
     }
 
@@ -194,17 +214,21 @@ export default api = {
       const data = JSON.parse(response._bodyText);
 
       return details = {
-        "Username": username,
-        "Followers": data.total_contacts,
-        // "Following": data.following,
-        "Videos": data.total_videos_uploaded,
-        "Channels": data.total_channels,
-        "Likes": data.total_videos_liked,
-        "Albums": data.total_albums,
-        "Avatar": data.portrait_huge,
-        "Location": data.location,
-        "Bio": data.bio,
-        "Name": data.display_name,
+        stats: {
+          "Followers": data.total_contacts,
+          // "Following": data.following,
+          "Videos": data.total_videos_uploaded,
+          "Channels": data.total_channels,
+          "Likes": data.total_videos_liked,
+          "Albums": data.total_albums,
+        },
+        user: {
+          "Username": username,
+          "Avatar": data.portrait_huge,
+          "Location": data.location,
+          "Bio": data.bio,
+          "Name": data.display_name,
+        }
       }
     }
 
@@ -221,13 +245,17 @@ export default api = {
       const data = (response._bodyText).replace(/\\/g, '');
 
       return details = {
-        "Username": username,
-        "Followers": parseInt((/\"followed_by\":{\"count\":([\d]+)/g).exec(data)[1]),
-        "Following": parseInt((/\"follows\":{\"count\":([\d]+)/g).exec(data)[1]),
-        "Medias": parseInt((/\"media\":{\"count\":([\d]+)/g).exec(data)[1]),
-        "Avatar": (/\"profile_pic_url\":"(.*?)"/g).exec(data)[1],
-        "Bio": (/\"biography\":"(.*?)"/g).exec(data)[1],
-        "Name": (/\"full_name\":"(.*?)"/g).exec(data)[1],
+        stats: {
+          "Followers": parseInt((/\"followed_by\":{\"count\":([\d]+)/g).exec(data)[1]),
+          "Following": parseInt((/\"follows\":{\"count\":([\d]+)/g).exec(data)[1]),
+          "Medias": parseInt((/\"media\":{\"count\":([\d]+)/g).exec(data)[1]),
+        },
+        user: {
+          "Username": username,
+          "Avatar": (/\"profile_pic_url\":"(.*?)"/g).exec(data)[1],
+          "Bio": (/\"biography\":"(.*?)"/g).exec(data)[1],
+          "Name": (/\"full_name\":"(.*?)"/g).exec(data)[1],
+        }
       }
     }
 
@@ -244,14 +272,18 @@ export default api = {
       const data = response._bodyText;
 
       return details = {
-        "Username": username,
-        "Followers": (/followers" content="([\d]+)"/g).exec(data)[1],
-        "Following": (/following" content="([\d]+)"/g).exec(data)[1],
-        "Pins": (/pins" content="([\d]+)"/g).exec(data)[1],
-        "Boards": (/boards" content="([\d]+)"/g).exec(data)[1],
-        "Avatar": (/image:src" content="(.*?)"/g).exec(data)[1],
-        "Bio": (/about" content="(.*?)"/g).exec(data)[1],
-        "Name": ((/og:title" content="(.*?)"/g).exec(data)[1]).replace(/\s*\(.*?\)\s*/g, ''),
+        stats: {
+          "Followers": (/followers" content="([\d]+)"/g).exec(data)[1],
+          "Following": (/following" content="([\d]+)"/g).exec(data)[1],
+          "Pins": (/pins" content="([\d]+)"/g).exec(data)[1],
+          "Boards": (/boards" content="([\d]+)"/g).exec(data)[1],
+        },
+        user: {
+          "Username": username,
+          "Avatar": (/image:src" content="(.*?)"/g).exec(data)[1],
+          "Bio": (/about" content="(.*?)"/g).exec(data)[1],
+          "Name": ((/og:title" content="(.*?)"/g).exec(data)[1]).replace(/\s*\(.*?\)\s*/g, ''),
+        }
       }
     }
 
@@ -276,17 +308,21 @@ export default api = {
       const data = JSON.parse(response._bodyText);
 
       return details = {
-        "Username": data.username,
-        "Followers": data.followers_count,
-        "Following": data.followings_count,
-        "Tracks": data.track_count,
-        "Playlist": data.playlist_count,
-        "Favorites": data.public_favorites_count,
-        "Avatar": data.avatar_url,
-        "City": data.city,
-        "Country": data.country,
-        "Bio": data.description,
-        "Name": data.full_name,
+        stats: {
+          "Followers": data.followers_count,
+          "Following": data.followings_count,
+          "Tracks": data.track_count,
+          "Playlist": data.playlist_count,
+          "Favorites": data.public_favorites_count,
+        },
+        user: {
+          "Username": data.username,
+          "Avatar": data.avatar_url,
+          "City": data.city,
+          "Country": data.country,
+          "Bio": data.description,
+          "Name": data.full_name,
+        }
       }
     }
 
@@ -311,16 +347,20 @@ export default api = {
       const data = JSON.parse(response._bodyText).user;
 
       return details = {
-        "Username": username,
-        "Followers": data.followers_count,
-        "Following": data.followings_count,
-        "Votes": data.votes_count,
-        "Posts": data.posts_count,
-        "Maker": data.maker_of_count,
-        "Collections": data.collections_count,
-        "Avatar": data.image_url['220px'],
-        "Bio": data.headline,
-        "Name": data.name,
+        stats: {
+          "Followers": data.followers_count,
+          "Following": data.followings_count,
+          "Votes": data.votes_count,
+          "Posts": data.posts_count,
+          "Maker": data.maker_of_count,
+          "Collections": data.collections_count,
+        },
+        user: {
+          "Username": username,
+          "Avatar": data.image_url['220px'],
+          "Bio": data.headline,
+          "Name": data.name,
+        }
       }
     }
 

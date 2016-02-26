@@ -129,7 +129,7 @@ export default React.createClass({
       >
         {
           Object.keys(data).filter(item => item !== 'preferences').map((item, i) => {
-            return this._renderRow(item, data[item].stats, syncDate, i);
+            return this._renderRow(item, data[item].data, syncDate, i);
           })
         }
       </ScrollView>
@@ -146,15 +146,6 @@ export default React.createClass({
     Storage.actualize('userData', obj);
 
     return date;
-  },
-
-  _reloadData() {
-    const { data } = this.state;
-
-    // Reload api for each networks added
-    Object.keys(data).filter(item => item !== 'preferences').map(item => {
-      api[item](item, data[item].stats.Username, data[item].stats, this._saveEditedDate());
-    });
   },
 
   _deleteItem(item) {
@@ -185,7 +176,7 @@ export default React.createClass({
     this.setState({ isRefreshing: true });
 
     Object.keys(data).filter(item => item !== 'preferences').map(item => {
-      Promise.resolve(api[item](item, data[item].stats.Username, data[item].stats, this._saveEditedDate())).then((value) => {
+      Promise.resolve(api[item](item, data[item].data.user.Username, data[item].data, this._saveEditedDate())).then((value) => {
         if (value === 'success') {
           that.setTimeout(() => {
             that.setState({ isRefreshing: false });

@@ -40,7 +40,7 @@ export default React.createClass({
       let networkData = storage[network];
 
       if (storage !== null && networkData !== undefined) {
-        this.setState({ allData: storage, networkData: networkData.stats, dataLoaded: true });
+        this.setState({ allData: storage, networkData: networkData.data.user, dataLoaded: true });
       }
     } catch (error) {
       console.log('Storage error: ' + error.message);

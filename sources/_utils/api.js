@@ -5,7 +5,7 @@ import React, {
 // import { decode } from './utils';
 import { diff } from './diff';
 import { removeTag } from './utils';
-import { extend } from './object';
+import { extend, read } from './object';
 import Storage from './storage';
 
 
@@ -18,18 +18,21 @@ export function fetchy(uri, username, network, details, current, sync) {
   return fetch(uri).then((response) => {
     if (response.ok) {
       const _detail = details(response);
-      objNetwork[network] = { data: _detail };
 
-      if (current) {
-        const _diff = diff(current, _detail);
+      objNetwork[network] = {
+        data: _detail,
+        history: read(current, 'history') || {}
+      };
+
+      if (read(current, 'data')) {
+        const _diff = diff(current.data, _detail);
 
         timestampDiff[sync] = _diff;
-        objHistory['history'] = timestampDiff;
+        extend(objNetwork[network].history, timestampDiff);
         extend(objNetwork[network], objHistory);
-        // console.log(objHistory);
       }
 
-      // console.log(objNetwork);
+      console.log(objNetwork);
       Storage.actualize('userData', objNetwork);
 
       return 'success';

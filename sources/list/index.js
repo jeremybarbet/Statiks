@@ -176,7 +176,7 @@ export default React.createClass({
     this.setState({ isRefreshing: true });
 
     Object.keys(data).filter(item => item !== 'preferences').map(item => {
-      Promise.resolve(api[item](item, data[item].data.user.Username, data[item].data, this._saveEditedDate())).then((value) => {
+      Promise.resolve(api[item](item, data[item].data.user.Username, data[item], this._saveEditedDate())).then((value) => {
         if (value === 'success') {
           that.setTimeout(() => {
             that.setState({ isRefreshing: false });

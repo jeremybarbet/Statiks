@@ -143,6 +143,7 @@ export default StyleSheet.create({
   },
 
   itemDetailLabel: {
+    fontFamily: _variables.din,
     fontSize: 14,
     color: _variables.lightBlue,
     marginTop: 4,

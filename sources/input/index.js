@@ -14,7 +14,7 @@ import _variables from '../_styles/variables';
 import global from '../_styles/global';
 import style from './style';
 
-import api from '../_utils/api';
+import api from '../api';
 import { dataIsEmpty } from '../_utils/utils';
 import { omit } from '../_utils/object';
 import Storage from '../_utils/storage';

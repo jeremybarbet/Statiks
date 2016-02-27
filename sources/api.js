@@ -2,12 +2,10 @@ import React, {
   AlertIOS,
 } from 'react-native';
 
-// import { decode } from './utils';
-import { diff } from './diff';
-import { removeTag } from './utils';
-import { extend, read } from './object';
-import Storage from './storage';
-
+import { diff } from './_utils/diff';
+import { removeTag } from './_utils/utils';
+import { extend, read } from './_utils/object';
+import Storage from './_utils/storage';
 
 
 export function fetchy(uri, username, network, details, current, sync) {

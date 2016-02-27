@@ -4,7 +4,7 @@ import _variables from '../_styles/variables';
 import global from '../_styles/global';
 import style from './style';
 
-import api from '../_utils/api';
+import api from '../api';
 import Storage from '../_utils/storage';
 import Input from '../input'
 

@@ -24,7 +24,7 @@ import style from './style';
 import { dataIsEmpty } from '../_utils/utils';
 import { omit } from '../_utils/object';
 import fontelloConfig from '../config.json';
-import api from '../_utils/api';
+import api from '../api';
 import objectDiff from '../_utils/diff';
 import Storage from '../_utils/storage';
 import { LoadingPlaceholder, EmptyPlaceholder, ErrorPlaceholder } from '../placeholder';

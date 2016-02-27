@@ -35,6 +35,10 @@ const { width } = Dimensions.get('window');
 const Icon = createIconSetFromFontello(fontelloConfig);
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
+function dataObj(value) {
+  return Object.keys(value).filter(item => item !== 'preferences' && item !== 'total');
+}
+
 export default React.createClass({
   mixins: [TimerMixin],
 
@@ -82,7 +86,7 @@ export default React.createClass({
     try {
       let value = await Storage.get('userData');
 
-      if (Object.keys(value).filter(item => item !== 'preferences').length > 0) {
+      if (dataObj(value).length > 0) {
         console.log('Recovered selection from disk');
         const datetime = !dataIsEmpty(value.preferences) ? value.preferences.syncDate : '';
         this.setState({ data: value, isLoading: false, isError: false, isEmpty: false, syncDate: datetime });
@@ -133,8 +137,7 @@ export default React.createClass({
     if (isEmpty) return <EmptyPlaceholder />
     if (isError) return <ErrorPlaceholder />
 
-    const dataObj = Object.keys(data).filter(item => item !== 'preferences');
-    const networkConnected = `${ size(dataObj) } network${ (size(dataObj) === 1) ? '' : 's' } connected`;
+    const networkConnected = `${ size(dataObj(data)) } network${ (size(dataObj(data)) === 1) ? '' : 's' } connected`;
 
     return (
       <ScrollView
@@ -148,7 +151,7 @@ export default React.createClass({
         }
       >
         {
-          dataObj.map((item, i) => {
+          dataObj(data).map((item, i) => {
             // For each network create a sum of each key value of data[item].data.stats
             return this._renderRow(item, data[item].data, syncDate, i);
           })
@@ -158,7 +161,7 @@ export default React.createClass({
           <Item
             title="total"
             description={ networkConnected }
-            data={ temp }
+            data={ data.total }
             sync={ syncDate }
           />
         </View>
@@ -205,7 +208,7 @@ export default React.createClass({
     const that = this;
     this.setState({ isRefreshing: true });
 
-    Object.keys(data).filter(item => item !== 'preferences').map(item => {
+    dataObj(data).map(item => {
       Promise.resolve(api[item](item, data[item].data.user.Username, data[item], this._saveEditedDate())).then((value) => {
         if (value === 'success') {
           that.setTimeout(() => {

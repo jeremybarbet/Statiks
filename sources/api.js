@@ -7,6 +7,17 @@ import { removeTag } from './_utils/utils';
 import { extend, read } from './_utils/object';
 import Storage from './_utils/storage';
 
+// Can I move result obj into sumTotal function ?
+let result = {};
+
+function sumTotal(obj) {
+  for (let key in obj) {
+    if (result.hasOwnProperty(key)) result[key] += parseInt(obj[key], 10);
+    else result[key] = parseInt(obj[key], 10);
+  }
+
+  return result;
+}
 
 export function fetchy(uri, username, network, details, current, sync) {
   const objNetwork = {};
@@ -16,6 +27,12 @@ export function fetchy(uri, username, network, details, current, sync) {
   return fetch(uri).then((response) => {
     if (response.ok) {
       const _detail = details(response);
+      const _total = {
+        total: {
+          stats: sumTotal(_detail.stats),
+          user: "to create"
+        }
+      };
 
       objNetwork[network] = {
         data: _detail,
@@ -30,7 +47,7 @@ export function fetchy(uri, username, network, details, current, sync) {
         extend(objNetwork[network], objHistory);
       }
 
-      console.log(objNetwork);
+      extend(objNetwork, _total);
       Storage.actualize('userData', objNetwork);
 
       return 'success';

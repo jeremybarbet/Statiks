@@ -3,9 +3,10 @@ import React, {
 } from 'react-native';
 
 import { diff } from './_utils/diff';
-import { removeTag } from './_utils/utils';
+import { removeTag, decode } from './_utils/utils';
 import { extend, read } from './_utils/object';
 import Storage from './_utils/storage';
+
 
 // Can I move result obj into sumTotal function ?
 let result = {};
@@ -115,8 +116,8 @@ export default api = {
           "Username": username,
           "Avatar": (((/\"profile_image_url\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, '')).replace(/_normal/g, ''),
           "Location": (/\"location\":"(.*?)"/g).exec(data)[1],
-          "Bio": ((/\"description\":"(.*?)"/g).exec(data)[1]).replace(/\\n/g, ' ').replace(/\\/g, ''),
-          "Name": ((/\"name\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, ''),
+          "Bio": decode(((/\"description\":"(.*?)"/g).exec(data)[1]).replace(/\\n/g, ' ')).replace(/\\/g, ''),
+          "Name": decode((/\"name\":"(.*?)"/g).exec(data)[1]),
         }
       }
     }
@@ -260,7 +261,7 @@ export default api = {
     const uri = `http://instagram.com/${ username }`;
 
     function details(response) {
-      const data = (response._bodyText).replace(/\\/g, '');
+      const data = response._bodyText;
 
       return details = {
         stats: {
@@ -270,9 +271,9 @@ export default api = {
         },
         user: {
           "Username": username,
-          "Avatar": (/\"profile_pic_url\":"(.*?)"/g).exec(data)[1],
-          "Bio": (/\"biography\":"(.*?)"/g).exec(data)[1],
-          "Name": (/\"full_name\":"(.*?)"/g).exec(data)[1],
+          "Avatar": ((/\"profile_pic_url\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, ''),
+          "Bio": decode(((/\"biography\":"(.*?)"/g).exec(data)[1]).replace(/\\n/g, ' ')).replace(/\\/g, ''),
+          "Name": decode((/\"full_name\":"(.*?)"/g).exec(data)[1]),
         }
       }
     }

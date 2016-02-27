@@ -22,7 +22,7 @@ import global from '../_styles/global';
 import style from './style';
 
 import { dataIsEmpty } from '../_utils/utils';
-import { omit } from '../_utils/object';
+import { omit, size } from '../_utils/object';
 import fontelloConfig from '../config.json';
 import api from '../api';
 import objectDiff from '../_utils/diff';
@@ -112,9 +112,29 @@ export default React.createClass({
   render() {
     const { data, isLoading, isError, isEmpty, syncDate, isRefreshing } = this.state;
 
+    const temp = {
+      stats: {
+        Followers: 345,
+        Following: 70,
+        Likes: 1207,
+        "Likes received": 907,
+        Projects: 0,
+        Shots: 23,
+      },
+      user: {
+        Avatar: "https://d13yacurqjgara.cloudfront.net/users/24613/avatars/normal/707f2ac2819fc2ec94cc10ac43723635.jpeg?1435334157",
+        Bio: "Designer at @Zengularity. twitter.com/JeremDsgn",
+        Location: "Paris, France",
+        Name: "Jérémy Barbet",
+      }
+    }
+
     if (isLoading) return <LoadingPlaceholder />
     if (isEmpty) return <EmptyPlaceholder />
     if (isError) return <ErrorPlaceholder />
+
+    const dataObj = Object.keys(data).filter(item => item !== 'preferences');
+    const networkConnected = `${ size(dataObj) } network${ (size(dataObj) === 1) ? '' : 's' } connected`;
 
     return (
       <ScrollView
@@ -128,10 +148,20 @@ export default React.createClass({
         }
       >
         {
-          Object.keys(data).filter(item => item !== 'preferences').map((item, i) => {
+          dataObj.map((item, i) => {
+            // For each network create a sum of each key value of data[item].data.stats
             return this._renderRow(item, data[item].data, syncDate, i);
           })
         }
+
+        <View>
+          <Item
+            title="total"
+            description={ networkConnected }
+            data={ temp }
+            sync={ syncDate }
+          />
+        </View>
       </ScrollView>
     );
   },

@@ -29,32 +29,30 @@ export default React.createClass({
   },
 
   render() {
-    const { network, data, sync } = this.props;
+    const { network, data, sync, title, description } = this.props;
     const { darker } = this.state;
 
-    const pressColor = darker === colors(network).backgroundColor ? colors(network) : darker;
-
-    let iconSize;
-    if (network === 'vimeo') iconSize = 22;
-    else iconSize = 26;
+    const networkName = network || title;
+    const pressColor = darker === colors(networkName).backgroundColor ? colors(networkName) : darker;
+    const iconSize = (networkName === 'vimeo') ? 22 : 26;
 
     return (
       <TouchableWithoutFeedback
-        onLongPress={ this._onLongPress.bind(this, network) }
-        onPressIn={ this._handlePressIn.bind(this, network) }
-        onPressOut={ this._handlePressOut.bind(this, network) }
-        onPress={ this._handlePress.bind(this, network, data, sync) }
+        onLongPress={ this._onLongPress.bind(this, networkName) }
+        onPressIn={ this._handlePressIn.bind(this, networkName) }
+        onPressOut={ this._handlePressOut.bind(this, networkName) }
+        onPress={ this._handlePress.bind(this, networkName, data, sync) }
       >
         <View style={[ style.itemContainer, { backgroundColor: pressColor } ]}>
           <View>
             <View style={ style.itemIconNetwork }>
-              <Icon name={ network } size={ iconSize } color={ _variables.white } />
+              <Icon name={ networkName } size={ iconSize } color={ _variables.white } />
             </View>
 
             <View style={ global.inlineBlock }>
               <View style={ style.itemInfoLeft }>
-                <Text style={ style.itemInfoMajor }>{ network === 'cinqcentpx' ? '500px' : network }</Text>
-                <Text style={ style.itemInfoMinor }>{ data.user.Username }</Text>
+                <Text style={ style.itemInfoMajor }>{ networkName === 'cinqcentpx' ? '500px' : networkName }</Text>
+                <Text style={ style.itemInfoMinor }>{ data.user.Username || description }</Text>
               </View>
 
               <View style={ style.itemInfoRight }>

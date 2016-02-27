@@ -21,16 +21,16 @@ There are only few things to set up.
 
 __Repository__
 
-You need first to [fork](https://github.com/statiks/statiks-react-native/fork) the project.  
-Now, make a clone of this fork on your computer.  
-`git clone https://github.com/[your_github_username]/statiks-react-native.git`
+* You need first to [fork](https://github.com/statiks/statiks-react-native/fork) the project.  
+* Now, make a clone of this fork on your computer.  
+* `git clone https://github.com/[your_github_username]/statiks-react-native.git`
 
 __Running__
 
 Statiks run with react-native npm dependencies.
 
-`npm install`  
-`npm start`
+* `npm install`  
+* `npm start`
 
 __Launching__
 

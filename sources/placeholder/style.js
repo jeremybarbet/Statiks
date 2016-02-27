@@ -65,8 +65,15 @@ export default StyleSheet.create({
   },
 
   // Custom style for each placeholder
-  loading: {
-    color: _variables.graySaturate,
+  loadingContainer: {
+    justifyContent: 'flex-start',
+  },
+
+  loadingIllustration: {
+    width: 160 / PixelRatio.get(),
+    height: 195 / PixelRatio.get(),
+    marginLeft: 0,
+    marginTop: 320 / PixelRatio.get(),
   },
 
   soEmptyIllustration: {

@@ -16,8 +16,9 @@ import { colors } from '../_utils/networksColors';
 export const LoadingPlaceholder = React.createClass({
   render() {
     return (
-      <View style={[ global.layout, style.defaultContainer ]}>
-        <Text style={ style.loading }>Loading...</Text>
+      <View style={[ global.layout, style.defaultContainer, style.loadingContainer ]}>
+        <Image style={[ style.defaultIllustration, style.loadingIllustration ]} source={ require('./images/emoji-loading.gif') } />
+        <Text style={ style.defaultParagraph }>Data are coming!</Text>
       </View>
     );
   }

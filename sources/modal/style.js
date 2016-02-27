@@ -81,7 +81,6 @@ export default StyleSheet.create({
     height: 64,
     borderRadius: 64 / PixelRatio.get(),
     alignSelf: 'center',
-    marginBottom: 20,
   },
 
   userInfoName: {
@@ -89,7 +88,8 @@ export default StyleSheet.create({
     fontFamily: _variables.dinBold,
     fontSize: 18,
     color: _variables.dark,
-    textAlign: 'center'
+    textAlign: 'center',
+    marginTop: 20,
   },
 
   userInfoText: {

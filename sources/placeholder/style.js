@@ -10,20 +10,20 @@ import _variables from '../_styles/variables';
 const { width } = Dimensions.get('window');
 
 export default StyleSheet.create({
-  // Welcome illustration
-  welcomeContainer: {
+  // Default illustration style
+  defaultContainer: {
     flexDirection: 'column',
     justifyContent: 'center'
   },
 
-  welcomeIllustration: {
+  defaultIllustration: {
     width: 551 / PixelRatio.get(),
     height: 318 / PixelRatio.get(),
     alignSelf: 'center',
     marginLeft: -14,
   },
 
-  welcomeTitle: {
+  defaultTitle: {
     fontFamily: _variables.dinBold,
     fontSize: 16,
     color: _variables.dark,
@@ -32,22 +32,22 @@ export default StyleSheet.create({
     textAlign: 'center'
   },
 
-  welcomeParagraph: {
+  defaultParagraph: {
     fontFamily: _variables.din,
     fontSize: 14,
     color: _variables.lightBlue,
-    lineHeight: 20,
+    lineHeight: 22,
     textAlign: 'center',
     marginTop: 20,
     paddingHorizontal: 50,
   },
 
-  welcomeParagraphLink: {
+  defaultParagraphLink: {
     fontFamily: _variables.dinMedium,
     color: _variables.green,
   },
 
-  welcomeButton: {
+  defaultButton: {
     marginTop: 40,
     backgroundColor: _variables.buttonGreen,
     borderRadius: 4,
@@ -55,7 +55,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
 
-  welcomeButtonText: {
+  defaultButtonText: {
     backgroundColor: 'transparent',
     color: _variables.white,
     fontSize: 16,
@@ -64,7 +64,25 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
 
-  loading: {
-    color: _variables.graySaturate,
+  // Custom style for each placeholder
+  loadingContainer: {
+    justifyContent: 'flex-start',
   },
+
+  loadingIllustration: {
+    width: 160 / PixelRatio.get(),
+    height: 195 / PixelRatio.get(),
+    marginLeft: 0,
+    marginTop: 320 / PixelRatio.get(),
+  },
+
+  soEmptyIllustration: {
+    marginTop: 60,
+    marginBottom: 5,
+  },
+
+  SoEmptyParagraph: {
+    marginBottom: 40,
+  },
+
 });

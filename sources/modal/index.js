@@ -16,9 +16,10 @@ import global from '../_styles/global';
 import style from './style';
 
 import Storage from '../_utils/storage';
-import { capitalize, format, dataIsEmpty } from '../_utils/utils';
+import { capitalize, format, dataIsEmpty, sum } from '../_utils/utils';
 import { luminosity, colors } from '../_utils/networksColors';
 import fontelloConfig from '../config.json';
+import { SoEmpty } from '../placeholder';
 
 
 const Icon = createIconSetFromFontello(fontelloConfig);
@@ -28,8 +29,12 @@ const NetworkGraph = React.createClass({
     const { data } = this.props;
 
     return (
-      <View>
-        <Text>GRAPH</Text>
+      <View style={ style.itemDetail }>
+        <Text style={ style.itemTitle }>{ "Graphics".toUpperCase() }</Text>
+
+        <View>
+
+        </View>
       </View>
     );
   }
@@ -38,7 +43,7 @@ const NetworkGraph = React.createClass({
 const NetworkStats = React.createClass({
   _renderRow(data, item, detail, network, i) {
     return (
-      <View key={ i } style={[ style.itemDetailRow ]}>
+      <View key={ i } style={ style.itemDetailRow }>
         <View>
           <Text style={[ style.itemDetailRowText, style.itemDetailNumber ]}>{ format(detail) }</Text>
           <Text style={[ style.itemDetailRowText, style.itemDetailLabel ]}>{ item }</Text>
@@ -53,20 +58,31 @@ const NetworkStats = React.createClass({
 
   render() {
     const { data, network } = this.props;
-    const ratio = data.Followers / data.Following;
+
+    const filterArr = [];
+    Object.keys(data).filter(item => filterArr.push(data[item]));
+
+    const content = Object.keys(data).filter(item => data[item] !== 0).map((item, i) => {
+      return this._renderRow(data, item, data[item], network, i)
+    });
+
+    if (sum(filterArr) === 0) {
+      return (
+        <View style={ style.itemDetail }>
+          <SoEmpty network={ network } />
+        </View>
+      )
+    }
 
     return (
-      <View>
-        {
-          Object.keys(data).filter(item => data[item] !== 0).map((item, i) => {
-            const detail = data[item];
-            return this._renderRow(data, item, detail, network, i);
-          })
-        }
+      <View style={ style.itemDetail }>
+        <Text style={ style.itemTitle }>{ "User statistics".toUpperCase() }</Text>
+
+        { content }
 
         <View style={[ style.itemDetailRow ]}>
           <View>
-            <Text style={[ style.itemDetailRowText, style.itemDetailNumber ]}>{ `${ Math.ceil(ratio) }:1` }</Text>
+            <Text style={[ style.itemDetailRowText, style.itemDetailNumber ]}>{ `${ Math.ceil(data.Followers / data.Following) }:1` }</Text>
             <Text style={[ style.itemDetailRowText, style.itemDetailLabel ]}>Ratio followers/following</Text>
           </View>
 
@@ -103,7 +119,7 @@ export default React.createClass({
     const username = networkData.Name ? <Text style={ style.userInfoName }>{ networkData.Name }</Text> : undefined;
     const location = networkData.Location ? <Text style={ style.userInfoText }>{ networkData.Location }</Text> : undefined;
     const about = networkData.Bio ? <Text style={[ style.userInfoText, style.userInfoAbout ]}>{ networkData.Bio }</Text> : undefined;
-    const avatar = networkData.Avatar ? <Image style={ style.userInfoPhoto } source={{ uri: networkData.Avatar }} /> : undefined; // Create placeholder image
+    const avatar = <Image style={ style.userInfoPhoto } source={ networkData.Avatar ? { uri: networkData.Avatar } : require('./images/avatar-placeholder.png') } />;
     const syncDate = !dataIsEmpty(sync) ? <View><Text style={ style.itemSyncTime }>Last updated: { moment.unix(sync).calendar(null, calendarConfig) }</Text></View> : undefined;
 
     return (
@@ -134,15 +150,8 @@ export default React.createClass({
               { about }
             </View>
 
-            <View style={ style.itemDetail }>
-              <Text style={ style.itemTitle }>{ "User statistics".toUpperCase() }</Text>
-              <NetworkStats network={ network } data={ data.stats } />
-            </View>
-
-            <View style={ style.itemDetail }>
-              <Text style={ style.itemTitle }>{ "Graphics".toUpperCase() }</Text>
-              <NetworkGraph network={ network } data={ data.stats } />
-            </View>
+            <NetworkStats network={ network } data={ data.stats } />
+            <NetworkGraph network={ network } data={ data.stats } />
 
             { syncDate }
           </ScrollView>

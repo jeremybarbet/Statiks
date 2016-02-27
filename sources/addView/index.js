@@ -6,7 +6,7 @@ import style from './style';
 
 import api from '../api';
 import Storage from '../_utils/storage';
-import Input from '../input'
+import Input from '../addInput'
 
 
 const {

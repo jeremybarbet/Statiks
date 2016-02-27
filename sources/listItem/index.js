@@ -82,6 +82,6 @@ export default React.createClass({
   },
 
   _handlePress(network, data, sync) {
-    Actions.modal({ network, data, sync });
+    Actions.detail({ network, data, sync });
   },
 });

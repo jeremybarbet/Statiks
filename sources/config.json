@@ -313,6 +313,20 @@
       "search": [
         "arrow-bottom"
       ]
+    },
+    {
+      "uid": "930fc5d5a94619cca034c6890a785a2d",
+      "css": "total",
+      "code": 59414,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M666.7 0L111.1 0C50 0 0 50 0 111.1L0 1000 388.9 833.3 777.8 1000 777.8 111.1C777.8 50 727.8 0 666.7 0L666.7 0Z",
+        "width": 778
+      },
+      "search": [
+        "total"
+      ]
     }
   ]
 }

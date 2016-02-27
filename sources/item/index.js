@@ -51,7 +51,7 @@ export default React.createClass({
 
             <View style={ global.inlineBlock }>
               <View style={ style.itemInfoLeft }>
-                <Text style={ style.itemInfoMajor }>{ networkName === 'cinqcentpx' ? '500px' : networkName }</Text>
+                <Text style={ style.itemInfoMajor }>{ networkName === 'fivehundredpx' ? '500px' : networkName }</Text>
                 <Text style={ style.itemInfoMinor }>{ data.user.Username || description }</Text>
               </View>
 

@@ -30,7 +30,7 @@ export function colors(network) {
     twitter: '#55acee',
     facebook: '#3b5998',
     behance: '#1769ff',
-    cinqcentpx: '#222222',
+    fivehundredpx: '#222222',
     github: '#4183c4',
     vimeo: '#1ab7ea',
     instagram: '#3f729b',

@@ -25,6 +25,8 @@ const Icon = createIconSetFromFontello(fontelloConfig);
 
 const NetworkGraph = React.createClass({
   render() {
+    const { data } = this.props;
+
     return (
       <View>
         <Text>GRAPH</Text>
@@ -51,6 +53,7 @@ const NetworkStats = React.createClass({
 
   render() {
     const { data, network } = this.props;
+    const ratio = data.Followers / data.Following;
 
     return (
       <View>
@@ -60,6 +63,19 @@ const NetworkStats = React.createClass({
             return this._renderRow(data, item, detail, network, i);
           })
         }
+
+        <View style={[ style.itemDetailRow ]}>
+          <View>
+            <Text style={[ style.itemDetailRowText, style.itemDetailNumber ]}>{ `${ Math.ceil(ratio) }:1` }</Text>
+            <Text style={[ style.itemDetailRowText, style.itemDetailLabel ]}>Ratio followers/following</Text>
+          </View>
+
+          {/*
+          <View style={[ style.itemDetailGrowth, { backgroundColor: colors(network) } ]}>
+            <Text style={ style.itemDetailGrowthNumber }>+4</Text>
+          </View>
+          */}
+        </View>
       </View>
     );
   }

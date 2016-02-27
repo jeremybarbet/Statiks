@@ -165,7 +165,7 @@ export default api = {
   /**
   * 500px API connection
   */
-  cinqcentpx(network, username, current, sync) {
+  fivehundredpx(network, username, current, sync) {
     const uri = `https://api.500px.com/v1/users/show?username=${ username }&consumer_key=GKHCkl4MdEE2rCFLVeIOWbYxhgk06s69xKnUzad3`;
 
     function details(response) {

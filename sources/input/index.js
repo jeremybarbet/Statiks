@@ -88,7 +88,7 @@ export default React.createClass({
               value={ inputValue }
               returnKeyType="done"
               enablesReturnKeyAutomatically={ true }
-              placeholder={ network }
+              placeholder={ (network === 'fivehundredpx') ? '500px' : network }
               placeholderTextColor="rgba(255, 255, 255, 0.25)"
               autoCorrect={ false }
               autoCapitalize="none"

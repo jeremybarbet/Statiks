@@ -274,7 +274,7 @@
     },
     {
       "uid": "62e394ab4c734b7d6e2b563bc35b39f9",
-      "css": "cinqcentpx",
+      "css": "fivehundredpx",
       "code": 59411,
       "src": "custom_icons",
       "selected": true,
@@ -283,7 +283,7 @@
         "width": 778
       },
       "search": [
-        "cinqcentpx"
+        "fivehundredpx"
       ]
     },
     {

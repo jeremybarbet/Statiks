@@ -6,10 +6,10 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "moment": "^2.11.2",
     "react-native": "^0.20.0",
-    "react-native-router-flux": "^2.2.5",
-    "react-native-vector-icons": "^1.2.0",
-    "react-timer-mixin": "0.13.3",
-    "moment": "2.11.2"
+    "react-native-router-flux": "^2.3.6",
+    "react-native-vector-icons": "^1.2.1",
+    "react-timer-mixin": "^0.13.3"
   }
 }

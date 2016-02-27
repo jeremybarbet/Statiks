@@ -116,23 +116,6 @@ export default React.createClass({
   render() {
     const { data, isLoading, isError, isEmpty, syncDate, isRefreshing } = this.state;
 
-    const temp = {
-      stats: {
-        Followers: 345,
-        Following: 70,
-        Likes: 1207,
-        "Likes received": 907,
-        Projects: 0,
-        Shots: 23,
-      },
-      user: {
-        Avatar: "https://d13yacurqjgara.cloudfront.net/users/24613/avatars/normal/707f2ac2819fc2ec94cc10ac43723635.jpeg?1435334157",
-        Bio: "Designer at @Zengularity. twitter.com/JeremDsgn",
-        Location: "Paris, France",
-        Name: "Jérémy Barbet",
-      }
-    }
-
     if (isLoading) return <LoadingPlaceholder />
     if (isEmpty) return <EmptyPlaceholder />
     if (isError) return <ErrorPlaceholder />

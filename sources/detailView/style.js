@@ -7,7 +7,7 @@ import _variables from '../_styles/variables';
 
 
 export default StyleSheet.create({
-  modalGlobal: {
+  detailGlobal: {
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
     overflow: 'hidden',
@@ -15,9 +15,9 @@ export default StyleSheet.create({
   },
 
   /*
-  * Modal header
+  * Detail header
   */
-  modalHeader: {
+  detailHeader: {
     backgroundColor: '#ea4c89',
     height: 64,
     shadowColor: 'rgb(23, 24, 26)',
@@ -29,31 +29,31 @@ export default StyleSheet.create({
     backgroundColor: _variables.white,
   },
 
-  modalHeaderArrow: {
+  detailHeaderArrow: {
     backgroundColor: 'transparent',
     position: 'absolute',
     top: 16,
     left: 10,
   },
 
-  modalHeaderArrowIcon: {
+  detailHeaderArrowIcon: {
     color: '#CAD8E6',
     padding: 14,
   },
 
-  modalHeaderReload: {
+  detailHeaderReload: {
     backgroundColor: 'transparent',
     position: 'absolute',
     top: 10,
     right: 10,
   },
 
-  modalHeaderReloadIcon: {
+  detailHeaderReloadIcon: {
     color: '#CAD8E6',
     padding: 14,
   },
 
-  modalHeaderTitle: {
+  detailHeaderTitle: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
@@ -61,7 +61,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
 
-  modalHeaderTitleName: {
+  detailHeaderTitleName: {
     backgroundColor: 'transparent',
     fontFamily: _variables.dinBold,
     fontSize: 16,
@@ -106,70 +106,6 @@ export default StyleSheet.create({
     marginTop: 20,
     fontSize: 14,
     lineHeight: 22,
-  },
-
-  /*
-  * Network data
-  */
-
-  itemDetail: {
-    flex: 1,
-    backgroundColor: _variables.white,
-    borderWidth: 1,
-    borderColor: '#E1EBF5',
-    marginHorizontal: 15,
-    borderRadius: 4,
-    marginBottom: 15,
-  },
-
-  itemTitle: {
-    fontFamily: _variables.dinMedium,
-    fontSize: 14,
-    color: _variables.lightBlue,
-    marginLeft: 25,
-    marginTop: 30,
-    marginBottom: 20,
-    letterSpacing: 0.75,
-  },
-
-  itemDetailRow: {
-    paddingHorizontal: 25,
-    paddingVertical: 20,
-  },
-
-  itemDetailRowText: {
-    color: _variables.graySaturate,
-    paddingBottom: 0,
-  },
-
-  itemDetailLabel: {
-    fontFamily: _variables.din,
-    fontSize: 14,
-    color: _variables.lightBlue,
-    marginTop: 4,
-  },
-
-  itemDetailNumber: {
-    fontFamily: _variables.din,
-    fontSize: 24,
-    color: _variables.dark,
-  },
-
-  itemDetailGrowth: {
-    position: 'absolute',
-    top: 30,
-    right: 25,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 4,
-  },
-
-  itemDetailGrowthNumber: {
-    fontFamily: _variables.dinMedium,
-    fontSize: 14,
-    color: _variables.white,
-    backgroundColor: 'transparent',
-    textAlign: 'center',
   },
 
   /*

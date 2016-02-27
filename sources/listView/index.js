@@ -28,7 +28,7 @@ import api from '../api';
 import objectDiff from '../_utils/diff';
 import Storage from '../_utils/storage';
 import { LoadingPlaceholder, EmptyPlaceholder, ErrorPlaceholder } from '../placeholder';
-import Item from '../item'
+import Item from '../listItem'
 
 
 const { width } = Dimensions.get('window');

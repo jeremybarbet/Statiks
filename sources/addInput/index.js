@@ -19,7 +19,7 @@ import { dataIsEmpty } from '../_utils/utils';
 import { omit } from '../_utils/object';
 import Storage from '../_utils/storage';
 import { colors } from '../_utils/networksColors';
-import { Loading, Success, Remove } from '../indicators';
+import { Loading, Success, Remove } from '../addIndicators';
 import fontelloConfig from '../config.json';
 
 

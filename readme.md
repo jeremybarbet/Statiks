@@ -1,40 +1,17 @@
 Statiks
 ========
 
-Statiks is a mobile application for iPhone allowing you to connect several social networks and retrieve your details stats.
+Statiks is a mobile application for iPhone propulsed thanks to [react-native](https://facebook.github.io/react-native/) allowing you to connect several social networks and retrieve your details stats.
 You can reload your networks and consult for each network how many followers you gained (or lost) through dynamic graph.
 
 I keep improving, fixing, adding new networks and more stats. Feel free to contribute.
 
 [Visit the application's website](http://statiks.jeremybarbet.com)
 
-ROADMAP
+Trello
 ----
 
-* ~~Save on AsyncStorage before making an update~~
-* ~~Export the fetch logic with parse.res() and catch(err)~~
-* ~~Add response ok check and throw error otherwise~~
-* When release pressure remove item
-* Interpolate x offset to scale the delete icon with gesture value instead of a fix value
-* Measure input offset y position and apply `scrollTop` function to focus on top of this input after tap
-
-```js
-const scrollView = this.refs.addScrollView.getScrollResponder();
-const inputToScroll = React.findNodeHandle(this.refs[item]);
-scrollView.scrollTo(inputToScroll, 0, true);
-```
-
-* ~~Refactoring the api for something more generic~~
-* Hide remove icon after delete of a network ?
-* Fetch data on the `add.js` view, send it trough props to individual `input.js` -> Add a [skeleton loading view](https://pbs.twimg.com/media/CbS-oOUVIAAsgtS.png:large) before data are ready ! Don't know if it's a good idea with delete and edit function
-* Block the left swipe gesture
-
-Changelog
----------
-
-__v0.0.1__
-
-* Current developement version
+You can find the roadmap and features coming on the [Trello related](https://trello.com/b/hfI9nPVL/statiks).
 
 Development
 -----------
@@ -44,17 +21,15 @@ There are only few things to set up.
 
 __Repository__
 
-You need first to [fork](https://github.com/statiks/statiks-react-native/fork) the project.
-
-Now, make a clone of this fork on your computer.
-
+You need first to [fork](https://github.com/statiks/statiks-react-native/fork) the project.  
+Now, make a clone of this fork on your computer.  
 `git clone https://github.com/[your_github_username]/statiks-react-native.git`
 
 __Running__
 
 Statiks run with react-native npm dependencies.
 
-`npm install`
+`npm install`  
 `npm start`
 
 __Launching__
@@ -63,7 +38,12 @@ __Launching__
 * Go to `cd statiks-react-native`
 * Open `ios/statiks.xcodeproj` and hit run in Xcode.
 * Hit `⌘-R` in your iOS simulator to reload the app and see your change!
-* Voilà
+* `⌘-ctrl-D` on the iOS simulator let you access to the dev menu where you can enable livereload and debugging in Chrome.
+* Voilà! \°-°/
+
+__Pull request__
+
+* You are now ready to edit the code and pull request !
 
 Contributors
 ------------

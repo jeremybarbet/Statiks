@@ -79,8 +79,11 @@ export default React.createClass({
             </View>
 
             <NetworkStats network={ network } data={ data.stats } />
+            
+            {/*
             <NetworkGraph network={ network } data={ data.stats } />
             <NetworkActivity network={ network } data={ data.stats } />
+            */}
 
             { syncDate }
           </ScrollView>

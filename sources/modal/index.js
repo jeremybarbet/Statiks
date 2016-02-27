@@ -103,7 +103,7 @@ export default React.createClass({
     const username = networkData.Name ? <Text style={ style.userInfoName }>{ networkData.Name }</Text> : undefined;
     const location = networkData.Location ? <Text style={ style.userInfoText }>{ networkData.Location }</Text> : undefined;
     const about = networkData.Bio ? <Text style={[ style.userInfoText, style.userInfoAbout ]}>{ networkData.Bio }</Text> : undefined;
-    const avatar = networkData.Avatar ? <Image style={ style.userInfoPhoto } source={{ uri: networkData.Avatar }} /> : undefined; // Create placeholder image
+    const avatar = <Image style={ style.userInfoPhoto } source={ networkData.Avatar ? { uri: networkData.Avatar } : require('./images/avatar-placeholder.png') } />;
     const syncDate = !dataIsEmpty(sync) ? <View><Text style={ style.itemSyncTime }>Last updated: { moment.unix(sync).calendar(null, calendarConfig) }</Text></View> : undefined;
 
     return (

@@ -10,7 +10,8 @@ import React, {
   TouchableOpacity,
   Linking,
   StatusBarIOS,
-  RefreshControl
+  RefreshControl,
+  NetInfo
 } from 'react-native';
 
 import { createIconSetFromFontello } from 'react-native-vector-icons';
@@ -42,10 +43,6 @@ function dataObj(value) {
 export default React.createClass({
   mixins: [TimerMixin],
 
-  componentDidMount() {
-    StatusBarIOS.setHidden(false);
-  },
-
   componentWillMount() {
     this._loadStorage().done();
 
@@ -74,12 +71,20 @@ export default React.createClass({
     });
   },
 
-  componentWillUnmount() {
-    this.state.pan.x.removeAllListeners();
+  componentDidMount() {
+    StatusBarIOS.setHidden(false);
+
+    NetInfo.isConnected.addEventListener('change', this._handleConnectivity);
+    this._checkConnectivity();
   },
 
   componentWillReceiveProps() {
     this._loadStorage().done();
+  },
+
+  componentWillUnmount() {
+    this.state.pan.x.removeAllListeners();
+    NetInfo.isConnected.removeEventListener('change', this._handleConnectivity);
   },
 
   async _loadStorage() {
@@ -109,33 +114,30 @@ export default React.createClass({
       isEmpty: true,
       pan: new Animated.ValueXY(),
       currentSwipeItem: '',
-      syncDate: ''
+      syncDate: '',
+      isConnected: null
     };
   },
 
   render() {
-    const { data, isLoading, isError, isEmpty, syncDate, isRefreshing } = this.state;
+    const { data, isLoading, isError, isEmpty, syncDate, isRefreshing, isConnected } = this.state;
 
     if (isLoading) return <LoadingPlaceholder description="Data are coming!" />
     if (isEmpty) return <EmptyPlaceholder />
     if (isError) return <ErrorPlaceholder />
 
+    console.log(isConnected);
+
     const networkConnected = `${ size(dataObj(data)) } network${ (size(dataObj(data)) === 1) ? '' : 's' } connected`;
+    const refresh = (isConnected) ? <RefreshControl refreshing={ isRefreshing } onRefresh={ this._onRefresh } tintColor={ _variables.graySaturateLighter } /> : undefined;
 
     return (
       <ScrollView
         style={[ global.layout, style.listContainer ]}
-        refreshControl={
-          <RefreshControl
-            refreshing={ isRefreshing }
-            onRefresh={ this._onRefresh }
-            tintColor={ _variables.graySaturateLighter }
-          />
-        }
+        refreshControl={ refresh }
       >
         {
           dataObj(data).map((item, i) => {
-            // For each network create a sum of each key value of data[item].data.stats
             return this._renderRow(item, data[item].data, syncDate, i);
           })
         }
@@ -150,6 +152,19 @@ export default React.createClass({
         </View>
       </ScrollView>
     );
+  },
+
+  _checkConnectivity() {
+    NetInfo.isConnected.fetch().done((isConnected) => this.setState({ isConnected }));
+  },
+
+  _handleConnectivity(isConnected) {
+    if (isConnected === false) {
+      this.interval = setInterval(() => this._checkConnectivity(), 3000);
+    } else {
+      this._checkConnectivity();
+      clearInterval(this.interval);
+    }
   },
 
   _saveEditedDate() {

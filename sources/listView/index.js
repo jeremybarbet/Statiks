@@ -122,11 +122,9 @@ export default React.createClass({
   render() {
     const { data, isLoading, isError, isEmpty, syncDate, isRefreshing, isConnected } = this.state;
 
-    if (isLoading) return <LoadingPlaceholder description="Data are coming!" />
-    if (isEmpty) return <EmptyPlaceholder />
-    if (isError) return <ErrorPlaceholder />
-
-    console.log(isConnected);
+    if (isLoading) return <LoadingPlaceholder description="Data are coming!" />;
+    if (isEmpty) return <EmptyPlaceholder />;
+    if (isError) return <ErrorPlaceholder />;
 
     const networkConnected = `${ size(dataObj(data)) } network${ (size(dataObj(data)) === 1) ? '' : 's' } connected`;
     const refresh = (isConnected) ? <RefreshControl refreshing={ isRefreshing } onRefresh={ this._onRefresh } tintColor={ _variables.graySaturateLighter } /> : undefined;

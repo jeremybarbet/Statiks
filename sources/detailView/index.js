@@ -5,10 +5,12 @@ import React, {
   View,
   TouchableOpacity,
   StatusBarIOS,
+  NetInfo,
 } from 'react-native';
 
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 import { Actions } from 'react-native-router-flux';
+import TimerMixin from 'react-timer-mixin';
 import moment from 'moment';
 
 import _variables from '../_styles/variables';
@@ -26,16 +28,27 @@ import { NetworkActivity, NetworkGraph, NetworkStats } from '../detailBlock';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 export default React.createClass({
+  mixins: [TimerMixin],
+
   componentDidMount() {
     StatusBarIOS.setHidden(true);
+
+    NetInfo.isConnected.addEventListener('change', this._handleConnectivity);
+    this._checkConnectivity();
   },
 
   componentWillUnmount() {
     StatusBarIOS.setHidden(false);
+    NetInfo.isConnected.removeEventListener('change', this._handleConnectivity);
+  },
+
+  getInitialState() {
+    return { isConnected: null };
   },
 
   render() {
     const { network, data, sync } = this.props;
+    const { isConnected } = this.state;
     const networkData = data.user;
 
     const calendarConfig = {
@@ -47,7 +60,7 @@ export default React.createClass({
     const username = networkData.Name ? <Text style={ style.userInfoName }>{ networkData.Name }</Text> : undefined;
     const location = networkData.Location ? <Text style={ style.userInfoText }>{ networkData.Location }</Text> : undefined;
     const about = networkData.Bio ? <Text style={[ style.userInfoText, style.userInfoAbout ]}>{ networkData.Bio }</Text> : undefined;
-    const avatar = <Image style={ style.userInfoPhoto } source={ networkData.Avatar ? { uri: networkData.Avatar } : require('./images/avatar-placeholder.png') } />;
+    const avatar = <Image style={ style.userInfoPhoto } source={ (isConnected && networkData.Avatar) ? { uri: networkData.Avatar } : require('./images/avatar-placeholder.png') } />;
     const syncDate = !dataIsEmpty(sync) ? <View><Text style={ style.itemSyncTime }>Last updated: { moment.unix(sync).calendar(null, calendarConfig) }</Text></View> : undefined;
 
     return (
@@ -91,4 +104,18 @@ export default React.createClass({
       </View>
     );
   },
+
+  _checkConnectivity() {
+    NetInfo.isConnected.fetch().done((isConnected) => this.setState({ isConnected }));
+  },
+
+  _handleConnectivity(isConnected) {
+    if (isConnected === false) {
+      this.interval = setInterval(() => this._checkConnectivity(), 3000);
+    } else {
+      this._checkConnectivity();
+      clearInterval(this.interval);
+    }
+  },
+
 });

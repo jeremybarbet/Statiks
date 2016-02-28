@@ -116,7 +116,7 @@ export default React.createClass({
   render() {
     const { data, isLoading, isError, isEmpty, syncDate, isRefreshing } = this.state;
 
-    if (isLoading) return <LoadingPlaceholder />
+    if (isLoading) return <LoadingPlaceholder description="Data are coming!" />
     if (isEmpty) return <EmptyPlaceholder />
     if (isError) return <ErrorPlaceholder />
 

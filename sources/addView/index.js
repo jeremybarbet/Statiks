@@ -1,15 +1,4 @@
-import React from 'react-native';
-
-import _variables from '../_styles/variables';
-import global from '../_styles/global';
-import style from './style';
-
-import api from '../api';
-import Storage from '../_utils/storage';
-import Input from '../addInput'
-
-
-const {
+import React, {
   Animated,
   Easing,
   Dimensions,
@@ -17,16 +6,35 @@ const {
   View,
   ScrollView,
   DeviceEventEmitter,
-} = React;
+  NetInfo
+} from 'react-native';
+
+import TimerMixin from 'react-timer-mixin';
+
+import _variables from '../_styles/variables';
+import global from '../_styles/global';
+import style from './style';
+
+import api from '../api';
+import Storage from '../_utils/storage';
+import { LoadingPlaceholder } from '../placeholder';
+import Input from '../addInput'
+
 
 const { width, height } = Dimensions.get('window');
 const NETWORKS = Object.keys(api);
 const HEADER_HEIGHT = 64;
 
 export default React.createClass({
+  mixins: [TimerMixin],
+
   getInitialState() {
     const screenHeight = height - HEADER_HEIGHT;
-    return { keyboardSpace: new Animated.Value(screenHeight) }
+
+    return {
+      keyboardSpace: new Animated.Value(screenHeight),
+      isConnected: null,
+    }
   },
 
   componentWillMount() {
@@ -34,8 +42,19 @@ export default React.createClass({
     DeviceEventEmitter.addListener('keyboardWillHide', this._keyboardWillHide);
   },
 
+  componentDidMount() {
+    NetInfo.isConnected.addEventListener('change', this._handleConnectivity);
+    this._checkConnectivity();
+  },
+
+  componentWillUnmount() {
+    NetInfo.isConnected.removeEventListener('change', this._handleConnectivity);
+  },
+
   render() {
-    const { keyboardSpace } = this.state;
+    const { keyboardSpace, isConnected } = this.state;
+
+    if (!isConnected) return <LoadingPlaceholder description="Ooops, no connection. I'm trying to get back asap!" />
 
     return (
       <Animated.View style={{ height: keyboardSpace }}>
@@ -45,10 +64,23 @@ export default React.createClass({
           keyboardShouldPersistTaps={ true }
           keyboardDismissMode="interactive"
         >
-          { NETWORKS.map((item, i) => { return <Input network={ item } key={ i } /> }) }
+          { NETWORKS.map((item, i) => <Input network={ item } key={ i } />) }
         </ScrollView>
       </Animated.View>
     );
+  },
+
+  _checkConnectivity() {
+    NetInfo.isConnected.fetch().done((isConnected) => this.setState({ isConnected }));
+  },
+
+  _handleConnectivity(isConnected) {
+    if (isConnected === false) {
+      this.interval = setInterval(() => this._checkConnectivity(), 3000);
+    } else {
+      this._checkConnectivity();
+      clearInterval(this.interval);
+    }
   },
 
   _keyboardWillShow(e) {

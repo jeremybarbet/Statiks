@@ -76,6 +76,10 @@ export default StyleSheet.create({
     marginTop: 320 / PixelRatio.get(),
   },
 
+  loadingParagraph: {
+    paddingHorizontal: 115,
+  },
+
   soEmptyIllustration: {
     marginTop: 60,
     marginBottom: 5,

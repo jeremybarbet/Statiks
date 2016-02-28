@@ -15,10 +15,12 @@ import { colors } from '../_utils/networksColors';
 
 export const LoadingPlaceholder = React.createClass({
   render() {
+    const { description } = this.props;
+
     return (
       <View style={[ global.layout, style.defaultContainer, style.loadingContainer ]}>
         <Image style={[ style.defaultIllustration, style.loadingIllustration ]} source={ require('./images/emoji-loading.gif') } />
-        <Text style={ style.defaultParagraph }>Data are coming!</Text>
+        <Text style={[ style.defaultParagraph, style.loadingParagraph ]}>{ description }</Text>
       </View>
     );
   }

@@ -31,6 +31,10 @@ export default class AddInput extends Component {
     this._loadStorage().done();
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.successTimeout);
+  }
+
   async _loadStorage() {
     const { network } = this.props;
 
@@ -131,7 +135,7 @@ export default class AddInput extends Component {
         if (value === 'success') {
           this.setState({ isLoading: false, isSuccess: true });
 
-          setTimeout(() => {
+          this.successTimeout = setTimeout(() => {
             this.setState({ isLoading: false, isSuccess: false });
           }, 1500);
         } else {

@@ -23,14 +23,14 @@ export default class DetailView extends Component {
   }
 
   componentDidMount() {
-    StatusBar.setHidden(true);
+    StatusBar.setHidden(true, 'fade');
 
     NetInfo.isConnected.addEventListener('change', this._handleConnectivity);
     this._checkConnectivity();
   }
 
   componentWillUnmount() {
-    StatusBar.setHidden(false);
+    StatusBar.setHidden(false, 'fade');
     NetInfo.isConnected.removeEventListener('change', this._handleConnectivity);
   }
 

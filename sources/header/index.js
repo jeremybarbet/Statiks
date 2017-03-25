@@ -16,7 +16,7 @@ export default class Header extends Component {
     const { title } = this.props;
 
     const prevButton = title !== 'Statiks' ? (
-      <TouchableOpacity activeOpacity={ 0.85 } onPress={ Actions.pop } style={[ style.navBarButton, style.navBarButtonLeft ]}>
+      <TouchableOpacity activeOpacity={ 0.85 } onPress={ () => Actions.pop({ refresh: { updated: true } }) } style={[ style.navBarButton, style.navBarButtonLeft ]}>
         <Icon name="arrow-left" size={ 14 } color={ _variables.graySaturate } />
       </TouchableOpacity>
     ) : undefined;

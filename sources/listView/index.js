@@ -81,6 +81,7 @@ export default class List extends Component {
   componentWillUnmount() {
     this.state.pan.x.removeAllListeners();
     NetInfo.isConnected.removeEventListener('change', this._handleConnectivity);
+    clearTimeout(this.refreshTimeout);
   }
 
   async _loadStorage() {
@@ -169,7 +170,7 @@ export default class List extends Component {
     * Remove stats from total object and remove item from array of networks into total object
     * Bounce effet on remove icon when release touch
     */
-    objTotal.subtract(data['total'].stats, data[item].data.stats);
+    // objTotal.subtract(data['total'].stats, data[item].data.stats);
     Storage.save('userData', newNetworks);
     this.setState({ data: newNetworks });
   }
@@ -194,7 +195,7 @@ export default class List extends Component {
     dataObj(data).map(item => {
       Promise.resolve(api[item](item, data[item].data.user.Username, data[item], this._saveEditedDate(), data.total)).then((value) => {
         if (value === 'success') {
-          setTimeout(() => {
+          this.refreshTimeout = setTimeout(() => {
             this.setState({ isRefreshing: false });
           }, 300);
         } else {
@@ -220,6 +221,7 @@ export default class List extends Component {
           horizontal={ true }
           directionalLockEnabled={ true }
           onScroll={ this._onSwipe.bind(this, item) }
+          scrollEventThrottle={32}
           { ...this._panResponder.panHandlers }
         >
           <Item

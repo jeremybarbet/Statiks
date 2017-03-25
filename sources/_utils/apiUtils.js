@@ -37,7 +37,7 @@ export default ApiUtils = {
     * Populate the networks array.
     * If total object already exists, concat it with networks array, else just init with the empty array.
     */
-    _networksArray = (total !== undefined && size(_networksArray) === 0) ? _networksArray.concat(total.networks) : _networksArray;
+    // _networksArray = (total !== undefined && size(_networksArray) === 0) ? _networksArray.concat(total.networks) : _networksArray;
 
     /**
     * Create a total object to sum up all the data of networks connected.
@@ -75,7 +75,7 @@ export default ApiUtils = {
     * Only push once the network name into the array,
     * Next push the array to the total object.
     */
-    _networksArray.pushOnce(network);
+    // _networksArray.pushOnce(network);
     // _total['total'].networks = _networksArray;
 
     // console.log(objNetwork);

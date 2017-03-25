@@ -165,6 +165,7 @@ export default class List extends Component {
   _deleteItem = (item) => {
     const { data } = this.state;
     const newNetworks = omit(data, item);
+    const isEmpty = Object.keys(newNetworks).length === 0;
 
     /**
     * Remove stats from total object and remove item from array of networks into total object
@@ -172,7 +173,11 @@ export default class List extends Component {
     */
     // objTotal.subtract(data['total'].stats, data[item].data.stats);
     Storage.save('userData', newNetworks);
-    this.setState({ data: newNetworks });
+
+    this.setState({
+      data: newNetworks,
+      isEmpty,
+    });
   }
 
   _scaleDeleteIcon = () => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicatorIOS, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 
 import _variables from '../_styles/variables';
@@ -13,7 +13,7 @@ const Icon = createIconSetFromFontello(fontelloConfig);
 export class Loading extends Component {
   render() {
     return (
-      <ActivityIndicatorIOS
+      <ActivityIndicator
         style={[ style.itemFeedback, style.itemLoading ]}
         animating={ this.props.loaded }
         color={ _variables.white }

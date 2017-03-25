@@ -67,6 +67,8 @@ export default api = {
     function details(response) {
       const data = response.replace(/&quot;/g, '"');
 
+      console.log(data)
+
       return details = {
         stats: {
           "Followers": parseInt((/\"followers_count\":([\d]+)/g).exec(data)[1]),
@@ -213,20 +215,20 @@ export default api = {
   * Instagram API connection
   */
   instagram(network, username, current, sync, total) {
-    const uri = `http://instagram.com/${ username }`;
+    const uri = `https://www.instagram.com/${ username }`;
 
     function details(response) {
       return details = {
         stats: {
-          "Followers": parseInt((/\"followed_by\":{\"count\":([\d]+)/g).exec(response)[1]),
-          "Following": parseInt((/\"follows\":{\"count\":([\d]+)/g).exec(response)[1]),
-          "Medias": parseInt((/\"media\":{\"count\":([\d]+)/g).exec(response)[1]),
+          "Followers": parseInt((/\"followed_by\": {\"count\": ([\d]+)/g).exec(response)[1]),
+          "Following": parseInt((/\"follows\": {\"count\": ([\d]+)/g).exec(response)[1]),
+          "Medias": parseInt((/\"media\": {\"count\": ([\d]+)/g).exec(response)[1]),
         },
         user: {
           "Username": username,
-          "Avatar": ((/\"profile_pic_url\":"(.*?)"/g).exec(response)[1]).replace(/\\/g, ''),
-          "Bio": decode(((/\"biography\":"(.*?)"/g).exec(response)[1]).replace(/\\n/g, ' ')).replace(/\\/g, ''),
-          "Name": decode((/\"full_name\":"(.*?)"/g).exec(response)[1]),
+          "Avatar": ((/\"profile_pic_url\": "(.*?)"/g).exec(response)[1]).replace(/\\/g, ''),
+          "Bio": decode(((/\"biography\": "(.*?)"/g).exec(response)[1]).replace(/\\n/g, ' ')).replace(/\\/g, ''),
+          "Name": decode((/\"full_name\": "(.*?)"/g).exec(response)[1]),
         }
       }
     }
@@ -272,7 +274,7 @@ export default api = {
   * Soundcloud API connection
   */
   soundcloud(network, username, current, sync, total) {
-    const uri = `http://api.soundcloud.com/users/${ username }.json?client_id=6ff9d7c484c5e5d5517d1965ca18eca9`;
+    const uri = `https://api.soundcloud.com/users/${ username }.json?client_id=6ff9d7c484c5e5d5517d1965ca18eca9`;
 
     function details(response) {
       return details = {

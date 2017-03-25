@@ -27,7 +27,7 @@ export default class Header extends Component {
       </TouchableOpacity>
     ) : undefined;
 
-    const removeData = title === 'Options' ? (
+    const removeData = title === 'Options' && __DEV__ ? (
       <TouchableOpacity activeOpacity={ 0.85 } onPress={ () => Storage.clear() } style={[ style.navBarButton, style.navBarButtonRight ]}>
         <Text>Clear all</Text>
       </TouchableOpacity>

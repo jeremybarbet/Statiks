@@ -20,7 +20,6 @@ export default class AddView extends Component {
     super(props);
 
     const screenHeight = height - HEADER_HEIGHT;
-    console.log(screenHeight)
 
     this.state = {
       keyboardSpace: new Animated.Value(screenHeight),
@@ -29,8 +28,8 @@ export default class AddView extends Component {
   }
 
   componentWillMount() {
-    Keyboard.addListener('keyboardWillShow', this._keyboardWillShow.bind(this));
-    Keyboard.addListener('keyboardWillHide', this._keyboardWillHide.bind(this));
+    Keyboard.addListener('keyboardWillShow', this.keyboardShowRef = this._keyboardWillShow.bind(this));
+    Keyboard.addListener('keyboardWillHide', this.keyboardHideRef = this._keyboardWillHide.bind(this));
   }
 
   componentDidMount() {
@@ -41,8 +40,8 @@ export default class AddView extends Component {
   componentWillUnmount() {
     NetInfo.isConnected.removeEventListener('change', this._handleConnectivity);
 
-    Keyboard.removeListener('keyboardWillShow', this._keyboardWillShow);
-    Keyboard.removeListener('keyboardWillHide', this._keyboardWillHide);
+    Keyboard.removeListener('keyboardWillShow', this.keyboardShowRef);
+    Keyboard.removeListener('keyboardWillHide', this.keyboardHideRef);
   }
 
   render() {
@@ -68,7 +67,7 @@ export default class AddView extends Component {
     );
   }
 
-  _checkConnectivity() {
+  _checkConnectivity = () => {
     NetInfo.isConnected.fetch().done((isConnected) => this.setState({ isConnected }));
   }
 

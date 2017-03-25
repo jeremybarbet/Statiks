@@ -30,7 +30,7 @@ export default ApiUtils = {
     */
     objNetwork[network] = {
       data: _detail,
-      history: read(current, 'history') || {}
+      // history: read(current, 'history') || {}
     };
 
     /**
@@ -42,14 +42,16 @@ export default ApiUtils = {
     /**
     * Create a total object to sum up all the data of networks connected.
     */
+    /*
     _total = {
       total: {
-        stats: objTotal.api(network, _detail.stats, _networksArray, current) || total.stats,
+        // stats: objTotal.api(network, _detail.stats, _networksArray, current) || total.stats,
         // stats: objTotal.actualize(network, _detail.stats, _networksArray, current) || {},
         networks: _networksArray,
         user: "to_create"
       }
     };
+    */
 
     /**
     * If fetchy function is called with current argument we will check the diff of old and new stats.
@@ -57,9 +59,9 @@ export default ApiUtils = {
     if (read(current, 'data')) {
       const { data } = current;
 
-      console.log('%c --------API--------', 'background: green; color: white');
-      console.log(data);
-      console.log(_detail);
+      // console.log('%c --------API--------', 'background: green; color: white');
+      // console.log(data);
+      // console.log(_detail);
 
       const _diff = diff(data, _detail);
       // console.log(_diff);
@@ -74,11 +76,11 @@ export default ApiUtils = {
     * Next push the array to the total object.
     */
     _networksArray.pushOnce(network);
-    _total['total'].networks = _networksArray;
+    // _total['total'].networks = _networksArray;
 
     // console.log(objNetwork);
     // console.log(_networksArray);
-    extend(objNetwork, _total);
+    // extend(objNetwork, _total);
     Storage.actualize('userData', objNetwork);
 
     return 'success';

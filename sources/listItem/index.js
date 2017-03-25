@@ -60,22 +60,22 @@ export default class ListItem extends Component {
     );
   }
 
-  _onLongPress(network) {
+  _onLongPress = (network) => {
     // Re-order
   }
 
-  _handlePressIn(item) {
+  _handlePressIn = (item) => {
     const base = colors(item);
     const darker = luminosity(base, -0.08);
 
     this.setState({ darker });
   }
 
-  _handlePressOut(item) {
+  _handlePressOut = (item) => {
     this.setState({ darker: colors(item) });
   }
 
-  _handlePress(network, data, sync, history) {
+  _handlePress = (network, data, sync, history) => {
     Actions.detail({ network, data, sync, history });
   }
 }

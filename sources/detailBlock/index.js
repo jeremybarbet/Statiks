@@ -73,7 +73,7 @@ export class NetworkStats extends Component {
     );
   }
 
-  _renderRow(data, item, detail, network, difference, i) {
+  _renderRow = (data, item, detail, network, difference, i) => {
     const diff = (difference !== undefined) ? <DiffNumber network={ network } diff={ difference } /> : undefined;
 
     return (

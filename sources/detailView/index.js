@@ -97,7 +97,7 @@ export default class DetailView extends Component {
     );
   }
 
-  _checkConnectivity() {
+  _checkConnectivity = () => {
     NetInfo.isConnected.fetch().done((isConnected) => this.setState({ isConnected }));
   }
 

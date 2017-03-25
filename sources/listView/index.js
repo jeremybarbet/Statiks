@@ -119,12 +119,9 @@ export default class List extends Component {
           style={[ global.layout, style.listContainer ]}
           refreshControl={ refresh }
         >
-          {
-            dataObj(data).map((item, i) => {
-              return this._renderRow(item, data[item], syncDate, i);
-            })
-          }
+          {dataObj(data).map((item, i) => this._renderRow(item, data[item], syncDate, i))}
 
+          {/*
           <View>
             <Item
               title="total"
@@ -133,12 +130,13 @@ export default class List extends Component {
               sync={ syncDate }
             />
           </View>
+          */}
         </ScrollView>
       </View>
     );
   }
 
-  _checkConnectivity() {
+  _checkConnectivity = () => {
     NetInfo.isConnected.fetch().done((isConnected) => this.setState({ isConnected }));
   }
 
@@ -151,7 +149,7 @@ export default class List extends Component {
     }
   }
 
-  _saveEditedDate() {
+  _saveEditedDate = () => {
     const obj = {};
     const date = moment().unix();
 
@@ -163,7 +161,7 @@ export default class List extends Component {
     return date;
   }
 
-  _deleteItem(item) {
+  _deleteItem = (item) => {
     const { data } = this.state;
     const newNetworks = omit(data, item);
 
@@ -176,7 +174,7 @@ export default class List extends Component {
     this.setState({ data: newNetworks });
   }
 
-  _scaleDeleteIcon() {
+  _scaleDeleteIcon = () => {
     const { pan } = this.state;
 
     return [{
@@ -189,30 +187,29 @@ export default class List extends Component {
     }];
   }
 
-  _onRefresh() {
+  _onRefresh = () => {
     const { data } = this.state;
-    const that = this;
     this.setState({ isRefreshing: true });
 
     dataObj(data).map(item => {
       Promise.resolve(api[item](item, data[item].data.user.Username, data[item], this._saveEditedDate(), data.total)).then((value) => {
         if (value === 'success') {
-          that.setTimeout(() => {
-            that.setState({ isRefreshing: false });
+          setTimeout(() => {
+            this.setState({ isRefreshing: false });
           }, 300);
         } else {
           console.log('error');
-          that.setState({ isRefreshing: false });
+          this.setState({ isRefreshing: false });
         }
       });
     });
   }
 
-  _onSwipe(item) {
+  _onSwipe = (item) => {
     this.setState({ currentSwipeItem: item });
   }
 
-  _renderRow(item, dataNetwork, syncDate, index) {
+  _renderRow = (item, dataNetwork, syncDate, index) => {
     return (
       <View key={ index }>
         <Animated.View style={[ style.deleteContainer, this._scaleDeleteIcon() ]} { ...this._panResponder.panHandlers }>

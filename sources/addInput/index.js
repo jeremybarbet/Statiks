@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, TextInput, View, ActivityIndicatorIOS, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 
 import _variables from '../_styles/variables';
@@ -91,7 +91,7 @@ export default class AddInput extends Component {
     );
   }
 
-  _removeItem(network) {
+  _removeItem = (network) => {
     this.refs[network].focus();
 
     /**
@@ -111,15 +111,14 @@ export default class AddInput extends Component {
     });
   }
 
-  async _handleChange(text) {
+  _handleChange = (text) => {
     if (text === '') this.setState({ value: '', networkData: {}, showRemoveIcon: false });
     else this.setState({ showRemoveIcon: true });
     this.setState({ value: text });
   }
 
-  async _handleSubmit(username, network) {
+  _handleSubmit = (username, network) => {
     const { allData } = this.state;
-    const that = this;
 
     /**
     * The condition should be more advanced
@@ -130,13 +129,13 @@ export default class AddInput extends Component {
 
       Promise.resolve(api[network](network, username, null, null, allData.total)).then((value) => {
         if (value === 'success') {
-          that.setState({ isLoading: false, isSuccess: true });
+          this.setState({ isLoading: false, isSuccess: true });
 
-          that.setTimeout(() => {
-            that.setState({ isLoading: false, isSuccess: false });
+          setTimeout(() => {
+            this.setState({ isLoading: false, isSuccess: false });
           }, 1500);
         } else {
-          that.setState({ isLoading: false, isSuccess: false, value: '', showRemoveIcon: false });
+          this.setState({ isLoading: false, isSuccess: false, value: '', showRemoveIcon: false });
         }
       });
     }

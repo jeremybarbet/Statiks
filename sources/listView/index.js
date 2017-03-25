@@ -37,7 +37,7 @@ export default class List extends Component {
     currentSwipeItem: '',
     syncDate: '',
     isConnected: null,
-  };
+  }
 
   componentWillMount() {
     this._loadStorage().done();

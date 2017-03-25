@@ -29,13 +29,6 @@ export default api = {
     const uri = `https://api.dribbble.com/v1/users/${ username }?access_token=419f6f1f2113f0328d44c3269232d69a9d55c87dd04c939b2ca9f3416dd89d2c`;
 
     function details(response) {
-      console.log('%c --------DRIBBBLE--------', 'background: grey; color: white');
-      console.log(response);
-
-      console.log(current);
-      console.log(sync);
-      console.log(total);
-
       return details = {
         stats: {
           "Followers": response.followers_count,
@@ -66,8 +59,6 @@ export default api = {
 
     function details(response) {
       const data = response.replace(/&quot;/g, '"');
-
-      console.log(data)
 
       return details = {
         stats: {

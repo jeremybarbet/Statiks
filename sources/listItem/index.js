@@ -13,29 +13,20 @@ import fontelloConfig from '../config.json';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 export default class ListItem extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      expanded: false,
-      darker: colors(props.network),
-    }
-  }
-
   render() {
     const { network, data, sync, history, title, description } = this.props;
-    const { darker } = this.state;
+    // const { darker } = this.state;
 
     const networkName = network || title;
-    const pressColor = darker === colors(networkName).backgroundColor ? colors(networkName) : darker;
+    const pressColor = colors(networkName);
     const iconSize = (networkName === 'vimeo') ? 22 : 26;
 
     return (
       <TouchableWithoutFeedback
-        onLongPress={ this._onLongPress.bind(this, networkName) }
-        onPressIn={ this._handlePressIn.bind(this, networkName) }
-        onPressOut={ this._handlePressOut.bind(this, networkName) }
-        onPress={ this._handlePress.bind(this, networkName, data, sync, history) }
+        onLongPress={ () => this._onLongPress(networkName) }
+        // onPressIn={ () => this._handlePressIn(networkName) }
+        // onPressOut={ () => this._handlePressOut(networkName) }
+        onPress={ () => this._handlePress(networkName, data, sync, history) }
       >
         <View style={[ style.itemContainer, { backgroundColor: pressColor } ]}>
           <View>

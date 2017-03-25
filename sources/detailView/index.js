@@ -10,7 +10,7 @@ import style from './style';
 
 import Storage from '../_utils/storage';
 import { capitalize, format, dataIsEmpty } from '../_utils/utils';
-import { luminosity, colors } from '../_utils/networksColors';
+import { colors } from '../_utils/networksColors';
 import fontelloConfig from '../config.json';
 import { SoEmpty } from '../placeholder';
 import { NetworkActivity, NetworkGraph, NetworkStats } from '../detailBlock';

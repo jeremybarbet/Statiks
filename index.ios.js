@@ -13,7 +13,7 @@ export default class Statiks extends Component {
         <Scene key="root">
           <Scene key="list" component={List} title="Statiks" />
           <Scene key="add" component={Add} title="Options" />
-          <Scene key="detail" component={Detail} />
+          <Scene key="detail" direction="vertical" component={Detail} />
         </Scene>
       </Router>
     );

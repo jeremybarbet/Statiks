@@ -1025,6 +1025,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jeremybarbet.statiks;
 				PRODUCT_NAME = Statiks;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1043,6 +1044,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jeremybarbet.statiks;
 				PRODUCT_NAME = Statiks;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

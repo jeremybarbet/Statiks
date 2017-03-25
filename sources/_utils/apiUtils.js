@@ -30,7 +30,7 @@ export default ApiUtils = {
     */
     objNetwork[network] = {
       data: _detail,
-      // history: read(current, 'history') || {}
+      history: read(current, 'history') || {}
     };
 
     /**
@@ -58,13 +58,7 @@ export default ApiUtils = {
     */
     if (read(current, 'data')) {
       const { data } = current;
-
-      // console.log('%c --------API--------', 'background: green; color: white');
-      // console.log(data);
-      // console.log(_detail);
-
       const _diff = diff(data, _detail);
-      // console.log(_diff);
 
       _timestampDiff[sync] = _diff;
       extend(objNetwork[network].history, _timestampDiff);

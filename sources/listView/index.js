@@ -165,7 +165,7 @@ export default class List extends Component {
   _deleteItem = (item) => {
     const { data } = this.state;
     const newNetworks = omit(data, item);
-    const isEmpty = Object.keys(newNetworks).length === 0;
+    const isEmpty = Object.keys(dataObj(newNetworks)).length === 0;
 
     /**
     * Remove stats from total object and remove item from array of networks into total object
@@ -198,7 +198,8 @@ export default class List extends Component {
     this.setState({ isRefreshing: true });
 
     dataObj(data).map(item => {
-      Promise.resolve(api[item](item, data[item].data.user.Username, data[item], this._saveEditedDate(), data.total)).then((value) => {
+      Promise.resolve(api[item](item, data[item].data.user.Username, data[item], this._saveEditedDate(), data.total))
+      .then((value) => {
         if (value === 'success') {
           this.refreshTimeout = setTimeout(() => {
             this.setState({ isRefreshing: false });

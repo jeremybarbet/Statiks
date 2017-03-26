@@ -1,41 +1,41 @@
 {
-	"name": "Statiks",
-	"version": "1.0.2",
-	"private": true,
-	"scripts": {
-		"start": "node_modules/react-native/packager/packager.sh",
-		"lint": "eslint sources",
-		"lint-staged": "lint-staged",
-		"test": "jest"
-	},
-	"pre-commit": "lint-staged",
-	"lint-staged": {
-		"*.{js,jsx}": "./node_modules/.bin/eslint"
-	},
-	"dependencies": {
-		"moment": "^2.18.1",
-		"react": "15.4.2",
-		"react-native": "^0.42.3",
-		"react-native-router-flux": "^3.38.0",
-		"react-native-vector-icons": "^4.0.0"
-	},
-	"devDependencies": {
-		"babel-eslint": "^7.2.1",
-		"babel-jest": "19.0.0",
-		"babel-preset-react-native": "1.9.1",
-		"eslint": "^3.18.0",
-		"eslint-config-airbnb": "14.1.0",
-		"eslint-import-resolver-webpack": "0.8.1",
-		"eslint-plugin-flowtype": "^2.30.4",
-		"eslint-plugin-import": "2.2.0",
-		"eslint-plugin-jsx-a11y": "4.0.0",
-		"eslint-plugin-react": "^6.10.3",
-		"jest": "19.0.2",
-		"lint-staged": "3.4.0",
-		"pre-commit": "1.2.2",
-		"react-test-renderer": "15.4.2"
-	},
-	"jest": {
-		"preset": "react-native"
-	}
+  "name": "Statiks",
+  "version": "1.0.2",
+  "private": true,
+  "scripts": {
+    "start": "node_modules/react-native/packager/packager.sh",
+    "lint": "eslint sources",
+    "lint-staged": "lint-staged",
+    "test": "jest"
+  },
+  "pre-commit": "lint-staged",
+  "lint-staged": {
+    "*.{js,jsx}": "./node_modules/.bin/eslint"
+  },
+  "dependencies": {
+    "moment": "^2.18.1",
+    "react": "15.4.2",
+    "react-native": "^0.42.3",
+    "react-native-router-flux": "^3.38.0",
+    "react-native-vector-icons": "^4.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.1",
+    "babel-jest": "19.0.0",
+    "babel-preset-react-native": "1.9.1",
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb": "14.1.0",
+    "eslint-import-resolver-webpack": "0.8.1",
+    "eslint-plugin-flowtype": "^2.30.4",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "4.0.0",
+    "eslint-plugin-react": "^6.10.3",
+    "jest": "19.0.2",
+    "lint-staged": "3.4.0",
+    "pre-commit": "1.2.2",
+    "react-test-renderer": "15.4.2"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
 }

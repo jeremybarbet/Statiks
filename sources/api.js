@@ -53,12 +53,16 @@ export default api = {
 
   /**
   * Twitter API connection
+  * REGEX hack
   */
   twitter(network, username, current, sync, total) {
     const uri = `https://twitter.com/${ username }`;
 
     function details(response) {
-      const data = response.replace(/&quot;/g, '"');
+      const data = response.replace(/&quot;/g, '"').match(/<input type="hidden" id="init-data".+>/g)[0];
+      const name = data.match(/\"name\":"(.*?)"/g);
+      const description = data.match(/\"description\":"(.*?)"/g);
+      const lastMatch = (value) => value[value.length - 1];
 
       return details = {
         stats: {
@@ -71,9 +75,9 @@ export default api = {
         user: {
           "Username": username,
           "Avatar": (((/\"profile_image_url\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, '')).replace(/_normal/g, ''),
-          "Location": (/\"location\":"(.*?)"/g).exec(data)[1],
-          "Bio": decode(((/\"description\":"(.*?)"/g).exec(data)[1]).replace(/\\n/g, ' ')).replace(/\\/g, ''),
-          "Name": decode((/\"name\":"(.*?)"/g).exec(data)[1]),
+          "Location": decode((/\"location\":"(.*?)"/g).exec(data)[1]),
+          "Bio": decode(((/\"description\":"(.*?)"/g).exec(lastMatch(description))[1]).replace(/\\n/g, ' ')).replace(/\\/g, ''),
+          "Name": decode((/\"name\":"(.*?)"/g).exec(lastMatch(name))[1]),
         }
       }
     }
@@ -204,6 +208,7 @@ export default api = {
 
   /**
   * Instagram API connection
+  * REGEX hack
   */
   instagram(network, username, current, sync, total) {
     const uri = `https://www.instagram.com/${ username }`;
@@ -229,6 +234,7 @@ export default api = {
 
   /**
   * Pinterest API connection
+  * REGEX hack
   */
   pinterest(network, username, current, sync, total) {
     const uri = `https://pinterest.com/${ username }`;

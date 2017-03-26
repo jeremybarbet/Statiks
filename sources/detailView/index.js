@@ -17,6 +17,17 @@ import { NetworkActivity, NetworkGraph, NetworkStats } from '../detailBlock';
 
 const Icon = createIconSetFromFontello(fontelloConfig);
 
+function convertToHttps(uri) {
+  const protocol = uri.split('://')[0];
+  const path = uri.split('://')[1];
+
+  if (protocol === 'http') {
+    return `https://${path}`;
+  }
+
+  return uri;
+}
+
 export default class DetailView extends Component {
   state = {
     isConnected: null,
@@ -48,7 +59,7 @@ export default class DetailView extends Component {
     const username = networkData.Name ? <Text style={ style.userInfoName }>{ networkData.Name }</Text> : undefined;
     const location = networkData.Location ? <Text style={ style.userInfoText }>{ networkData.Location }</Text> : undefined;
     const about = networkData.Bio ? <Text style={[ style.userInfoText, style.userInfoAbout ]}>{ networkData.Bio }</Text> : undefined;
-    const avatar = <Image style={ style.userInfoPhoto } source={ (isConnected && networkData.Avatar) ? { uri: networkData.Avatar } : require('./images/avatar-placeholder.png') } />;
+    const avatar = <Image style={ style.userInfoPhoto } source={ (isConnected && networkData.Avatar) ? { uri: convertToHttps(networkData.Avatar) } : require('./images/avatar-placeholder.png') } />;
     const syncDate = !dataIsEmpty(sync) ? <View><Text style={ style.itemSyncTime }>Last updated: { moment.unix(sync).calendar(null, calendarConfig) }</Text></View> : undefined;
 
     return (

@@ -13,19 +13,26 @@ import fontelloConfig from '../config.json';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 export default class ListItem extends Component {
+
+  state = {
+    imPressed: false,
+  }
+
   render() {
     const { network, data, sync, history, title, description } = this.props;
-    // const { darker } = this.state;
+    const { imPressed } = this.state;
 
     const networkName = network || title;
-    const pressColor = colors(networkName);
+    const base = colors(networkName);
+    const darker = luminosity(base, -0.08);
+    const pressColor = !imPressed ? base : darker;
     const iconSize = (networkName === 'vimeo') ? 22 : 26;
 
     return (
       <TouchableWithoutFeedback
         onLongPress={ () => this._onLongPress(networkName) }
-        // onPressIn={ () => this._handlePressIn(networkName) }
-        // onPressOut={ () => this._handlePressOut(networkName) }
+        onPressIn={ () => this._handlePressIn(networkName) }
+        onPressOut={ () => this._handlePressOut(networkName) }
         onPress={ () => this._handlePress(networkName, data, sync, history) }
       >
         <View style={[ style.itemContainer, { backgroundColor: pressColor } ]}>
@@ -56,14 +63,11 @@ export default class ListItem extends Component {
   }
 
   _handlePressIn = (item) => {
-    const base = colors(item);
-    const darker = luminosity(base, -0.08);
-
-    this.setState({ darker });
+    this.setState({ imPressed: !this.state.imPressed });
   }
 
   _handlePressOut = (item) => {
-    this.setState({ darker: colors(item) });
+    this.setState({ imPressed: !this.state.imPressed });
   }
 
   _handlePress = (network, data, sync, history) => {

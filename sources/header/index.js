@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
@@ -12,6 +12,11 @@ import fontelloConfig from '../config.json';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 export default class Header extends Component {
+
+  static propTypes = {
+    title: PropTypes.string,
+  }
+
   render() {
     const { title } = this.props;
 

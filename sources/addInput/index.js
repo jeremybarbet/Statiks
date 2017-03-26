@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { ScrollView, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 
@@ -17,6 +17,11 @@ import fontelloConfig from '../config.json';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 export default class AddInput extends Component {
+
+  static propTypes = {
+    network: PropTypes.string,
+  };
+
   state = {
     value: '',
     allData: '',

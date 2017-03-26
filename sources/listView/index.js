@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, ScrollView, Image, Text, ListView, View, Animated, PanResponder, TouchableOpacity, Linking, StatusBar, RefreshControl, NetInfo } from 'react-native';
+import { Dimensions, ScrollView, View, Animated, PanResponder, StatusBar, RefreshControl, NetInfo } from 'react-native';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 import moment from 'moment';
 
@@ -7,15 +7,13 @@ import _variables from '../_styles/variables';
 import global from '../_styles/global';
 import style from './style';
 
-import total from '../_utils/total';
 import { dataIsEmpty } from '../_utils/utils';
 import { omit, size } from '../_utils/object';
 import fontelloConfig from '../config.json';
 import api from '../api';
-import objectDiff from '../_utils/diff';
 import Storage from '../_utils/storage';
 import * as Placeholders from '../placeholder';
-import Item from '../listItem'
+import Item from '../listItem';
 import Header from '../header/index';
 
 const { width } = Dimensions.get('window');
@@ -59,7 +57,7 @@ export default class List extends Component {
 
       onPanResponderRelease: () => {
         // Remove item if x value is enough
-        if (this.state.pan.x._value < -150) this._deleteItem(this.state.currentSwipeItem)
+        if (this.state.pan.x._value < -150) this._deleteItem(this.state.currentSwipeItem);
 
         // Reset to default value
         Animated.spring(this.state.pan, { toValue: 0 }).start();
@@ -187,9 +185,9 @@ export default class List extends Component {
       transform: [{
         scale: pan.x.interpolate({
           inputRange: [100, 200],
-          outputRange: [0.6, 1]
-        })
-      }]
+          outputRange: [0.6, 1],
+        }),
+      }],
     }];
   }
 
@@ -243,6 +241,6 @@ export default class List extends Component {
           />
         </AnimatedScrollView>
       </View>
-    )
+    );
   }
 }

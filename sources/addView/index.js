@@ -1,30 +1,29 @@
 import React, { Component } from 'react';
-import { Animated, Easing, Dimensions, Text, View, ScrollView, DeviceEventEmitter, NetInfo, Keyboard } from 'react-native';
+import { Animated, Easing, Dimensions, View, ScrollView, NetInfo, Keyboard } from 'react-native';
 
-import _variables from '../_styles/variables';
 import global from '../_styles/global';
 import style from './style';
 
 import api from '../api';
-import Storage from '../_utils/storage';
 import * as Placeholders from '../placeholder';
 import Input from '../addInput';
 import Header from '../header/index';
 
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 const NETWORKS = Object.keys(api);
 const HEADER_HEIGHT = 64;
 
 export default class AddView extends Component {
-  constructor(props) {
-    super(props);
+
+  constructor() {
+    super();
 
     const screenHeight = height - HEADER_HEIGHT;
 
     this.state = {
       keyboardSpace: new Animated.Value(screenHeight),
       isConnected: null,
-    }
+    };
   }
 
   componentWillMount() {
@@ -47,7 +46,7 @@ export default class AddView extends Component {
   render() {
     const { keyboardSpace, isConnected } = this.state;
 
-    if (!isConnected) return <Placeholders.Loading description="Ooops, no connection. I'm trying to get back asap!" />
+    if (!isConnected) return <Placeholders.Loading description="Ooops, no connection. I'm trying to get back asap!" />;
 
     return (
       <View style={{ flex: 1 }}>

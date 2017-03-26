@@ -1,14 +1,9 @@
-/**
-* @param {Object} a
-* @param {Object} b
-* @return {Object}
-*/
 export function diff(a, b) {
   if (a === b) {
     return {
       changed: 'equal',
-      value: a
-    }
+      value: a,
+    };
   }
 
   let value = {};
@@ -26,8 +21,8 @@ export function diff(a, b) {
 
           if (valueDiff.changed === 'equal') {
             value[key] = {
-              changed: 'equal'
-            }
+              changed: 'equal',
+            };
           } else {
             equal = false;
             value[key] = valueDiff;
@@ -42,8 +37,8 @@ export function diff(a, b) {
           value[key] = {
             removed: a[key],
             added: b[key],
-            difference: difference
-          }
+            difference,
+          };
         }
       }
     } else {
@@ -51,8 +46,8 @@ export function diff(a, b) {
 
       value[key] = {
         changed: 'removed',
-        value: a[key]
-      }
+        value: a[key],
+      };
     }
   }
 
@@ -62,19 +57,19 @@ export function diff(a, b) {
 
       value[key] = {
         changed: 'added',
-        value: b[key]
-      }
+        value: b[key],
+      };
     }
   }
 
   if (equal) {
     return {
-      changed: 'equal'
-    }
+      changed: 'equal',
+    };
   } else {
     return {
       changed: 'object change',
-      value: value
-    }
+      value: value,
+    };
   }
-};
+}

@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import { ScrollView, Text, Image, View, TouchableOpacity } from 'react-native';
+import React, { Component, PropTypes } from 'react';
+import { Text, View } from 'react-native';
 
 import { getLastChange } from '../_utils/total';
-import { size } from '../_utils/object';
 import { format, ratio } from '../_utils/utils';
 import { sum } from '../_utils/array';
 import { colors } from '../_utils/networksColors';
@@ -14,33 +13,41 @@ export class NetworkActivity extends Component {
   render() {
     return (
       <View style={style.itemDetail}>
-        <Text style={style.itemTitle}>{"Activity".toUpperCase()}</Text>
+        <Text style={style.itemTitle}>{'Activity'.toUpperCase()}</Text>
 
-        <View>
-
-        </View>
+        <View />
       </View>
     );
   }
 }
 
 export class NetworkGraph extends Component {
+
+  static propTypes = {
+    data: PropTypes.object,
+  };
+
   render() {
     const { data } = this.props;
 
     return (
       <View style={style.itemDetail}>
-        <Text style={style.itemTitle}>{"Graphics".toUpperCase()}</Text>
+        <Text style={style.itemTitle}>{'Graphics'.toUpperCase()}</Text>
 
-        <View>
-
-        </View>
+        <View />
       </View>
     );
   }
 }
 
 export class NetworkStats extends Component {
+
+  static propTypes = {
+    data: PropTypes.object,
+    history: PropTypes.object,
+    network: PropTypes.string,
+  };
+
   render() {
     const { data, network, history } = this.props;
 
@@ -67,7 +74,7 @@ export class NetworkStats extends Component {
 
     return (
       <View style={style.itemDetail}>
-        <Text style={style.itemTitle}>{"User statistics".toUpperCase()}</Text>
+        <Text style={style.itemTitle}>{'User statistics'.toUpperCase()}</Text>
 
         {content}
         {ratioPart}
@@ -94,6 +101,11 @@ export class NetworkStats extends Component {
 }
 
 class RatioBlock extends Component {
+
+  static propTypes = {
+    ratio: PropTypes.string,
+  };
+
   render() {
     const { ratio } = this.props;
 
@@ -115,6 +127,12 @@ class RatioBlock extends Component {
 }
 
 class DiffNumber extends Component {
+
+  static propTypes = {
+    diff: PropTypes.number,
+    network: PropTypes.string,
+  };
+
   render() {
     const { diff, network } = this.props;
 

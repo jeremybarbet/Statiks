@@ -38,7 +38,7 @@ export function colors(network) {
     soundcloud: '#ff8800',
     deviantart: '#4dc47d',
     producthunt: '#da552f',
-  }
+  };
 
   if (colors[network] !== undefined) {
     return colors[network];

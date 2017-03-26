@@ -1,8 +1,6 @@
-import { AlertIOS } from 'react-native';
-
-import objTotal from './total';
+// import objTotal from './total';
 import { diff } from './diff';
-import { size } from './array';
+// import { size } from './array';
 import { extend, read } from './object';
 import Storage from './storage';
 
@@ -19,7 +17,7 @@ export default ApiUtils = {
 
   returnResponse(response) {
     if (response.headers.get('Content-Type').indexOf('application/json') > -1) return response.json();
-    else return response.text();
+    return response.text();
   },
 
   storeData(response, objNetwork, network, details, current, _networksArray, sync, total, _total, _timestampDiff, objHistory) {
@@ -30,7 +28,7 @@ export default ApiUtils = {
     */
     objNetwork[network] = {
       data: _detail,
-      history: read(current, 'history') || {}
+      history: read(current, 'history') || {},
     };
 
     /**
@@ -48,7 +46,7 @@ export default ApiUtils = {
         // stats: objTotal.api(network, _detail.stats, _networksArray, current) || total.stats,
         // stats: objTotal.actualize(network, _detail.stats, _networksArray, current) || {},
         networks: _networksArray,
-        user: "to_create"
+        user: 'to_create'
       }
     };
     */
@@ -78,5 +76,5 @@ export default ApiUtils = {
     Storage.actualize('userData', objNetwork);
 
     return 'success';
-  }
+  },
 };

@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+/* eslint-disable max-len */
+import React, { Component, PropTypes } from 'react';
 import { ScrollView, Text, Image, View, TouchableOpacity, StatusBar, NetInfo } from 'react-native';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 import { Actions } from 'react-native-router-flux';
@@ -8,16 +9,22 @@ import _variables from '../_styles/variables';
 import global from '../_styles/global';
 import style from './style';
 
-import Storage from '../_utils/storage';
-import { capitalize, format, dataIsEmpty, convertToHttps } from '../_utils/utils';
+import { capitalize, dataIsEmpty, convertToHttps } from '../_utils/utils';
 import { colors } from '../_utils/networksColors';
 import fontelloConfig from '../config.json';
-import { SoEmpty } from '../placeholder';
 import { NetworkActivity, NetworkGraph, NetworkStats } from '../detailBlock';
 
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 export default class DetailView extends Component {
+
+  static propTypes = {
+    network: PropTypes.string,
+    data: PropTypes.object,
+    sync: PropTypes.number,
+    history: PropTypes.object,
+  }
+
   state = {
     isConnected: null,
   }
@@ -42,7 +49,7 @@ export default class DetailView extends Component {
     const calendarConfig = {
       sameDay: '[Today], LTS',
       lastDay: '[Yesterday], LTS',
-      sameElse: 'dddd, MMMM Do YYYY, h:mm:ss a'
+      sameElse: 'dddd, MMMM Do YYYY, h:mm:ss a',
     };
 
     const username = networkData.Name ? <Text style={style.userInfoName}>{networkData.Name}</Text> : undefined;
@@ -56,7 +63,12 @@ export default class DetailView extends Component {
         <View style={[global.layout, style.detailGlobal]}>
           <View style={style.detailHeader}>
             <TouchableOpacity onPress={Actions.pop} style={style.detailHeaderArrow}>
-              <Icon name="arrow-bottom" size={10} color="#CAD8E6" style={style.detailHeaderArrowIcon} />
+              <Icon
+                name="arrow-bottom"
+                size={10}
+                color="#CAD8E6"
+                style={style.detailHeaderArrowIcon}
+              />
             </TouchableOpacity>
 
             <View style={style.detailHeaderTitle}>

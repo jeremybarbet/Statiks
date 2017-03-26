@@ -29,5 +29,5 @@ export default Storage = {
 
   clear() {
     return AsyncStorage.clear();
-  }
+  },
 };

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { ScrollView, Text, View, TouchableWithoutFeedback } from 'react-native';
+import React, { Component, PropTypes } from 'react';
+import { Text, View, TouchableWithoutFeedback } from 'react-native';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 import { Actions } from 'react-native-router-flux';
 
@@ -13,6 +13,15 @@ import fontelloConfig from '../config.json';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 export default class ListItem extends Component {
+
+  static propTypes = {
+    network: PropTypes.string,
+    data: PropTypes.object,
+    sync: PropTypes.number,
+    history: PropTypes.object,
+    title: PropTypes.string,
+    description: PropTypes.string,
+  }
 
   state = {
     imPressed: false,
@@ -71,11 +80,11 @@ export default class ListItem extends Component {
     // Re-order
   }
 
-  _handlePressIn = (item) => {
+  _handlePressIn = () => {
     this.setState({ imPressed: !this.state.imPressed });
   }
 
-  _handlePressOut = (item) => {
+  _handlePressOut = () => {
     this.setState({ imPressed: !this.state.imPressed });
   }
 

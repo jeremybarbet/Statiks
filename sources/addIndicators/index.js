@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 
@@ -11,6 +11,11 @@ import fontelloConfig from '../config.json';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 export class Loading extends Component {
+
+  static propTypes = {
+    loaded: PropTypes.bool,
+  };
+
   render() {
     return (
       <ActivityIndicator
@@ -25,6 +30,11 @@ export class Loading extends Component {
 }
 
 export class Success extends Component {
+
+  static propTypes = {
+    network: PropTypes.string,
+  };
+
   render() {
     return (
       <TouchableOpacity
@@ -43,6 +53,12 @@ export class Success extends Component {
 }
 
 export class Remove extends Component {
+
+  static propTypes = {
+    network: PropTypes.string,
+    onPress: PropTypes.func,
+  };
+
   render() {
     return (
       <TouchableOpacity

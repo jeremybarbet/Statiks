@@ -12,7 +12,7 @@ function isUsernameStore(input, store, network) {
 export function dataIsEmpty(data) {
   let arrayIntoArray = (data instanceof Array) ? data.filter(array => !dataIsEmpty(array)).length === 0 : false;
   return (data === undefined || data === null || data.length === 0 || arrayIntoArray);
-};
+}
 
 /**
 * Return the ratio of a division of two number
@@ -21,16 +21,19 @@ export function ratio(a, b) {
   let x = Number(a);
   let y = Number(b);
 
-  if (x > y) return `${Math.ceil(x / y)}:1`;
-  else return `1:${Math.round(y / x)}`;
-};
+  if (x > y) {
+    return `${Math.ceil(x / y)}:1`;
+  }
+
+  return `1:${Math.round(y / x)}`;
+}
 
 /**
 * Some API return html tag in their response (e.g. dribbble about key return <a href="#"></a> for link add)
 */
 export function removeTag(s) {
   return s.replace(/(<(?:.|\n)*?>)/g, '');
-};
+}
 
 /**
 * Make images src from API with https uri
@@ -51,14 +54,14 @@ export function convertToHttps(uri) {
 */
 export function capitalize(s) {
   return s && s[0].toUpperCase() + s.slice(1);
-};
+}
 
 /**
 * Formatting big numbers
 */
 export function format(nbr) {
   return (nbr + '').replace(/.(?=(?:.{3})+$)/g, '$& ');
-};
+}
 
 /**
 * Converts a single hex number to a character
@@ -78,7 +81,7 @@ export function hex2char(hex) {
   }
 
   return result;
-};
+}
 
 /**
 * Converts a string containing JavaScript escapes to a string of characters - unicode UTF-8 ready
@@ -108,4 +111,4 @@ export function decode(str, shortEscapes) {
   }
 
   return str;
-};
+}

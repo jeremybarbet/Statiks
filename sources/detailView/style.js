@@ -75,7 +75,7 @@ export default StyleSheet.create({
   userInfoPhoto: {
     width: 64,
     height: 64,
-    borderRadius: 64 / PixelRatio.get(),
+    borderRadius: 32,
     alignSelf: 'center',
   },
 

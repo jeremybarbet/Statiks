@@ -26,7 +26,7 @@ export default StyleSheet.create({
     backgroundColor: _variables.white,
     width: 26,
     height: 26,
-    borderRadius: 26 / PixelRatio.get(),
+    borderRadius: 26,
   },
 
   itemSuccessIcon: {
@@ -40,7 +40,7 @@ export default StyleSheet.create({
     backgroundColor: _variables.white,
     width: 18,
     height: 18,
-    borderRadius: 18 / PixelRatio.get(),
+    borderRadius: 18,
   },
 
   itemRemoveIcon: {

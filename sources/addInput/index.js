@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { ScrollView, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { TextInput, View } from 'react-native';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 
 import _variables from '../_styles/variables';
@@ -26,7 +26,6 @@ export default class AddInput extends Component {
     value: '',
     allData: '',
     networkData: '',
-    dataLoaded: false,
     isSuccess: false,
     isLoading: false,
     showRemoveIcon: false,
@@ -44,30 +43,33 @@ export default class AddInput extends Component {
     const { network } = this.props;
 
     try {
-      let storage = await Storage.get('userData');
-      let networkData = storage[network];
+      const storage = await Storage.get('userData');
+      const networkData = storage[network];
 
       if (Object.keys(storage).length > 0) {
-        this.setState({ allData: storage, dataLoaded: true });
+        this.setState({ allData: storage });
 
         if (networkData !== undefined) this.setState({ networkData: networkData.data.user });
       }
     } catch (error) {
-      console.log(`Storage error: ${error.message}`);
+      console.log(`Storage error: ${error.message}`); // eslint-disable-line
     }
   }
 
   render() {
     const { network } = this.props;
-    const { value, networkData, dataLoaded, isSuccess, isLoading, showRemoveIcon } = this.state;
+    const { value, networkData, isSuccess, isLoading, showRemoveIcon } = this.state;
 
     const condition = showRemoveIcon || !dataIsEmpty(networkData.Username);
-    const marginForRemoveIcon = condition ? { marginRight: 46 } : { marginRight: 20 }
+    const marginForRemoveIcon = condition ? { marginRight: 46 } : { marginRight: 20 };
     const inputValue = (value === '') ? networkData.Username : value;
 
     const loading = (isLoading === true) ? <Loading loaded={isLoading} /> : undefined;
     const success = (isSuccess === true) ? <Success network={network} /> : undefined;
-    const remove = condition ? <Remove onPress={() => this._removeItem(network)} network={network} /> : undefined;
+
+    const remove = condition
+      ? <Remove onPress={() => this._removeItem(network)} network={network} />
+      : undefined;
 
     return (
       <View style={[style.itemContainer, { backgroundColor: colors(network) }]}>
@@ -85,9 +87,9 @@ export default class AddInput extends Component {
             {success}
 
             <TextInput
-              ref={network}
+              ref={(c) => { this.input = c; }}
               style={[style.itemInfoMajor, global.alignRight, marginForRemoveIcon]}
-              onChangeText={(text) => this._handleChange(text)}
+              onChangeText={text => this._handleChange(text)}
               onEndEditing={() => this._handleSubmit(inputValue, network)}
               value={inputValue}
               returnKeyType="done"
@@ -107,7 +109,7 @@ export default class AddInput extends Component {
   }
 
   _removeItem = (network) => {
-    this.refs[network].focus();
+    this.input.focus();
 
     /**
     * Remove stats from total object and remove item from array of networks into total object
@@ -122,7 +124,7 @@ export default class AddInput extends Component {
       networkData: {},
       value: '',
       showRemoveIcon: false,
-      isLoading: false
+      isLoading: false,
     });
   }
 

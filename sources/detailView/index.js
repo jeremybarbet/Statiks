@@ -12,7 +12,7 @@ import style from './style';
 import { capitalize, dataIsEmpty, convertToHttps } from '../_utils/utils';
 import { colors } from '../_utils/networksColors';
 import fontelloConfig from '../config.json';
-import { NetworkActivity, NetworkGraph, NetworkStats } from '../detailBlock';
+import { /*NetworkActivity, NetworkGraph,*/ NetworkStats } from '../detailBlock';
 
 const Icon = createIconSetFromFontello(fontelloConfig);
 
@@ -110,7 +110,7 @@ export default class DetailView extends Component {
   }
 
   _checkConnectivity = () => {
-    NetInfo.isConnected.fetch().done((isConnected) => this.setState({ isConnected }));
+    NetInfo.isConnected.fetch().done(isConnected => this.setState({ isConnected }));
   }
 
   _handleConnectivity = (isConnected) => {

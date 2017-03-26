@@ -186,8 +186,8 @@ export default class List extends Component {
     return [{
       transform: [{
         scale: pan.x.interpolate({
-          inputRange: [0, 200],
-          outputRange: [0, 1]
+          inputRange: [100, 200],
+          outputRange: [0.6, 1]
         })
       }]
     }];

@@ -56,11 +56,11 @@ export default class AddView extends Component {
         <Animated.View style={{ height: keyboardSpace }}>
           <ScrollView
             ref="addScrollView"
-            style={[ global.layout, style.addContainer ]}
+            style={[global.layout, style.addContainer]}
             keyboardShouldPersistTaps="always"
             keyboardDismissMode="interactive"
           >
-            { NETWORKS.map((item, i) => <Input network={ item } key={ i } />) }
+            {NETWORKS.map((item, i) => <Input network={item} key={`addView-${i}`} />)}
           </ScrollView>
         </Animated.View>
       </View>
@@ -87,7 +87,7 @@ export default class AddView extends Component {
     Animated.timing(this.state.keyboardSpace, {
       easing: Easing.inOut(Easing.ease),
       duration: 250,
-      toValue: newHeight
+      toValue: newHeight,
     }).start();
   }
 
@@ -97,7 +97,7 @@ export default class AddView extends Component {
     Animated.timing(keyboardSpace, {
       easing: Easing.inOut(Easing.ease),
       duration: 250,
-      toValue: height - HEADER_HEIGHT
+      toValue: height - HEADER_HEIGHT,
     }).start();
   }
 }

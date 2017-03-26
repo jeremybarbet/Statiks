@@ -13,8 +13,8 @@ import style from './style';
 export class NetworkActivity extends Component {
   render() {
     return (
-      <View style={ style.itemDetail }>
-        <Text style={ style.itemTitle }>{ "Activity".toUpperCase() }</Text>
+      <View style={style.itemDetail}>
+        <Text style={style.itemTitle}>{"Activity".toUpperCase()}</Text>
 
         <View>
 
@@ -29,8 +29,8 @@ export class NetworkGraph extends Component {
     const { data } = this.props;
 
     return (
-      <View style={ style.itemDetail }>
-        <Text style={ style.itemTitle }>{ "Graphics".toUpperCase() }</Text>
+      <View style={style.itemDetail}>
+        <Text style={style.itemTitle}>{"Graphics".toUpperCase()}</Text>
 
         <View>
 
@@ -54,36 +54,40 @@ export class NetworkStats extends Component {
 
     if (sum(filterArr) === 0) {
       return (
-        <View style={ style.itemDetail }>
-          <SoEmpty network={ network } />
+        <View style={style.itemDetail}>
+          <SoEmpty network={network} />
         </View>
       )
     }
 
     // I could create little function to check if not undefined or equal to zero
-    const ratioPart = (data.Following !== undefined && data.Following !== 0 && data.Followers !== undefined && data.Followers !== 0) ? <RatioBlock ratio={ ratio(data.Followers, data.Following) } /> : undefined;
+    const ratioPart = (data.Following !== undefined && data.Following !== 0 && data.Followers !== undefined && data.Followers !== 0)
+      ? <RatioBlock ratio={ratio(data.Followers, data.Following)} />
+      : undefined;
 
     return (
-      <View style={ style.itemDetail }>
-        <Text style={ style.itemTitle }>{ "User statistics".toUpperCase() }</Text>
+      <View style={style.itemDetail}>
+        <Text style={style.itemTitle}>{"User statistics".toUpperCase()}</Text>
 
-        { content }
-        { ratioPart }
+        {content}
+        {ratioPart}
       </View>
     );
   }
 
   _renderRow = (data, item, detail, network, difference, i) => {
-    const diff = (difference !== undefined) ? <DiffNumber network={ network } diff={ difference } /> : undefined;
+    const diff = difference !== undefined
+      ? <DiffNumber network={network} diff={difference} />
+      : undefined;
 
     return (
-      <View key={ i } style={ style.itemDetailRow }>
+      <View key={`detail-row-${i}`} style={style.itemDetailRow}>
         <View>
-          <Text style={[ style.itemDetailRowText, style.itemDetailNumber ]}>{ format(detail) }</Text>
-          <Text style={[ style.itemDetailRowText, style.itemDetailLabel ]}>{ item }</Text>
+          <Text style={[style.itemDetailRowText, style.itemDetailNumber]}>{format(detail)}</Text>
+          <Text style={[style.itemDetailRowText, style.itemDetailLabel]}>{item}</Text>
         </View>
 
-        { diff }
+        {diff}
       </View>
     );
   }
@@ -94,15 +98,15 @@ class RatioBlock extends Component {
     const { ratio } = this.props;
 
     return (
-      <View style={[ style.itemDetailRow ]}>
+      <View style={style.itemDetailRow}>
         <View>
-          <Text style={[ style.itemDetailRowText, style.itemDetailNumber ]}>{ ratio }</Text>
-          <Text style={[ style.itemDetailRowText, style.itemDetailLabel ]}>Ratio followers/following</Text>
+          <Text style={[style.itemDetailRowText, style.itemDetailNumber]}>{ratio}</Text>
+          <Text style={[style.itemDetailRowText, style.itemDetailLabel]}>Ratio followers/following</Text>
         </View>
 
         {/*
-        <View style={[ style.itemDetailGrowth, { backgroundColor: colors(network) } ]}>
-          <Text style={ style.itemDetailGrowthNumber }>+4</Text>
+        <View style={[style.itemDetailGrowth, { backgroundColor: colors(network) }]}>
+          <Text style={style.itemDetailGrowthNumber}>+4</Text>
         </View>
         */}
       </View>
@@ -115,8 +119,8 @@ class DiffNumber extends Component {
     const { diff, network } = this.props;
 
     return (
-      <View style={[ style.itemDetailGrowth, { backgroundColor: colors(network) } ]}>
-        <Text style={ style.itemDetailGrowthNumber }>{ (diff > 0) ? `+${ diff }` : diff }</Text>
+      <View style={[style.itemDetailGrowth, { backgroundColor: colors(network) }]}>
+        <Text style={style.itemDetailGrowthNumber}>{(diff > 0) ? `+${diff}` : diff}</Text>
       </View>
     );
   }

@@ -48,7 +48,7 @@ export default class AddInput extends Component {
         if (networkData !== undefined) this.setState({ networkData: networkData.data.user });
       }
     } catch (error) {
-      console.log('Storage error: ' + error.message);
+      console.log(`Storage error: ${error.message}`);
     }
   }
 
@@ -60,35 +60,41 @@ export default class AddInput extends Component {
     const marginForRemoveIcon = condition ? { marginRight: 46 } : { marginRight: 20 }
     const inputValue = (value === '') ? networkData.Username : value;
 
-    const loading = (isLoading === true) ? <Loading loaded={ isLoading } /> : undefined;
-    const success = (isSuccess === true) ? <Success network={ network } /> : undefined;
-    const remove = condition ? <Remove onPress={ () => this._removeItem(network) } network={ network } /> : undefined;
+    const loading = (isLoading === true) ? <Loading loaded={isLoading} /> : undefined;
+    const success = (isSuccess === true) ? <Success network={network} /> : undefined;
+    const remove = condition ? <Remove onPress={() => this._removeItem(network)} network={network} /> : undefined;
 
     return (
-      <View style={[ style.itemContainer, { backgroundColor: colors(network) } ]}>
+      <View style={[style.itemContainer, { backgroundColor: colors(network) }]}>
         <View>
-          <View style={ global.inlineBlock }>
-            <View><Icon name={ network } size={ 28 } color={ _variables.white } /></View>
+          <View style={global.inlineBlock}>
+            <View>
+              <Icon
+                name={network}
+                size={28}
+                color={_variables.white}
+              />
+            </View>
 
-            { loading }
-            { success }
+            {loading}
+            {success}
 
             <TextInput
-              ref={ network }
-              style={[ style.itemInfoMajor, global.alignRight, marginForRemoveIcon ]}
-              onChangeText={ (text) => this._handleChange(text) }
-              onEndEditing={ () => this._handleSubmit(inputValue, network) }
-              value={ inputValue }
+              ref={network}
+              style={[style.itemInfoMajor, global.alignRight, marginForRemoveIcon]}
+              onChangeText={(text) => this._handleChange(text)}
+              onEndEditing={() => this._handleSubmit(inputValue, network)}
+              value={inputValue}
               returnKeyType="done"
-              enablesReturnKeyAutomatically={ true }
-              placeholder={ (network === 'fivehundredpx') ? '500px' : network }
+              enablesReturnKeyAutomatically
+              placeholder={network === 'fivehundredpx' ? '500px' : network}
               placeholderTextColor="rgba(255, 255, 255, 0.25)"
-              autoCorrect={ false }
+              autoCorrect={false}
               autoCapitalize="none"
               selectionColor="rgba(255, 255, 255, 0.8)"
             />
 
-            { remove }
+            {remove}
           </View>
         </View>
       </View>

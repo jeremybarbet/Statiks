@@ -109,16 +109,16 @@ export default class List extends Component {
     if (isEmpty) return <Placeholders.Empty />;
     if (isError) return <Placeholders.Error />;
 
-    const networkConnected = `${ size(dataObj(data)) } network${ (size(dataObj(data)) === 1) ? '' : 's' } connected`;
-    const refresh = (isConnected) ? <RefreshControl refreshing={ isRefreshing } onRefresh={ this._onRefresh } tintColor={ _variables.graySaturateLighter } /> : undefined;
+    const networkConnected = `${size(dataObj(data))} network${(size(dataObj(data)) === 1) ? '' : 's'} connected`;
+    const refresh = (isConnected) ? <RefreshControl refreshing={isRefreshing} onRefresh={this._onRefresh} tintColor={_variables.graySaturateLighter} /> : undefined;
 
     return (
       <View style={{ flex: 1 }}>
         <Header title="Statiks" />
 
         <ScrollView
-          style={[ global.layout, style.listContainer ]}
-          refreshControl={ refresh }
+          style={[global.layout, style.listContainer]}
+          refreshControl={refresh}
         >
           {dataObj(data).map((item, i) => this._renderRow(item, data[item], syncDate, i))}
 
@@ -126,9 +126,9 @@ export default class List extends Component {
           <View>
             <Item
               title="total"
-              description={ networkConnected }
-              data={ data.total }
-              sync={ syncDate }
+              description={networkConnected}
+              data={data.total}
+              sync={syncDate}
             />
           </View>
           */}
@@ -218,24 +218,28 @@ export default class List extends Component {
 
   _renderRow = (item, dataNetwork, syncDate, index) => {
     return (
-      <View key={ index }>
-        <Animated.View style={[ style.deleteContainer, this._scaleDeleteIcon() ]} { ...this._panResponder.panHandlers }>
-          <Icon style={ style.deleteContainerIcon } name="cross" size={ 18 } />
+      <View key={index}>
+        <Animated.View style={[style.deleteContainer, this._scaleDeleteIcon()]} {...this._panResponder.panHandlers}>
+          <Icon
+            style={style.deleteContainerIcon}
+            name="cross"
+            size={18}
+          />
         </Animated.View>
 
         <AnimatedScrollView
-          horizontal={ true }
-          directionalLockEnabled={ true }
-          onScroll={ this._onSwipe.bind(this, item) }
+          horizontal
+          directionalLockEnabled
+          onScroll={this._onSwipe.bind(this, item)}
           scrollEventThrottle={32}
-          { ...this._panResponder.panHandlers }
+          {...this._panResponder.panHandlers}
         >
           <Item
-            key={ index }
-            network={ item }
-            data={ dataNetwork.data }
-            sync={ syncDate }
-            history={ dataNetwork.history }
+            key={index}
+            network={item}
+            data={dataNetwork.data}
+            sync={syncDate}
+            history={dataNetwork.history}
           />
         </AnimatedScrollView>
       </View>

@@ -30,26 +30,35 @@ export default class ListItem extends Component {
 
     return (
       <TouchableWithoutFeedback
-        onLongPress={ () => this._onLongPress(networkName) }
-        onPressIn={ () => this._handlePressIn(networkName) }
-        onPressOut={ () => this._handlePressOut(networkName) }
-        onPress={ () => this._handlePress(networkName, data, sync, history) }
+        onLongPress={() => this._onLongPress(networkName)}
+        onPressIn={() => this._handlePressIn(networkName)}
+        onPressOut={() => this._handlePressOut(networkName)}
+        onPress={() => this._handlePress(networkName, data, sync, history)}
       >
-        <View style={[ style.itemContainer, { backgroundColor: pressColor } ]}>
+        <View style={[style.itemContainer, { backgroundColor: pressColor }]}>
           <View>
-            <View style={ style.itemIconNetwork }>
-              <Icon name={ networkName } size={ iconSize } color={ _variables.white } />
+            <View style={style.itemIconNetwork}>
+              <Icon
+                name={networkName}
+                size={iconSize}
+                color={_variables.white}
+              />
             </View>
 
-            <View style={ global.inlineBlock }>
-              <View style={ style.itemInfoLeft }>
-                <Text style={ style.itemInfoMajor }>{ networkName === 'fivehundredpx' ? '500px' : networkName }</Text>
-                <Text style={ style.itemInfoMinor }>{ data.user.Username || description }</Text>
+            <View style={global.inlineBlock}>
+              <View style={style.itemInfoLeft}>
+                <Text style={style.itemInfoMajor}>
+                  {networkName === 'fivehundredpx' ? '500px' : networkName}
+                </Text>
+
+                <Text style={style.itemInfoMinor}>
+                  {data.user.Username || description}
+                </Text>
               </View>
 
-              <View style={ style.itemInfoRight }>
-                <Text style={[ style.itemInfoMajor, global.alignRight ]}>{ data.stats.Followers }</Text>
-                <Text style={[ style.itemInfoMinor, global.alignRight ]}>followers</Text>
+              <View style={style.itemInfoRight}>
+                <Text style={[style.itemInfoMajor, global.alignRight]}>{data.stats.Followers}</Text>
+                <Text style={[style.itemInfoMinor, global.alignRight]}>followers</Text>
               </View>
             </View>
           </View>

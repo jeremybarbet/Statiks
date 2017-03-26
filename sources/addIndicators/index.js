@@ -14,9 +14,9 @@ export class Loading extends Component {
   render() {
     return (
       <ActivityIndicator
-        style={[ style.itemFeedback, style.itemLoading ]}
-        animating={ this.props.loaded }
-        color={ _variables.white }
+        style={[style.itemFeedback, style.itemLoading]}
+        animating={this.props.loaded}
+        color={_variables.white}
         hidesWhenStopped
         size="small"
       />
@@ -28,14 +28,14 @@ export class Success extends Component {
   render() {
     return (
       <TouchableOpacity
-        activeOpacity={ 0.85 }
-        style={[ style.itemFeedback, style.itemSuccess ]}
+        activeOpacity={0.85}
+        style={[style.itemFeedback, style.itemSuccess]}
       >
         <Icon
-          style={[ style.itemIcon, style.itemSuccessIcon ]}
+          style={[style.itemIcon, style.itemSuccessIcon]}
           name="check"
-          color={ colors(this.props.network) }
-          size={ 10 }
+          color={colors(this.props.network)}
+          size={10}
         />
       </TouchableOpacity>
     );
@@ -46,15 +46,15 @@ export class Remove extends Component {
   render() {
     return (
       <TouchableOpacity
-        activeOpacity={ 0.85 }
-        style={[ style.itemFeedback, style.itemRemove ]}
-        onPress={ this.props.onPress }
+        activeOpacity={0.85}
+        style={[style.itemFeedback, style.itemRemove]}
+        onPress={this.props.onPress}
       >
         <Icon
-          style={[ style.itemIcon, style.itemRemoveIcon ]}
+          style={[style.itemIcon, style.itemRemoveIcon]}
           name="cross"
-          color={ colors(this.props.network) }
-          size={ 8 }
+          color={colors(this.props.network)}
+          size={8}
         />
       </TouchableOpacity>
     );

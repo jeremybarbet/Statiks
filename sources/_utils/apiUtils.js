@@ -11,7 +11,7 @@ export default ApiUtils = {
     if (response.status >= 200 && response.status < 300) {
       return response;
     } else if (response.status === 404) {
-      throw `${ username } not found for ${ network }.`;
+      throw `${username} not found for ${network}.`;
     } else {
       throw 'It seems something went wrong !';
     }

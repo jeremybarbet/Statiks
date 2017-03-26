@@ -21,8 +21,8 @@ export function ratio(a, b) {
   let x = Number(a);
   let y = Number(b);
 
-  if (x > y) return `${ Math.ceil(x / y) }:1`;
-  else return `1:${ Math.round(y / x) }`;
+  if (x > y) return `${Math.ceil(x / y)}:1`;
+  else return `1:${Math.round(y / x)}`;
 };
 
 /**
@@ -31,6 +31,20 @@ export function ratio(a, b) {
 export function removeTag(s) {
   return s.replace(/(<(?:.|\n)*?>)/g, '');
 };
+
+/**
+* Make images src from API with https uri
+*/
+export function convertToHttps(uri) {
+  const protocol = uri.split('://')[0];
+  const path = uri.split('://')[1];
+
+  if (protocol === 'http') {
+    return `https://${path}`;
+  }
+
+  return uri;
+}
 
 /**
 * Put the first letter of network name in uppercase

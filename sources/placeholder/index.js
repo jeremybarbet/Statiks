@@ -72,7 +72,7 @@ export class Error extends Component {
           </Text>
 
           <Text style={style.defaultParagraph}>
-            Hit me up at <Text style={style.defaultParagraphLink} onPress={() => Linking.openURL('https://twitter.com/JeremDsgn')}>@JeremDsgn</Text> if issues remaining. // eslint-disable-line
+            Hit me up at <Text style={style.defaultParagraphLink} onPress={() => Linking.openURL('https://twitter.com/JeremDsgn')}>@JeremDsgn</Text> if issues remaining.
           </Text>
         </View>
       </View>

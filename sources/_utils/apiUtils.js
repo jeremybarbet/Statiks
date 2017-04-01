@@ -75,6 +75,9 @@ export default ApiUtils = {
     // extend(objNetwork, _total);
     Storage.actualize('userData', objNetwork);
 
-    return 'success';
+    return {
+      state: 'success',
+      data: objNetwork,
+    }
   },
 };

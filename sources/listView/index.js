@@ -195,12 +195,15 @@ export default class List extends Component {
     const { data } = this.state;
     this.setState({ isRefreshing: true });
 
-    dataObj(data).map(item => {
-      Promise.resolve(api[item](item, data[item].data.user.Username, data[item], this._saveEditedDate(), data.total))
+    return dataObj(data).map(item => {
+      return Promise.resolve(api[item](item, data[item].data.user.Username, data[item], this._saveEditedDate(), data.total))
       .then((value) => {
-        if (value === 'success') {
+        if (value.state === 'success') {
           this.refreshTimeout = setTimeout(() => {
-            this.setState({ isRefreshing: false });
+            this.setState({
+              data: value.data,
+              isRefreshing: false,
+            });
           }, 300);
         } else {
           console.log('error');

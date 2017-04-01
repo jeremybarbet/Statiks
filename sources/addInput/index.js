@@ -145,7 +145,7 @@ export default class AddInput extends Component {
       this.setState({ isLoading: true });
 
       Promise.resolve(api[network](network, username, null, null, allData.total)).then((value) => {
-        if (value === 'success') {
+        if (value.state === 'success') {
           this.setState({ isLoading: false, isSuccess: true });
 
           this.successTimeout = setTimeout(() => {

@@ -48,7 +48,7 @@ export default class Header extends Component {
       </TouchableOpacity>
     ) : undefined;
 
-    const removeData = title === 'Options' && __DEV__ ? (
+    const removeData = title === 'Options' && __DEV__ ? ( // eslint-disable-line
       <TouchableOpacity
         activeOpacity={0.85}
         onPress={() => Storage.clear()}

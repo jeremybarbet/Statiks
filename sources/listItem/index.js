@@ -16,12 +16,12 @@ export default class ListItem extends Component {
 
   static propTypes = {
     network: PropTypes.string,
-    data: PropTypes.object,
+    data: PropTypes.object, // eslint-disable-line
     sync: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.string,
     ]),
-    history: PropTypes.object,
+    history: PropTypes.object, // eslint-disable-line
     title: PropTypes.string,
     description: PropTypes.string,
   }

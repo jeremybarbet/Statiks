@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
-import { Dimensions, ScrollView, View, Animated, PanResponder, StatusBar, RefreshControl, NetInfo } from 'react-native';
+import { ScrollView, View, Animated, PanResponder, StatusBar, RefreshControl, NetInfo } from 'react-native';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 import moment from 'moment';
+import _isEmpty from 'lodash/isEmpty';
 
 import _variables from '../_styles/variables';
 import global from '../_styles/global';
 import style from './style';
 
-import { dataIsEmpty } from '../_utils/utils';
-import { omit, size } from '../_utils/object';
+import { omit/* , size */ } from '../_utils/object';
 import fontelloConfig from '../config.json';
 import api from '../api';
 import Storage from '../_utils/storage';
-import * as Placeholders from '../placeholder';
+import Loading from '../placeholder/Loading';
+import Empty from '../placeholder/Empty';
+import Error from '../placeholder/Error';
 import Item from '../listItem';
 import Header from '../header/index';
 
-const { width } = Dimensions.get('window');
 const Icon = createIconSetFromFontello(fontelloConfig);
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
@@ -41,12 +42,12 @@ export default class List extends Component {
     this._loadStorage().done();
 
     this._animatedValueX = 0;
-    this.state.pan.x.addListener((value) => this._animatedValueX = value.value);
+    this.state.pan.x.addListener(value => this._animatedValueX = value.value); // eslint-disable-line
 
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
 
-      onPanResponderGrant: (e, gestureState) => {
+      onPanResponderGrant: () => {
         this.state.pan.setOffset({ x: this._animatedValueX });
         this.state.pan.setValue({ x: 0 });
       },
@@ -84,31 +85,50 @@ export default class List extends Component {
 
   async _loadStorage() {
     try {
-      let value = await Storage.get('userData');
+      const value = await Storage.get('userData');
 
       if (dataObj(value).length > 0) {
-        // console.log('Recovered selection from disk');
-        const datetime = !dataIsEmpty(value.preferences) ? value.preferences.syncDate : '';
-        this.setState({ data: value, isLoading: false, isError: false, isEmpty: false, syncDate: datetime });
+        const datetime = !_isEmpty(value.preferences) ? value.preferences.syncDate : null;
+
+        this.setState({
+          data: value,
+          isLoading: false,
+          isError: false,
+          isEmpty: false,
+          syncDate: datetime,
+        });
       } else {
-        // console.log('Initialized with no selection on disk.');
-        this.setState({ isLoading: false, isError: false, isEmpty: true });
+        this.setState({
+          isLoading: false,
+          isError: false,
+          isEmpty: true,
+        });
       }
-    } catch(error) {
-      // console.log('Storage error: ' + error.message);
-      this.setState({ isLoading: false, isError: true });
+    } catch (error) {
+      this.setState({
+        isLoading: false,
+        isError: true,
+      });
     }
   }
 
   render() {
     const { data, isLoading, isError, isEmpty, syncDate, isRefreshing, isConnected } = this.state;
 
-    if (isLoading) return <Placeholders.Loading description="Data are coming!" />;
-    if (isEmpty) return <Placeholders.Empty />;
-    if (isError) return <Placeholders.Error />;
+    if (isLoading) return <Loading description="Data are coming!" />;
+    if (isEmpty) return <Empty />;
+    if (isError) return <Error />;
 
-    const networkConnected = `${size(dataObj(data))} network${(size(dataObj(data)) === 1) ? '' : 's'} connected`;
-    const refresh = (isConnected) ? <RefreshControl refreshing={isRefreshing} onRefresh={this._onRefresh} tintColor={_variables.graySaturateLighter} /> : undefined;
+    // const sizeData = size(dataObj(data));
+    // const networkConnected = `${sizeData} network${sizeData === 1 ? '' : 's'} connected`;
+
+    const refresh = isConnected ? (
+      <RefreshControl
+        refreshing={isRefreshing}
+        onRefresh={this._onRefresh}
+        tintColor={_variables.graySaturateLighter}
+      />
+    ) : undefined;
 
     return (
       <View style={{ flex: 1 }}>
@@ -136,7 +156,7 @@ export default class List extends Component {
   }
 
   _checkConnectivity = () => {
-    NetInfo.isConnected.fetch().done((isConnected) => this.setState({ isConnected }));
+    NetInfo.isConnected.fetch().done(isConnected => this.setState({ isConnected })); // eslint-disable-line
   }
 
   _handleConnectivity = (isConnected) => {
@@ -153,8 +173,7 @@ export default class List extends Component {
     const date = moment().unix();
 
     this.setState({ syncDate: date });
-
-    obj['preferences'] = { 'syncDate': date };
+    obj.preferences = { syncDate: date };
     Storage.actualize('userData', obj);
 
     return date;
@@ -195,8 +214,16 @@ export default class List extends Component {
     const { data } = this.state;
     this.setState({ isRefreshing: true });
 
-    return dataObj(data).map(item => {
-      return Promise.resolve(api[item](item, data[item].data.user.Username, data[item], this._saveEditedDate(), data.total))
+    return dataObj(data).map((item) => {
+      const apiQuery = api[item](
+        item,
+        data[item].data.user.Username,
+        data[item],
+        this._saveEditedDate(),
+        data.total,
+      );
+
+      return Promise.resolve(apiQuery)
       .then((value) => {
         if (value.state === 'success') {
           this.refreshTimeout = setTimeout(() => {
@@ -206,7 +233,6 @@ export default class List extends Component {
             });
           }, 300);
         } else {
-          console.log('error');
           this.setState({ isRefreshing: false });
         }
       });
@@ -217,33 +243,34 @@ export default class List extends Component {
     this.setState({ currentSwipeItem: item });
   }
 
-  _renderRow = (item, dataNetwork, syncDate, index) => {
-    return (
-      <View key={index}>
-        <Animated.View style={[style.deleteContainer, this._scaleDeleteIcon()]} {...this._panResponder.panHandlers}>
-          <Icon
-            style={style.deleteContainerIcon}
-            name="cross"
-            size={18}
-          />
-        </Animated.View>
+  _renderRow = (item, dataNetwork, syncDate, index) => (
+    <View key={index}>
+      <Animated.View
+        style={[style.deleteContainer, this._scaleDeleteIcon()]}
+        {...this._panResponder.panHandlers}
+      >
+        <Icon
+          style={style.deleteContainerIcon}
+          name="cross"
+          size={18}
+        />
+      </Animated.View>
 
-        <AnimatedScrollView
-          horizontal
-          directionalLockEnabled
-          onScroll={this._onSwipe.bind(this, item)}
-          scrollEventThrottle={32}
-          {...this._panResponder.panHandlers}
-        >
-          <Item
-            key={index}
-            network={item}
-            data={dataNetwork.data}
-            sync={syncDate}
-            history={dataNetwork.history}
-          />
-        </AnimatedScrollView>
-      </View>
-    );
-  }
+      <AnimatedScrollView
+        horizontal
+        directionalLockEnabled
+        onScroll={() => this._onSwipe(item)}
+        scrollEventThrottle={32}
+        {...this._panResponder.panHandlers}
+      >
+        <Item
+          key={index}
+          network={item}
+          data={dataNetwork.data}
+          sync={syncDate}
+          history={dataNetwork.history}
+        />
+      </AnimatedScrollView>
+    </View>
+  )
 }

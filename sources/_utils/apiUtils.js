@@ -78,6 +78,6 @@ export default ApiUtils = {
     return {
       state: 'success',
       data: objNetwork,
-    }
+    };
   },
 };

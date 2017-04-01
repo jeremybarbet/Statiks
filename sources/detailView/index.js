@@ -4,15 +4,18 @@ import { ScrollView, Text, Image, View, TouchableOpacity, StatusBar, NetInfo } f
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
+import isNil from 'lodash/isNil';
 
 import _variables from '../_styles/variables';
 import global from '../_styles/global';
 import style from './style';
 
-import { capitalize, dataIsEmpty, convertToHttps } from '../_utils/utils';
+import { capitalize, convertToHttps } from '../_utils/utils';
 import { colors } from '../_utils/networksColors';
 import fontelloConfig from '../config.json';
-import { /*NetworkActivity, NetworkGraph,*/ NetworkStats } from '../detailBlock';
+import Stats from '../detailBlock/Stats';
+// import Activity from '../detailBlock/Activity';
+// import Graph from '../detailBlock/Graph';
 
 const Icon = createIconSetFromFontello(fontelloConfig);
 
@@ -20,9 +23,12 @@ export default class DetailView extends Component {
 
   static propTypes = {
     network: PropTypes.string,
-    data: PropTypes.object,
-    sync: PropTypes.number,
-    history: PropTypes.object,
+    data: PropTypes.object, // eslint-disable-line
+    sync: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+    history: PropTypes.object, // eslint-disable-line
   }
 
   state = {
@@ -56,7 +62,7 @@ export default class DetailView extends Component {
     const location = networkData.Location ? <Text style={style.userInfoText}>{networkData.Location}</Text> : undefined;
     const about = networkData.Bio ? <Text style={[style.userInfoText, style.userInfoAbout]}>{networkData.Bio}</Text> : undefined;
     const avatar = <Image style={style.userInfoPhoto} source={(isConnected && networkData.Avatar) ? { uri: convertToHttps(networkData.Avatar) } : require('./images/avatar-placeholder.png')} />;
-    const syncDate = !dataIsEmpty(sync) ? <View><Text style={style.itemSyncTime}>Last updated: {moment.unix(sync).calendar(null, calendarConfig)}</Text></View> : undefined;
+    const syncDate = !isNil(sync) ? <View><Text style={style.itemSyncTime}>Last updated: {moment.unix(sync).calendar(null, calendarConfig)}</Text></View> : undefined;
 
     return (
       <View style={{ backgroundColor: _variables.black, flex: 1 }}>
@@ -91,7 +97,7 @@ export default class DetailView extends Component {
               {about}
             </View>
 
-            <NetworkStats
+            <Stats
               network={network}
               data={data.stats}
               history={history}

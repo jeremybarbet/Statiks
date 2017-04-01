@@ -1,17 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import { TextInput, View } from 'react-native';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
+import isEmpty from 'lodash/isEmpty';
 
 import _variables from '../_styles/variables';
 import global from '../_styles/global';
 import style from './style';
 
 import api from '../api';
-import { dataIsEmpty } from '../_utils/utils';
 import { omit } from '../_utils/object';
 import Storage from '../_utils/storage';
 import { colors } from '../_utils/networksColors';
-import { Loading, Success, Remove } from '../addIndicators';
+import Loading from '../addIndicators/Loading';
+import Success from '../addIndicators/Success';
+import Remove from '../addIndicators/Remove';
 import fontelloConfig from '../config.json';
 
 const Icon = createIconSetFromFontello(fontelloConfig);
@@ -60,7 +62,7 @@ export default class AddInput extends Component {
     const { network } = this.props;
     const { value, networkData, isSuccess, isLoading, showRemoveIcon } = this.state;
 
-    const condition = showRemoveIcon || !dataIsEmpty(networkData.Username);
+    const condition = showRemoveIcon || !isEmpty(networkData.Username);
     const marginForRemoveIcon = condition ? { marginRight: 46 } : { marginRight: 20 };
     const inputValue = (value === '') ? networkData.Username : value;
 

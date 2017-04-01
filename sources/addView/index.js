@@ -5,7 +5,7 @@ import global from '../_styles/global';
 import style from './style';
 
 import api from '../api';
-import * as Placeholders from '../placeholder';
+import Loading from '../placeholder/Loading';
 import Input from '../addInput';
 import Header from '../header/index';
 
@@ -46,7 +46,7 @@ export default class AddView extends Component {
   render() {
     const { keyboardSpace, isConnected } = this.state;
 
-    if (!isConnected) return <Placeholders.Loading description="Ooops, no connection. I'm trying to get back asap!" />;
+    if (!isConnected) return <Loading description="Ooops, no connection. I'm trying to get back asap!" />;
 
     return (
       <View style={{ flex: 1 }}>
@@ -54,12 +54,11 @@ export default class AddView extends Component {
 
         <Animated.View style={{ height: keyboardSpace }}>
           <ScrollView
-            ref="addScrollView"
             style={[global.layout, style.addContainer]}
             keyboardShouldPersistTaps="always"
             keyboardDismissMode="interactive"
           >
-            {NETWORKS.map((item, i) => <Input network={item} key={`addView-${i}`} />)}
+            {NETWORKS.map(item => <Input network={item} key={`addView-${item}`} />)}
           </ScrollView>
         </Animated.View>
       </View>
@@ -67,7 +66,7 @@ export default class AddView extends Component {
   }
 
   _checkConnectivity = () => {
-    NetInfo.isConnected.fetch().done((isConnected) => this.setState({ isConnected }));
+    NetInfo.isConnected.fetch().done(isConnected => this.setState({ isConnected }));
   }
 
   _handleConnectivity = (isConnected) => {
@@ -83,7 +82,7 @@ export default class AddView extends Component {
     const { keyboardSpace } = this.state;
     const newHeight = (height - HEADER_HEIGHT) - e.endCoordinates.height;
 
-    Animated.timing(this.state.keyboardSpace, {
+    Animated.timing(keyboardSpace, {
       easing: Easing.inOut(Easing.ease),
       duration: 250,
       toValue: newHeight,

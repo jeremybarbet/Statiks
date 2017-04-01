@@ -17,7 +17,10 @@ export default class ListItem extends Component {
   static propTypes = {
     network: PropTypes.string,
     data: PropTypes.object,
-    sync: PropTypes.number,
+    sync: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
     history: PropTypes.object,
     title: PropTypes.string,
     description: PropTypes.string,
@@ -76,7 +79,7 @@ export default class ListItem extends Component {
     );
   }
 
-  _onLongPress = (network) => {
+  _onLongPress = () => {
     // Re-order
   }
 

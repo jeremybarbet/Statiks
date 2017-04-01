@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React, { Component, PropTypes } from 'react';
 import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -39,7 +40,7 @@ export class Empty extends Component {
         />
 
         <View>
-          <Text style={style.defaultTitle}>{"Welcome to statiks".toUpperCase()}</Text>
+          <Text style={style.defaultTitle}>{'Welcome to statiks'.toUpperCase()}</Text>
 
           <Text style={style.defaultParagraph}>
             Hey buddy, you are ready to go ! Let’s add your networks and see the differents stats for each of them.
@@ -64,7 +65,7 @@ export class Error extends Component {
         />
 
         <View>
-          <Text style={style.defaultTitle}>{"There is a problem!".toUpperCase()}</Text>
+          <Text style={style.defaultTitle}>{'There is a problem!'.toUpperCase()}</Text>
 
           <Text style={style.defaultParagraph}>
             I’m so sorry buddy, but something went wrong! Keep calm and reload the app.

@@ -6,18 +6,19 @@ export function diff(a, b) {
     };
   }
 
-  let value = {};
+  const value = {};
   let equal = true;
 
-  for (let key in a) {
+  for (const key in a) { // eslint-disable-line
     if (key in b) {
       if (a[key] !== b[key]) {
-        let typeA = typeof a[key];
-        let typeB = typeof b[key];
+        const typeA = typeof a[key];
+        const typeB = typeof b[key];
+
         let difference;
 
         if (a[key] && b[key] && (typeA === 'object' || typeA === 'function') && (typeB === 'object' || typeB === 'function')) {
-          let valueDiff = diff(a[key], b[key]);
+          const valueDiff = diff(a[key], b[key]);
 
           if (valueDiff.changed === 'equal') {
             value[key] = {
@@ -51,7 +52,7 @@ export function diff(a, b) {
     }
   }
 
-  for (key in b) {
+  for (const key in b) { // eslint-disable-line
     if (!(key in a)) {
       equal = false;
 
@@ -66,10 +67,10 @@ export function diff(a, b) {
     return {
       changed: 'equal',
     };
-  } else {
-    return {
-      changed: 'object change',
-      value: value,
-    };
   }
+
+  return {
+    changed: 'object change',
+    value,
+  };
 }

@@ -9,8 +9,12 @@ export function extend(obj, other) {
 * Creates a shallow copy of an object.
 */
 export function copy(obj) {
-  let result = {};
-  Object.keys(obj).forEach(key => result[key] = obj[key]);
+  const result = {};
+
+  Object.keys(obj).forEach((key) => {
+    result[key] = obj[key];
+  });
+
   return result;
 }
 
@@ -18,13 +22,14 @@ export function copy(obj) {
 * Returns a new object with the passed key removed.
 */
 export function omit(obj, ...props) {
-  let result = copy(obj);
+  const result = copy(obj);
   props.forEach(prop => delete result[prop]);
   return result;
 }
 
 /*
- * Reads a property at the specified path string (e.g 'prop.nested.value') or undefined if the path is invalid.
+ * Reads a property at the specified path string
+ * (e.g 'prop.nested.value') or undefined if the path is invalid.
  */
 export function read(obj, path) {
   return path.split('.').reduce((acc, val) => {

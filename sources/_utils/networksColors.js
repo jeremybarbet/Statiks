@@ -1,29 +1,28 @@
 import _variables from '../_styles/variables';
 
 export function luminosity(hex, value) {
-  hex = String(hex).replace(/[^0-9a-f]/gi, '');
+  let hexValue = hex;
+  hexValue = String(hexValue).replace(/[^0-9a-f]/gi, '');
 
-  if (hex.length < 6) {
-    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+  if (hexValue.length < 6) {
+    hexValue = hexValue[0] + hexValue[0] + hexValue[1] + hexValue[1] + hexValue[2] + hexValue[2];
   }
-
-  value = value || 0;
 
   let rgb = '#';
   let c;
   let i;
 
-  for (i = 0; i < 3; i++) {
-    c = parseInt(hex.substr(i * 2, 2), 16);
-    c = Math.round(Math.min(Math.max(0, c + (c * value)), 255)).toString(16);
-    rgb += ('00' + c).substr(c.length);
+  for (i = 0; i < 3; i++) { // eslint-disable-line
+    c = parseInt(hexValue.substr(i * 2, 2), 16);
+    c = Math.round(Math.min(Math.max(0, c + (c * (value || 0))), 255)).toString(16);
+    rgb += (`00${c}`).substr(c.length);
   }
 
   return rgb;
 }
 
 export function colors(network) {
-  const colors = {
+  const list = {
     total: _variables.graySaturate,
     dribbble: '#ea4c89',
     twitter: '#55acee',
@@ -40,7 +39,7 @@ export function colors(network) {
     producthunt: '#da552f',
   };
 
-  if (colors[network] !== undefined) {
-    return colors[network];
+  if (list[network] !== undefined) {
+    return list[network];
   }
 }

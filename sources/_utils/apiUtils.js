@@ -20,7 +20,19 @@ export default ApiUtils = {
     return response.text();
   },
 
-  storeData(response, objNetwork, network, details, current, _networksArray, sync, total, _total, _timestampDiff, objHistory) {
+  storeData(
+    response,
+    objNetwork,
+    network,
+    details,
+    current,
+    _networksArray,
+    sync,
+    total,
+    _total,
+    _timestampDiff,
+    objHistory,
+  ) {
     const _detail = details(response);
 
     /**
@@ -40,6 +52,8 @@ export default ApiUtils = {
     /**
     * Create a total object to sum up all the data of networks connected.
     */
+    // console.log(objTotal.api(network, _detail.stats, _networksArray, current) || total.stats)
+
     /*
     _total = {
       total: {

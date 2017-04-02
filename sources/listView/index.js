@@ -87,7 +87,7 @@ export default class List extends Component {
     try {
       const value = await Storage.get('userData');
 
-      if (dataObj(value).length > 0) {
+      if (!_isEmpty(dataObj(value))) {
         const datetime = !_isEmpty(value.preferences) ? value.preferences.syncDate : null;
 
         this.setState({
@@ -227,10 +227,8 @@ export default class List extends Component {
       .then((value) => {
         if (value.state === 'success') {
           this.refreshTimeout = setTimeout(() => {
-            this.setState({
-              data: value.data,
-              isRefreshing: false,
-            });
+            this._loadStorage().done();
+            this.setState({ isRefreshing: false });
           }, 300);
         } else {
           this.setState({ isRefreshing: false });

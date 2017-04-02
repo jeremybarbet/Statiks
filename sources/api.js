@@ -7,15 +7,17 @@ import apiUtils from './_utils/apiUtils';
 const _networksArray = [];
 
 export function fetchy(uri, username, network, details, current, sync, total) {
-  const objNetwork = {};
-  const objHistory = {};
-  const _timestampDiff = {};
-  const _total = {};
+  const obj = {
+    objNetwork: {},
+    objHistory: {},
+    _timestampDiff: {},
+    _total: {},
+  }
 
   return fetch(uri)
   .then(response => apiUtils.checkStatus(response, username, network))
   .then(response => apiUtils.returnResponse(response))
-  .then(response => apiUtils.storeData(response, objNetwork, network, details, current, _networksArray, sync, total, _total, _timestampDiff, objHistory)) // eslint-disable-line
+  .then(response => apiUtils.storeData(response, obj, network, details, current, _networksArray, sync, total)) // eslint-disable-line
   .catch((error) => {
     AlertIOS.prompt(`${error}`, null, null, null, 'default');
   });

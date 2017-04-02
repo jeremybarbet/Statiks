@@ -22,23 +22,20 @@ export default ApiUtils = {
 
   storeData(
     response,
-    objNetwork,
+    obj,
     network,
     details,
     current,
     _networksArray,
     sync,
     total,
-    _total,
-    _timestampDiff,
-    objHistory,
   ) {
     const _detail = details(response);
 
     /**
     * Init the network object with stats and history if existing
     */
-    objNetwork[network] = {
+    obj.objNetwork[network] = {
       data: _detail,
       history: read(current, 'history') || {},
     };
@@ -55,7 +52,7 @@ export default ApiUtils = {
     // console.log(objTotal.api(network, _detail.stats, _networksArray, current) || total.stats)
 
     /*
-    _total = {
+    obj._total = {
       total: {
         // stats: objTotal.api(network, _detail.stats, _networksArray, current) || total.stats,
         // stats: objTotal.actualize(network, _detail.stats, _networksArray, current) || {},
@@ -72,9 +69,9 @@ export default ApiUtils = {
       const { data } = current;
       const _diff = diff(data, _detail);
 
-      _timestampDiff[sync] = _diff;
-      extend(objNetwork[network].history, _timestampDiff);
-      extend(objNetwork[network], objHistory);
+      obj._timestampDiff[sync] = _diff;
+      extend(obj.objNetwork[network].history, obj._timestampDiff);
+      extend(obj.objNetwork[network], obj.objHistory);
     }
 
     /**
@@ -82,16 +79,16 @@ export default ApiUtils = {
     * Next push the array to the total object.
     */
     // _networksArray.pushOnce(network);
-    // _total['total'].networks = _networksArray;
+    // obj._total['total'].networks = _networksArray;
 
-    // console.log(objNetwork);
+    // console.log(obj.objNetwork);
     // console.log(_networksArray);
-    // extend(objNetwork, _total);
-    Storage.actualize('userData', objNetwork);
+    // extend(obj.objNetwork, obj._total);
+    Storage.actualize('userData', obj.objNetwork);
 
     return {
       state: 'success',
-      data: objNetwork,
+      data: obj.objNetwork,
     };
   },
 };

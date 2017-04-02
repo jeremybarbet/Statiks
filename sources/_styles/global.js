@@ -46,7 +46,7 @@ export default StyleSheet.create({
   // Text-align: right
   alignRight: {
     textAlign: 'right',
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
   },
 
 });

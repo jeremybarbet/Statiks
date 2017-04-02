@@ -1,8 +1,6 @@
-import { Dimensions, PixelRatio, StyleSheet } from 'react-native';
+import { PixelRatio, StyleSheet } from 'react-native';
 
 import _variables from '../_styles/variables';
-
-const { width } = Dimensions.get('window');
 
 export default StyleSheet.create({
   listContainer: {
@@ -25,5 +23,5 @@ export default StyleSheet.create({
     color: _variables.white,
     textAlign: 'center',
     marginTop: 16,
-  }
+  },
 });

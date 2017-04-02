@@ -13,9 +13,11 @@ export default StyleSheet.create({
     backgroundColor: _variables.bgBlue,
     paddingBottom: 5,
   },
+
   statusBar: {
     height: STATUS_BAR_HEIGHT,
   },
+
   navBar: {
     height: NAV_BAR_HEIGHT,
     flexDirection: 'row',
@@ -47,7 +49,7 @@ export default StyleSheet.create({
   },
 
   navBarButtonLeft: {
-    marginLeft: 14
+    marginLeft: 14,
   },
 
   navBarButtonRight: {

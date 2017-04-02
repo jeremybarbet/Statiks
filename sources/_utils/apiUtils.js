@@ -1,8 +1,6 @@
-import { AlertIOS } from 'react-native';
-
-import objTotal from './total';
+// import objTotal from './total';
 import { diff } from './diff';
-import { size } from './array';
+// import { size } from './array';
 import { extend, read } from './object';
 import Storage from './storage';
 
@@ -11,7 +9,7 @@ export default ApiUtils = {
     if (response.status >= 200 && response.status < 300) {
       return response;
     } else if (response.status === 404) {
-      throw `${ username } not found for ${ network }.`;
+      throw `${username} not found for ${network}.`;
     } else {
       throw 'It seems something went wrong !';
     }
@@ -19,18 +17,27 @@ export default ApiUtils = {
 
   returnResponse(response) {
     if (response.headers.get('Content-Type').indexOf('application/json') > -1) return response.json();
-    else return response.text();
+    return response.text();
   },
 
-  storeData(response, objNetwork, network, details, current, _networksArray, sync, total, _total, _timestampDiff, objHistory) {
+  storeData(
+    response,
+    obj,
+    network,
+    details,
+    current,
+    _networksArray,
+    sync,
+    total,
+  ) {
     const _detail = details(response);
 
     /**
     * Init the network object with stats and history if existing
     */
-    objNetwork[network] = {
+    obj.objNetwork[network] = {
       data: _detail,
-      history: read(current, 'history') || {}
+      history: read(current, 'history') || {},
     };
 
     /**
@@ -42,13 +49,15 @@ export default ApiUtils = {
     /**
     * Create a total object to sum up all the data of networks connected.
     */
+    // console.log(objTotal.api(network, _detail.stats, _networksArray, current) || total.stats)
+
     /*
-    _total = {
+    obj._total = {
       total: {
         // stats: objTotal.api(network, _detail.stats, _networksArray, current) || total.stats,
         // stats: objTotal.actualize(network, _detail.stats, _networksArray, current) || {},
         networks: _networksArray,
-        user: "to_create"
+        user: 'to_create'
       }
     };
     */
@@ -60,9 +69,9 @@ export default ApiUtils = {
       const { data } = current;
       const _diff = diff(data, _detail);
 
-      _timestampDiff[sync] = _diff;
-      extend(objNetwork[network].history, _timestampDiff);
-      extend(objNetwork[network], objHistory);
+      obj._timestampDiff[sync] = _diff;
+      extend(obj.objNetwork[network].history, obj._timestampDiff);
+      extend(obj.objNetwork[network], obj.objHistory);
     }
 
     /**
@@ -70,13 +79,16 @@ export default ApiUtils = {
     * Next push the array to the total object.
     */
     // _networksArray.pushOnce(network);
-    // _total['total'].networks = _networksArray;
+    // obj._total['total'].networks = _networksArray;
 
-    // console.log(objNetwork);
+    // console.log(obj.objNetwork);
     // console.log(_networksArray);
-    // extend(objNetwork, _total);
-    Storage.actualize('userData', objNetwork);
+    // extend(obj.objNetwork, obj._total);
+    Storage.actualize('userData', obj.objNetwork);
 
-    return 'success';
-  }
+    return {
+      state: 'success',
+      data: obj.objNetwork,
+    };
+  },
 };

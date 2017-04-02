@@ -23,7 +23,7 @@ export default objTotal = {
   * Method function to init total object
   */
   init(obj) {
-    for (let key in obj) {
+    for (const key in obj) { // eslint-disable-line
       if (this.result.hasOwnProperty(key)) this.result[key] += parseInt(obj[key], 10);
       else this.result[key] = parseInt(obj[key], 10);
     }
@@ -35,41 +35,45 @@ export default objTotal = {
   * Return a diff with new values compared between old data and new data updated
   */
   update(current, old) {
-    console.log('%c -------TOTAL---------', 'background: blue; color: white');
-    console.log(current);
-    console.log(old.history);
+    // console.log('%c -------TOTAL---------', 'background: blue; color: white');
+    // console.log(current);
+    // console.log(old.history);
 
     if (size(old.history) !== 0) {
-      console.log('There is some history');
+      // console.log('There is some history');
 
-      Object.keys(current).map(item => {
+      Object.keys(current).map((item) => {
         /**
-        * There is a issue with diff value after first reload/changed values. It seems to do not be recognized after refresh data
+        * There is a issue with diff value after first
+        * reload/changed values. It seems to do not be recognized after refresh data
         */
-        console.log(getLastChange(old.history, item));
+        // console.log(getLastChange(old.history, item));
 
         if (getLastChange(old.history, item) !== undefined) {
-          console.log('%c --------TOTAL--------', 'background: red; color: white');
-          console.log('need to update stats');
-          console.log(item);
-          console.log(getLastChange(old.history, item));
+          // console.log('%c --------TOTAL--------', 'background: red; color: white');
+          // console.log('need to update stats');
+          // console.log(item);
+          // console.log(getLastChange(old.history, item));
 
-          console.log('------------------');
-          console.log('before');
-          console.log(current);
+          // console.log('------------------');
+          // console.log('before');
+          // console.log(current);
 
-          if (current.hasOwnProperty(item)) current[item] += parseInt(getLastChange(old.history, item), 10);
+          if (current.hasOwnProperty(item)) {
+            current[item] += parseInt(getLastChange(old.history, item), 10);
+          }
           // else this.result[key] = parseInt(obj[key], 10);
 
-          console.log('------------------');
-          console.log('after');
-          console.log(current);
-          console.log('%c --------TOTAL--------', 'background: red; color: white');
+          // console.log('------------------');
+          // console.log('after');
+          // console.log(current);
+          // console.log('%c --------TOTAL--------', 'background: red; color: white');
 
           return current;
         }
-      });
 
+        return null;
+      });
 
       // for (let key in current) {
       //   if (this.result.hasOwnProperty(key)) {
@@ -82,8 +86,6 @@ export default objTotal = {
         // else this.result[key] = parseInt(current[key], 10);
 
       // }
-
-      return;
     }
   },
 
@@ -93,11 +95,11 @@ export default objTotal = {
   */
   api(network, stats, array, current) {
     if (current !== undefined && array.indexOf(network) > -1) {
-      console.log('Update object with diff value');
-      objTotal.update(stats, current);
+      // console.log('Update object with diff value');
+      this.update(stats, current);
     } else {
-      console.log('Init object with network stats');
-      return objTotal.init(stats);
+      // console.log('Init object with network stats');
+      return this.init(stats);
     }
   },
 
@@ -105,7 +107,7 @@ export default objTotal = {
   * Return new total object after subtracted item data
   */
   subtract(obj, item) {
-    for (let key in item) {
+    for (const key in item) {
       if (obj.hasOwnProperty(key)) obj[key] -= parseInt(item[key], 10);
     }
 

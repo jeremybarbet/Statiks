@@ -13,4 +13,4 @@ module.exports = {
   din: 'DIN-Regular',
   dinMedium: 'DIN-Medium',
   dinBold: 'DIN-Bold',
-}
+};

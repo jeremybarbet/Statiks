@@ -1,4 +1,4 @@
-import { StyleSheet, PixelRatio } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import _variables from '../_styles/variables';
 
@@ -14,7 +14,6 @@ export default StyleSheet.create({
   * Detail header
   */
   detailHeader: {
-    backgroundColor: '#ea4c89',
     height: 64,
     shadowColor: 'rgb(23, 24, 26)',
     shadowOffset: { height: 1 },
@@ -116,7 +115,6 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginTop: 6,
     paddingHorizontal: 40,
-    marginBottom: 20
+    marginBottom: 20,
   },
-
 });

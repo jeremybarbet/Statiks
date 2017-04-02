@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { ScrollView, Text, View, TouchableWithoutFeedback } from 'react-native';
+import React, { Component, PropTypes } from 'react';
+import { Text, View, TouchableWithoutFeedback } from 'react-native';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 import { Actions } from 'react-native-router-flux';
 
@@ -13,6 +13,18 @@ import fontelloConfig from '../config.json';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 export default class ListItem extends Component {
+
+  static propTypes = {
+    network: PropTypes.string,
+    data: PropTypes.object, // eslint-disable-line
+    sync: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+    history: PropTypes.object, // eslint-disable-line
+    title: PropTypes.string,
+    description: PropTypes.string,
+  }
 
   state = {
     imPressed: false,
@@ -30,26 +42,35 @@ export default class ListItem extends Component {
 
     return (
       <TouchableWithoutFeedback
-        onLongPress={ () => this._onLongPress(networkName) }
-        onPressIn={ () => this._handlePressIn(networkName) }
-        onPressOut={ () => this._handlePressOut(networkName) }
-        onPress={ () => this._handlePress(networkName, data, sync, history) }
+        onLongPress={() => this._onLongPress(networkName)}
+        onPressIn={() => this._handlePressIn(networkName)}
+        onPressOut={() => this._handlePressOut(networkName)}
+        onPress={() => this._handlePress(networkName, data, sync, history)}
       >
-        <View style={[ style.itemContainer, { backgroundColor: pressColor } ]}>
+        <View style={[style.itemContainer, { backgroundColor: pressColor }]}>
           <View>
-            <View style={ style.itemIconNetwork }>
-              <Icon name={ networkName } size={ iconSize } color={ _variables.white } />
+            <View style={style.itemIconNetwork}>
+              <Icon
+                name={networkName}
+                size={iconSize}
+                color={_variables.white}
+              />
             </View>
 
-            <View style={ global.inlineBlock }>
-              <View style={ style.itemInfoLeft }>
-                <Text style={ style.itemInfoMajor }>{ networkName === 'fivehundredpx' ? '500px' : networkName }</Text>
-                <Text style={ style.itemInfoMinor }>{ data.user.Username || description }</Text>
+            <View style={global.inlineBlock}>
+              <View style={style.itemInfoLeft}>
+                <Text style={style.itemInfoMajor}>
+                  {networkName === 'fivehundredpx' ? '500px' : networkName}
+                </Text>
+
+                <Text style={style.itemInfoMinor}>
+                  {data.user.Username || description}
+                </Text>
               </View>
 
-              <View style={ style.itemInfoRight }>
-                <Text style={[ style.itemInfoMajor, global.alignRight ]}>{ data.stats.Followers }</Text>
-                <Text style={[ style.itemInfoMinor, global.alignRight ]}>followers</Text>
+              <View style={style.itemInfoRight}>
+                <Text style={[style.itemInfoMajor, global.alignRight]}>{data.stats.Followers}</Text>
+                <Text style={[style.itemInfoMinor, global.alignRight]}>followers</Text>
               </View>
             </View>
           </View>
@@ -58,15 +79,15 @@ export default class ListItem extends Component {
     );
   }
 
-  _onLongPress = (network) => {
+  _onLongPress = () => {
     // Re-order
   }
 
-  _handlePressIn = (item) => {
+  _handlePressIn = () => {
     this.setState({ imPressed: !this.state.imPressed });
   }
 
-  _handlePressOut = (item) => {
+  _handlePressOut = () => {
     this.setState({ imPressed: !this.state.imPressed });
   }
 

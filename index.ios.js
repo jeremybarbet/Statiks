@@ -11,9 +11,24 @@ export default class Statiks extends Component {
     return (
       <Router hideNavBar={true}>
         <Scene key="root">
-          <Scene key="list" component={List} title="Statiks" />
-          <Scene key="add" component={Add} title="Options" />
-          <Scene key="detail" direction="vertical" component={Detail} />
+          <Scene
+            key="list"
+            component={List}
+            title="Statiks"
+          />
+
+          <Scene
+            key="add"
+            component={Add}
+            title="Options"
+          />
+
+          <Scene
+            key="detail"
+            direction="vertical"
+            component={Detail}
+            panHandlers={null}
+          />
         </Scene>
       </Router>
     );

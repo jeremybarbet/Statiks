@@ -12,7 +12,7 @@ export default StyleSheet.create({
     paddingBottom: 9,
     borderRadius: 4,
     marginBottom: 15,
-    width: width - 30
+    width: width - 30,
   },
 
   itemIconNetwork: {
@@ -33,7 +33,7 @@ export default StyleSheet.create({
     fontSize: 16,
     color: _variables.white,
     opacity: 0.75,
-    paddingBottom: 9
+    paddingBottom: 9,
   },
 
   itemInfoLeft: {
@@ -47,7 +47,7 @@ export default StyleSheet.create({
   // Item detail
   itemDetail: {
     backgroundColor: _variables.white,
-    marginTop: 9
+    marginTop: 9,
   },
 
   itemDetailRow: {

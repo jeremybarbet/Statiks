@@ -8,7 +8,7 @@ export default StyleSheet.create({
   // Default illustration style
   defaultContainer: {
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 
   defaultIllustration: {
@@ -24,7 +24,7 @@ export default StyleSheet.create({
     color: _variables.dark,
     letterSpacing: 2,
     marginTop: 60,
-    textAlign: 'center'
+    textAlign: 'center',
   },
 
   defaultParagraph: {
@@ -83,5 +83,4 @@ export default StyleSheet.create({
   SoEmptyParagraph: {
     marginBottom: 40,
   },
-
 });

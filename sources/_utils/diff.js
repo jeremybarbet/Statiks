@@ -1,33 +1,29 @@
-/**
-* @param {Object} a
-* @param {Object} b
-* @return {Object}
-*/
 export function diff(a, b) {
   if (a === b) {
     return {
       changed: 'equal',
-      value: a
-    }
+      value: a,
+    };
   }
 
-  let value = {};
+  const value = {};
   let equal = true;
 
-  for (let key in a) {
+  for (const key in a) { // eslint-disable-line
     if (key in b) {
       if (a[key] !== b[key]) {
-        let typeA = typeof a[key];
-        let typeB = typeof b[key];
+        const typeA = typeof a[key];
+        const typeB = typeof b[key];
+
         let difference;
 
         if (a[key] && b[key] && (typeA === 'object' || typeA === 'function') && (typeB === 'object' || typeB === 'function')) {
-          let valueDiff = diff(a[key], b[key]);
+          const valueDiff = diff(a[key], b[key]);
 
           if (valueDiff.changed === 'equal') {
             value[key] = {
-              changed: 'equal'
-            }
+              changed: 'equal',
+            };
           } else {
             equal = false;
             value[key] = valueDiff;
@@ -42,8 +38,8 @@ export function diff(a, b) {
           value[key] = {
             removed: a[key],
             added: b[key],
-            difference: difference
-          }
+            difference,
+          };
         }
       }
     } else {
@@ -51,30 +47,30 @@ export function diff(a, b) {
 
       value[key] = {
         changed: 'removed',
-        value: a[key]
-      }
+        value: a[key],
+      };
     }
   }
 
-  for (key in b) {
+  for (const key in b) { // eslint-disable-line
     if (!(key in a)) {
       equal = false;
 
       value[key] = {
         changed: 'added',
-        value: b[key]
-      }
+        value: b[key],
+      };
     }
   }
 
   if (equal) {
     return {
-      changed: 'equal'
-    }
-  } else {
-    return {
-      changed: 'object change',
-      value: value
-    }
+      changed: 'equal',
+    };
   }
-};
+
+  return {
+    changed: 'object change',
+    value,
+  };
+}

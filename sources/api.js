@@ -12,7 +12,7 @@ export function fetchy(uri, username, network, details, current, sync, total) {
     objHistory: {},
     _timestampDiff: {},
     _total: {},
-  }
+  };
 
   return fetch(uri)
   .then(response => apiUtils.checkStatus(response, username, network))
@@ -23,7 +23,7 @@ export function fetchy(uri, username, network, details, current, sync, total) {
   });
 }
 
-export default api = {
+export default api = { // eslint-disable-line
   /**
   * Dribbble API connection
   */
@@ -220,7 +220,7 @@ export default api = {
         stats: {
           Followers: parseInt((/\"followed_by\": {\"count\": ([\d]+)/g).exec(response)[1], 10),
           Following: parseInt((/\"follows\": {\"count\": ([\d]+)/g).exec(response)[1], 10),
-          Medias: parseInt((/\"media\": {\"count\": ([\d]+)/g).exec(response)[1], 10),
+          Medias: parseInt((/\}}], \"count\": ([\d]+)/g).exec(response)[1], 10),
         },
         user: {
           Username: username,

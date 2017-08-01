@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
 * Do not push value to an array of already into
 */
@@ -32,3 +34,5 @@ export function sum(arr) {
 export function size(arr) {
   return arr.length;
 }
+
+/* eslint-enable */

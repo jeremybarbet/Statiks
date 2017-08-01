@@ -1,21 +1,17 @@
 import { AsyncStorage } from 'react-native';
 
-export default Storage = {
+export default Storage = { // eslint-disable-line
   /**
   * Get a one or more value for a key or array of keys from AsyncStorage
   */
   get(key) {
     if (!Array.isArray(key)) {
-      return AsyncStorage.getItem(key).then((value) => {
-        return JSON.parse(value);
-      });
+      return AsyncStorage.getItem(key).then(value => JSON.parse(value));
     }
 
-    return AsyncStorage.multiGet(key).then((values) => {
-      return values.map((value) => {
-        return JSON.parse(value[1]);
-      });
-    });
+    return AsyncStorage.multiGet(key).then(values =>
+      values.map(value => JSON.parse(value[1])),
+    );
   },
 
   /**
@@ -26,16 +22,18 @@ export default Storage = {
       return AsyncStorage.setItem(key, JSON.stringify(value));
     }
 
-    const pairs = key.map((pair) => [pair[0], JSON.stringify(pair[1])]);
+    const pairs = key.map(pair => [pair[0], JSON.stringify(pair[1])]);
     return AsyncStorage.multiSet(pairs);
   },
 
   /**
-  * Updates the value in the store for a given key in AsyncStorage. If the value is a string it will be replaced. If the value is an object it will be deep merged.
+  * Updates the value in the store for a given key in AsyncStorage.
+  * If the value is a string it will be replaced.
+  * If the value is an object it will be deep merged.
   */
   actualize(key, value) {
     return this.get(key).then((item) => {
-      value = typeof value === 'string' ? value : Object.assign({}, item, value);
+      value = typeof value === 'string' ? value : Object.assign({}, item, value); // eslint-disable-line
       return AsyncStorage.setItem(key, JSON.stringify(value));
     });
   },

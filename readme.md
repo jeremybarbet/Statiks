@@ -6,7 +6,9 @@ You can reload your networks and consult for each network how many followers you
 
 I keep improving, fixing, adding new networks and more stats. Feel free to contribute.
 
-[Visit the application's website](http://statiks.jeremybarbet.com)
+__[Visit the application's website](http://statiks.jeremybarbet.com)__
+
+__[Download here](https://itunes.apple.com/app/statiks/id1082528737)__
 
 Development
 -----------

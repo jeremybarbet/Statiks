@@ -1,17 +1,17 @@
-// import objTotal from './total';
+import { get, assign, size } from 'lodash';
+
+import objTotal from './total';
 import { diff } from './diff';
-// import { size } from './array';
-import { extend, read } from './object';
 import Storage from './storage';
 
-export default ApiUtils = {
+const ApiUtils = {
   checkStatus(response, username, network) {
     if (response.status >= 200 && response.status < 300) {
       return response;
     } else if (response.status === 404) {
-      throw `${username} not found for ${network}.`;
+      throw new Error(`${username} not found for ${network}.`);
     } else {
-      throw 'It seems something went wrong !';
+      throw new Error('It seems something went wrong !');
     }
   },
 
@@ -31,64 +31,66 @@ export default ApiUtils = {
     total,
   ) {
     const _detail = details(response);
+    const newObj = obj;
+    let newArr = _networksArray;
 
     /**
     * Init the network object with stats and history if existing
     */
-    obj.objNetwork[network] = {
+    newObj.objNetwork[network] = {
       data: _detail,
-      history: read(current, 'history') || {},
+      history: get(current, 'history') || {},
     };
 
     /**
     * Populate the networks array.
-    * If total object already exists, concat it with networks array, else just init with the empty array.
+    * If total object already exists, concat it with
+    * networks array, else just init with the empty array.
     */
-    // _networksArray = (total !== undefined && size(_networksArray) === 0) ? _networksArray.concat(total.networks) : _networksArray;
+    newArr = (total !== undefined && size(newArr) === 0)
+      ? newArr.concat(total.networks)
+      : newArr;
 
     /**
-    * Create a total object to sum up all the data of networks connected.
+    * If fetchy function is called with current argument
+    * we will check the diff of old and new stats.
     */
-    // console.log(objTotal.api(network, _detail.stats, _networksArray, current) || total.stats)
-
-    /*
-    obj._total = {
-      total: {
-        // stats: objTotal.api(network, _detail.stats, _networksArray, current) || total.stats,
-        // stats: objTotal.actualize(network, _detail.stats, _networksArray, current) || {},
-        networks: _networksArray,
-        user: 'to_create'
-      }
-    };
-    */
-
-    /**
-    * If fetchy function is called with current argument we will check the diff of old and new stats.
-    */
-    if (read(current, 'data')) {
+    if (get(current, 'data')) {
       const { data } = current;
       const _diff = diff(data, _detail);
 
-      obj._timestampDiff[sync] = _diff;
-      extend(obj.objNetwork[network].history, obj._timestampDiff);
-      extend(obj.objNetwork[network], obj.objHistory);
+      newObj._timestampDiff[sync] = _diff;
+      assign(newObj.objNetwork[network].history, newObj._timestampDiff);
+      assign(newObj.objNetwork[network], newObj.objHistory);
     }
+
+    /**
+    * Create a total object to sum up all
+    * the data of networks connected.
+    */
+    newObj._total = {
+      total: {
+        stats: objTotal.api(network, _detail.stats, newArr, current) || total.stats,
+        networks: newArr,
+        user: 'total',
+      },
+    };
 
     /**
     * Only push once the network name into the array,
     * Next push the array to the total object.
     */
-    // _networksArray.pushOnce(network);
-    // obj._total['total'].networks = _networksArray;
+    newArr.pushOnce(network);
+    newObj._total.total.networks = newArr;
 
-    // console.log(obj.objNetwork);
-    // console.log(_networksArray);
-    // extend(obj.objNetwork, obj._total);
-    Storage.actualize('userData', obj.objNetwork);
+    assign(newObj.objNetwork, newObj._total);
+    Storage.actualize('userData', newObj.objNetwork);
 
     return {
       state: 'success',
-      data: obj.objNetwork,
+      data: newObj.objNetwork,
     };
   },
 };
+
+export default ApiUtils;

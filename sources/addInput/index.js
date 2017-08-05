@@ -1,14 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { TextInput, View } from 'react-native';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
-import isEmpty from 'lodash/isEmpty';
+import { isEmpty, omit, get } from 'lodash';
 
 import _variables from '../_styles/variables';
 import global from '../_styles/global';
 import style from './style';
 
 import api from '../api';
-import { omit } from '../_utils/object';
 import Storage from '../_utils/storage';
 import { colors } from '../_utils/networksColors';
 import Loading from '../addIndicators/Loading';
@@ -131,30 +130,56 @@ export default class AddInput extends Component {
   }
 
   _handleChange = (text) => {
-    if (text === '') this.setState({ value: '', networkData: {}, showRemoveIcon: false });
-    else this.setState({ showRemoveIcon: true });
+    if (text === '') {
+      this.setState({
+        value: '',
+        networkData: {},
+        showRemoveIcon: false,
+      });
+    } else {
+      this.setState({ showRemoveIcon: true });
+    }
+
     this.setState({ value: text });
   }
 
   _handleSubmit = (username, network) => {
     const { allData } = this.state;
+    const storedUsername = get(allData[network], 'data.user.Username');
 
-    /**
-    * The condition should be more advanced
-    * if (isUsernameStore(username, allData, network))
-    */
-    if (username !== undefined) {
+    if (username !== storedUsername) {
       this.setState({ isLoading: true });
 
-      Promise.resolve(api[network](network, username, null, null, allData.total)).then((value) => {
+      Promise.resolve(
+        api[network](
+          network,
+          username,
+          null,
+          null,
+          allData.total,
+        ),
+      ).then((value) => {
         if (value.state === 'success') {
-          this.setState({ isLoading: false, isSuccess: true });
+          this.setState({
+            isLoading: false,
+            isSuccess: true,
+          });
 
           this.successTimeout = setTimeout(() => {
-            this.setState({ isLoading: false, isSuccess: false });
+            this._loadStorage().done();
+
+            this.setState({
+              isLoading: false,
+              isSuccess: false,
+            });
           }, 1500);
         } else {
-          this.setState({ isLoading: false, isSuccess: false, value: '', showRemoveIcon: false });
+          this.setState({
+            isLoading: false,
+            isSuccess: false,
+            value: '',
+            showRemoveIcon: false,
+          });
         }
       });
     }

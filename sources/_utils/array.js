@@ -28,11 +28,4 @@ export function sum(arr) {
   return arr.reduce((a, b) => a + b, 0);
 }
 
-/**
-* Returns the length of an array
-*/
-export function size(arr) {
-  return arr.length;
-}
-
 /* eslint-enable */

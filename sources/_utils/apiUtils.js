@@ -33,6 +33,7 @@ const ApiUtils = {
     const _detail = details(response);
     const newObj = obj;
     let newArr = _networksArray;
+    let isUpdated = false;
 
     /**
     * Init the network object with stats and history if existing
@@ -59,6 +60,7 @@ const ApiUtils = {
       const { data } = current;
       const _diff = diff(data, _detail);
 
+      isUpdated = _diff.changed === 'object change';
       newObj._timestampDiff[sync] = _diff;
       assign(newObj.objNetwork[network].history, newObj._timestampDiff);
       assign(newObj.objNetwork[network], newObj.objHistory);
@@ -70,7 +72,14 @@ const ApiUtils = {
     */
     newObj._total = {
       total: {
-        stats: objTotal.api(network, _detail.stats, newArr, current) || total.stats,
+        stats: objTotal.api(
+          network,
+          _detail.stats,
+          newArr,
+          current,
+          total,
+          isUpdated,
+        ) || total.stats,
         networks: newArr,
         user: 'total',
       },

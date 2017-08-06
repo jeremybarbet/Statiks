@@ -38,29 +38,37 @@ const objTotal = {
   /**
   * Return a diff with new values compared between old data and new data updated
   */
-  update(current, old) {
-    let newCurrent;
+  update(current, old, total) {
+    const newTotal = total;
 
     if (size(old.history) !== 0) {
-      Object.keys(current).map((item) => {
-        if (getLastChange(old.history, item) !== undefined && hasProp(current, item)) {
-          newCurrent = current;
-        }
+      Object.keys(current).map((item) => { // eslint-disable-line
+        const diff = getLastChange(old.history, item);
 
-        return null;
+        if (diff !== undefined && hasProp(current, item)) {
+          if (diff > 0) {
+            newTotal[item] += diff;
+          } else {
+            newTotal[item] -= Math.abs(diff);
+          }
+        }
       });
     }
 
-    return newCurrent;
+    return newTotal;
   },
 
   /**
   * Method function to update current total object
   * Add or subtract the difference before refreshing and after results of new data
   */
-  api(network, stats, array, current) {
-    if (current !== null && array.indexOf(network) > -1) {
-      return this.update(stats, current);
+  api(network, stats, array, current, total, isUpdated) {
+    const hasCurrent = current !== null;
+
+    if (!isUpdated && hasCurrent) return;
+
+    if (hasCurrent && array.indexOf(network) > -1) {
+      return this.update(stats, current, total.stats);
     }
 
     return this.init(stats);

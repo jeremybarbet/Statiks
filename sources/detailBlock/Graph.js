@@ -6,7 +6,7 @@ import style from './style';
 export default class Graph extends Component {
 
   static propTypes = {
-    // data: PropTypes.object, // eslint-disable-line
+    // data: PropTypes.object,
   };
 
   render() {

@@ -33,6 +33,7 @@
     "consistent-return": 0,
     "no-confusing-arrow": 0,
     "no-underscore-dangle": 0,
+    "react/forbid-prop-types": ["error", { "forbid": ["any"] }],
     "react/require-extension": 0,
     "import/no-named-as-default": 0,
     "import/no-extraneous-dependencies": 0

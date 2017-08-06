@@ -14,8 +14,8 @@ import style from './style';
 export default class Stats extends Component {
 
   static propTypes = {
-    data: PropTypes.object, // eslint-disable-line
-    history: PropTypes.object, // eslint-disable-line
+    data: PropTypes.object,
+    history: PropTypes.object,
     network: PropTypes.string,
   };
 

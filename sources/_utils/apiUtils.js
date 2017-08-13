@@ -26,20 +26,20 @@ const ApiUtils = {
     network,
     details,
     current,
-    _networksArray,
+    networks,
     sync,
     total,
   ) {
-    const _detail = details(response);
+    const detail = details(response);
     const newObj = obj;
-    let newArr = _networksArray;
+    let newArr = networks;
     let isUpdated = false;
 
     /**
     * Init the network object with stats and history if existing
     */
-    newObj.objNetwork[network] = {
-      data: _detail,
+    newObj.network[network] = {
+      data: detail,
       history: get(current, 'history') || {},
     };
 
@@ -58,28 +58,28 @@ const ApiUtils = {
     */
     if (get(current, 'data')) {
       const { data } = current;
-      const _diff = diff(data, _detail);
+      const diffs = diff(data, detail);
 
-      isUpdated = _diff.changed === 'object change';
-      newObj._timestampDiff[sync] = _diff;
-      assign(newObj.objNetwork[network].history, newObj._timestampDiff);
-      assign(newObj.objNetwork[network], newObj.objHistory);
+      isUpdated = diffs.changed === 'object change';
+      newObj.timestamp[sync] = diffs;
+      assign(newObj.network[network].history, newObj.timestamp);
+      assign(newObj.network[network], newObj.history);
     }
 
     /**
     * Create a total object to sum up all
     * the data of networks connected.
     */
-    newObj._total = {
+    newObj.total = {
       total: {
         stats: objTotal.api(
           network,
-          _detail.stats,
+          detail.stats,
           newArr,
           current,
           total,
           isUpdated,
-        ) || total.stats,
+        ),
         networks: newArr,
         user: 'total',
       },
@@ -90,14 +90,14 @@ const ApiUtils = {
     * Next push the array to the total object.
     */
     newArr.pushOnce(network);
-    newObj._total.total.networks = newArr;
+    newObj.total.total.networks = newArr;
 
-    assign(newObj.objNetwork, newObj._total);
-    Storage.actualize('userData', newObj.objNetwork);
+    assign(newObj.network, newObj.total);
+    Storage.actualize('userData', newObj.network);
 
     return {
       state: 'success',
-      data: newObj.objNetwork,
+      data: newObj.network,
     };
   },
 };

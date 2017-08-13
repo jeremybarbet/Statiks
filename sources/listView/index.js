@@ -11,6 +11,7 @@ import style from './style';
 import fontelloConfig from '../config.json';
 import api from '../api';
 import Storage from '../_utils/storage';
+import objTotal from '../_utils/total';
 import Loading from '../placeholder/Loading';
 import Empty from '../placeholder/Empty';
 import Error from '../placeholder/Error';
@@ -22,6 +23,16 @@ const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
 const getNetworks = v => Object.keys(v).filter(item => item !== 'preferences' && item !== 'total');
 const getTotal = v => Object.keys(v).filter(item => item === 'total');
+
+const findAndRemove = (arr, val) => {
+  const i = arr.indexOf(val);
+
+  if (i !== -1) {
+    return arr.splice(i, 1);
+  }
+
+  return arr;
+};
 
 export default class List extends Component {
   state = {
@@ -183,14 +194,11 @@ export default class List extends Component {
 
   _deleteItem = (item) => {
     const { data } = this.state;
+    const newArr = findAndRemove(data.total.networks, item); // eslint-disable-line
     const newNetworks = omit(data, item);
     const isEmpty = Object.keys(getNetworks(newNetworks)).length === 0;
 
-    /**
-    * Remove stats from total object and remove item from array of networks into total object
-    * Bounce effet on remove icon when release touch
-    */
-    // objTotal.subtract(data['total'].stats, data[item].data.stats);
+    objTotal.subtract(data.total.stats, data[item].data.stats);
     Storage.save('userData', newNetworks);
 
     this.setState({

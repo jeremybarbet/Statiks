@@ -4,20 +4,20 @@ import { AlertIOS } from 'react-native';
 import { removeTag, decode } from './_utils/utils';
 import apiUtils from './_utils/apiUtils';
 
-const _networksArray = [];
+const networks = [];
 
 export function fetchy(uri, username, network, details, current, sync, total) {
   const obj = {
-    objNetwork: {},
-    objHistory: {},
-    _timestampDiff: {},
-    _total: {},
+    network: {},
+    history: {},
+    timestamp: {},
+    total: {},
   };
 
   return fetch(uri)
   .then(response => apiUtils.checkStatus(response, username, network))
   .then(response => apiUtils.returnResponse(response))
-  .then(response => apiUtils.storeData(response, obj, network, details, current, _networksArray, sync, total)) // eslint-disable-line
+  .then(response => apiUtils.storeData(response, obj, network, details, current, networks, sync, total)) // eslint-disable-line
   .catch((error) => {
     AlertIOS.prompt(`${error}`, null, null, null, 'default');
   });

@@ -1,4 +1,4 @@
-import { size } from 'lodash';
+import { get, size } from 'lodash';
 
 const hasProp = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop);
 
@@ -23,16 +23,18 @@ const objTotal = {
   /**
   * Method function to init total object
   */
-  init(obj) {
+  init(obj, total) {
+    const newTotal = get(total, 'stats') || this.result;
+
     for (const key in obj) { // eslint-disable-line
-      if (hasProp(this.result, key)) {
-        this.result[key] += parseInt(obj[key], 10);
+      if (hasProp(newTotal, key)) {
+        newTotal[key] += parseInt(obj[key], 10);
       } else {
-        this.result[key] = parseInt(obj[key], 10);
+        newTotal[key] = parseInt(obj[key], 10);
       }
     }
 
-    return this.result;
+    return newTotal;
   },
 
   /**
@@ -71,7 +73,7 @@ const objTotal = {
       return this.update(stats, current, total.stats);
     }
 
-    return this.init(stats);
+    return this.init(stats, total);
   },
 
   /**

@@ -10,6 +10,7 @@ import style from './style';
 
 import fontelloConfig from '../config.json';
 import api from '../api';
+import * as utils from '../_utils/utils';
 import Storage from '../_utils/storage';
 import objTotal from '../_utils/total';
 import Loading from '../placeholder/Loading';
@@ -20,19 +21,6 @@ import Header from '../header/index';
 
 const Icon = createIconSetFromFontello(fontelloConfig);
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
-
-const getNetworks = v => Object.keys(v).filter(item => item !== 'preferences' && item !== 'total');
-const getTotal = v => Object.keys(v).filter(item => item === 'total');
-
-const findAndRemove = (arr, val) => {
-  const i = arr.indexOf(val);
-
-  if (i !== -1) {
-    return arr.splice(i, 1);
-  }
-
-  return arr;
-};
 
 export default class List extends Component {
   state = {
@@ -98,7 +86,7 @@ export default class List extends Component {
     try {
       const value = await Storage.get('userData');
 
-      if (!_isEmpty(getNetworks(value))) {
+      if (!_isEmpty(utils.getNetworks(value))) {
         const datetime = !_isEmpty(value.preferences) ? value.preferences.syncDate : null;
 
         this.setState({
@@ -130,7 +118,7 @@ export default class List extends Component {
     if (isEmpty) return <Empty />;
     if (isError) return <Error />;
 
-    const sizeData = size(getNetworks(data));
+    const sizeData = size(utils.getNetworks(data));
     const networkConnected = `${sizeData} network${sizeData === 1 ? '' : 's'} connected`;
 
     const refresh = isConnected ? (
@@ -149,9 +137,9 @@ export default class List extends Component {
           style={[global.layout, style.listContainer]}
           refreshControl={refresh}
         >
-          {getNetworks(data).map((item, i) => this._renderRow(item, data[item], syncDate, i))}
+          {utils.getNetworks(data).map((item, i) => this._renderRow(item, data[item], syncDate, i))}
 
-          {data.total !== undefined && getTotal(data).map((item, i) =>
+          {data.total !== undefined && utils.getTotal(data).map((item, i) =>
             <View
               key={`total-${i}`} // eslint-disable-line
             >
@@ -194,9 +182,9 @@ export default class List extends Component {
 
   _deleteItem = (item) => {
     const { data } = this.state;
-    const newArr = findAndRemove(data.total.networks, item); // eslint-disable-line
+    const newArr = utils.findAndRemove(data.total.networks, item); // eslint-disable-line
     const newNetworks = omit(data, item);
-    const isEmpty = Object.keys(getNetworks(newNetworks)).length === 0;
+    const isEmpty = Object.keys(utils.getNetworks(newNetworks)).length === 0;
 
     objTotal.subtract(data.total.stats, data[item].data.stats);
     Storage.save('userData', newNetworks);
@@ -224,7 +212,7 @@ export default class List extends Component {
     const { data } = this.state;
     this.setState({ isRefreshing: true });
 
-    return getNetworks(data).map((item) => {
+    return utils.getNetworks(data).map((item) => {
       const apiQuery = api[item](
         item,
         data[item].data.user.Username,

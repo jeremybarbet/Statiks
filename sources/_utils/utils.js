@@ -1,12 +1,18 @@
 /**
-* Function to check is the username is stored before submiting with api request
-*
-function isUsernameStore(input, store, network) {
-  const isExist = store[network] !== '' ? store[network].data.user.Username : undefined;
-  const valuedStored = store !== '' ? isExist : undefined;
+* Commons functions
+*/
+export const getNetworks = v => Object.keys(v).filter(item => item !== 'preferences' && item !== 'total');
+export const getTotal = v => Object.keys(v).filter(item => item === 'total');
 
-  return input !== undefined && input !== valuedStored;
-}
+export const findAndRemove = (arr, val) => {
+  const i = arr.indexOf(val);
+
+  if (i !== -1) {
+    return arr.splice(i, 1);
+  }
+
+  return arr;
+};
 
 /**
 * Return the ratio of a division of two number

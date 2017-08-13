@@ -8,6 +8,8 @@ import global from '../_styles/global';
 import style from './style';
 
 import api from '../api';
+import * as utils from '../_utils/utils';
+import objTotal from '../_utils/total';
 import Storage from '../_utils/storage';
 import { colors } from '../_utils/networksColors';
 import Loading from '../addIndicators/Loading';
@@ -112,12 +114,11 @@ export default class AddInput extends Component {
   _removeItem = (network) => {
     this.input.focus();
 
-    /**
-    * Remove stats from total object and remove item from array of networks into total object
-    */
-    const oldNetworks = this.state.allData;
-    const newNetworks = omit(oldNetworks, network);
+    const { allData } = this.state;
+    const newArr = utils.findAndRemove(allData.total.networks, network); // eslint-disable-line
+    const newNetworks = omit(allData, network);
 
+    objTotal.subtract(allData.total.stats, allData[network].data.stats);
     Storage.save('userData', newNetworks);
 
     this.setState({

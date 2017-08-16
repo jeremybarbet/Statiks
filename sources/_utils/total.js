@@ -67,7 +67,9 @@ const objTotal = {
   api(network, stats, array, current, total, isUpdated) {
     const hasCurrent = current !== null;
 
-    if (!isUpdated && hasCurrent) return;
+    if (!isUpdated && hasCurrent) {
+      return stats;
+    }
 
     if (hasCurrent && array.indexOf(network) > -1) {
       return this.update(stats, current, total.stats);

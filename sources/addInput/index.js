@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { TextInput, View } from 'react-native';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
-import { isEmpty, omit, get } from 'lodash';
+import { omit, get } from 'lodash';
 
 import _variables from '../_styles/variables';
 import global from '../_styles/global';
@@ -27,7 +27,7 @@ export default class AddInput extends Component {
 
   state = {
     value: '',
-    allData: '',
+    data: '',
     networkData: '',
     isSuccess: false,
     isLoading: false,
@@ -43,16 +43,11 @@ export default class AddInput extends Component {
   }
 
   async _loadStorage() {
-    const { network } = this.props;
-
     try {
       const storage = await Storage.get('userData');
-      const networkData = storage[network];
 
-      if (Object.keys(storage).length > 0) {
-        this.setState({ allData: storage });
-
-        if (networkData !== undefined) this.setState({ networkData: networkData.data.user });
+      if (storage !== null && Object.keys(storage).length > 0) {
+        this.setState({ data: storage });
       }
     } catch (error) {
       console.log(`Storage error: ${error.message}`); // eslint-disable-line
@@ -61,11 +56,11 @@ export default class AddInput extends Component {
 
   render() {
     const { network } = this.props;
-    const { value, networkData, isSuccess, isLoading, showRemoveIcon } = this.state;
+    const { value, data, isSuccess, isLoading, showRemoveIcon } = this.state;
 
-    const condition = showRemoveIcon || !isEmpty(networkData.Username);
+    const condition = showRemoveIcon || get(data[network], 'data.user.Username');
     const marginForRemoveIcon = condition ? { marginRight: 46 } : { marginRight: 20 };
-    const inputValue = (value === '') ? networkData.Username : value;
+    const inputValue = (value === '') ? get(data[network], 'data.user.Username') : value;
 
     const loading = (isLoading === true) ? <Loading loaded={isLoading} /> : undefined;
     const success = (isSuccess === true) ? <Success network={network} /> : undefined;
@@ -114,15 +109,15 @@ export default class AddInput extends Component {
   _removeItem = (network) => {
     this.input.focus();
 
-    const { allData } = this.state;
-    const newArr = utils.findAndRemove(allData.total.networks, network); // eslint-disable-line
-    const newNetworks = omit(allData, network);
+    const { data } = this.state;
+    const newArr = utils.findAndRemove(data.total.networks, network); // eslint-disable-line
+    const newNetworks = omit(data, network);
 
-    objTotal.subtract(allData.total.stats, allData[network].data.stats);
+    objTotal.subtract(data.total.stats, data[network].data.stats);
     Storage.save('userData', newNetworks);
 
     this.setState({
-      allData: newNetworks,
+      data: newNetworks,
       networkData: {},
       value: '',
       showRemoveIcon: false,
@@ -145,8 +140,8 @@ export default class AddInput extends Component {
   }
 
   _handleSubmit = (username, network) => {
-    const { allData } = this.state;
-    const storedUsername = get(allData[network], 'data.user.Username');
+    const { data } = this.state;
+    const storedUsername = get(data[network], 'data.user.Username');
 
     if (username !== storedUsername) {
       this.setState({ isLoading: true });
@@ -157,7 +152,7 @@ export default class AddInput extends Component {
           username,
           null,
           null,
-          allData.total,
+          data.total,
         ),
       ).then((value) => {
         if (value.state === 'success') {

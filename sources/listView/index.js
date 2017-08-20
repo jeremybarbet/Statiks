@@ -36,8 +36,6 @@ export default class List extends Component {
   }
 
   componentWillMount() {
-    // Storage.clear();
-
     this._loadStorage().done();
 
     this._animatedValueX = 0;

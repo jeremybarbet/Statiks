@@ -26,13 +26,15 @@ const objTotal = {
   init(obj, total) {
     const newTotal = get(total, 'stats') || this.result;
 
-    for (const key in obj) { // eslint-disable-line
-      if (hasProp(newTotal, key)) {
-        newTotal[key] += parseInt(obj[key], 10);
-      } else {
-        newTotal[key] = parseInt(obj[key], 10);
-      }
-    }
+    Object.keys(obj)
+      .filter(k => k === 'Followers' || k === 'Following')
+      .map((k) => { // eslint-disable-line
+        if (hasProp(newTotal, k)) {
+          newTotal[k] += parseInt(obj[k], 10);
+        } else {
+          newTotal[k] = parseInt(obj[k], 10);
+        }
+      });
 
     return newTotal;
   },

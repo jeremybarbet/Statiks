@@ -28,7 +28,6 @@ export default class AddInput extends Component {
   state = {
     value: '',
     data: '',
-    networkData: '',
     isSuccess: false,
     isLoading: false,
     showRemoveIcon: false,
@@ -106,19 +105,18 @@ export default class AddInput extends Component {
     );
   }
 
-  _removeItem = (network) => {
+  async _removeItem(network) {
     this.input.focus();
 
-    const { data } = this.state;
-    const newArr = utils.findAndRemove(data.total.networks, network); // eslint-disable-line
-    const newNetworks = omit(data, network);
+    const storage = await Storage.get('userData');
+    const newArr = utils.findAndRemove(storage.total.networks, network); // eslint-disable-line
+    const newNetworks = omit(storage, network);
 
-    objTotal.subtract(data.total.stats, data[network].data.stats);
+    objTotal.subtract(storage.total.stats, storage[network].data.stats);
     Storage.save('userData', newNetworks);
 
     this.setState({
       data: newNetworks,
-      networkData: {},
       value: '',
       showRemoveIcon: false,
       isLoading: false,
@@ -129,7 +127,6 @@ export default class AddInput extends Component {
     if (text === '') {
       this.setState({
         value: '',
-        networkData: {},
         showRemoveIcon: false,
       });
     } else {
@@ -146,15 +143,22 @@ export default class AddInput extends Component {
     if (username !== storedUsername) {
       this.setState({ isLoading: true });
 
-      Promise.resolve(
-        api[network](
-          network,
-          username,
-          null,
-          null,
-          data.total,
-        ),
+      api[network](
+        network,
+        username,
+        null,
+        null,
+        data.total,
       ).then((value) => {
+        if (!get(value, 'state')) {
+          return this.setState({
+            isLoading: false,
+            isSuccess: false,
+            value: '',
+            showRemoveIcon: false,
+          });
+        }
+
         if (value.state === 'success') {
           this.setState({
             isLoading: false,
@@ -169,13 +173,6 @@ export default class AddInput extends Component {
               isSuccess: false,
             });
           }, 1500);
-        } else {
-          this.setState({
-            isLoading: false,
-            isSuccess: false,
-            value: '',
-            showRemoveIcon: false,
-          });
         }
       });
     }

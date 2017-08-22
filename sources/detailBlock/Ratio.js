@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, View } from 'react-native';
 
-// import { colors } from '../_utils/networksColors';
-
 import style from './style';
 
 export default class Ratio extends Component {
@@ -25,12 +23,6 @@ export default class Ratio extends Component {
             Ratio followers/following
           </Text>
         </View>
-
-        {/*
-        <View style={[style.itemDetailGrowth, { backgroundColor: colors(network) }]}>
-          <Text style={style.itemDetailGrowthNumber}>+4</Text>
-        </View>
-        */}
       </View>
     );
   }

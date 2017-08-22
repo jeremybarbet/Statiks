@@ -14,8 +14,8 @@ import { capitalize, convertToHttps } from '../_utils/utils';
 import { colors } from '../_utils/networksColors';
 import fontelloConfig from '../config.json';
 import Stats from '../detailBlock/Stats';
-// import Activity from '../detailBlock/Activity';
 // import Graph from '../detailBlock/Graph';
+// import Activity from '../detailBlock/Activity';
 
 const Icon = createIconSetFromFontello(fontelloConfig);
 
@@ -81,12 +81,6 @@ export default class DetailView extends Component {
               <Icon name={network} size={20} color={colors(network)} />
               <Text style={[style.detailHeaderTitleName, { color: colors(network) }]}> {capitalize(network)}</Text>
             </View>
-
-            {/*
-            <TouchableOpacity onPress={() => {}} style={style.detailHeaderReload}>
-              <Icon name="reload" size={18} color="#CAD8E6" style={style.detailHeaderReloadIcon} />
-            </TouchableOpacity>
-            */}
           </View>
 
           <ScrollView>
@@ -104,8 +98,15 @@ export default class DetailView extends Component {
             />
 
             {/*
-            <NetworkGraph network={network} data={data.stats} />
-            <NetworkActivity network={network} data={data.stats} />
+            <Graph
+              network={network}
+              data={data.stats}
+            />
+
+            <Activity
+              network={network}
+              data={data.stats}
+            />
             */}
 
             {syncDate}

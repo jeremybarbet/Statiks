@@ -23,6 +23,8 @@ export default class AddInput extends Component {
 
   static propTypes = {
     network: PropTypes.string,
+    onPress: PropTypes.func,
+    internalRef: PropTypes.func,
   };
 
   state = {
@@ -54,7 +56,7 @@ export default class AddInput extends Component {
   }
 
   render() {
-    const { network } = this.props;
+    const { network, onPress, internalRef } = this.props;
     const { value, data, isSuccess, isLoading, showRemoveIcon } = this.state;
 
     const condition = showRemoveIcon || get(data[network], 'data.user.Username');
@@ -69,7 +71,10 @@ export default class AddInput extends Component {
       : undefined;
 
     return (
-      <View style={[style.itemContainer, { backgroundColor: colors(network) }]}>
+      <View
+        style={[style.itemContainer, { backgroundColor: colors(network) }]}
+        ref={internalRef}
+      >
         <View>
           <View style={global.inlineBlock}>
             <View>
@@ -84,8 +89,9 @@ export default class AddInput extends Component {
             {success}
 
             <TextInput
-              ref={(c) => { this.input = c; }}
+              ref={c => (this.input = c)}
               style={[style.itemInfoMajor, global.alignRight, marginForRemoveIcon]}
+              onFocus={onPress}
               onChangeText={text => this._handleChange(text)}
               onEndEditing={() => this._handleSubmit(inputValue, network)}
               value={inputValue}

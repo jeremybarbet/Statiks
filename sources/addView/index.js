@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Animated, Easing, Dimensions, View, ScrollView, NetInfo, Keyboard } from 'react-native';
+import { get } from 'lodash';
 
 import global from '../_styles/global';
 import style from './style';
@@ -18,13 +19,17 @@ export default class AddView extends Component {
   constructor() {
     super();
 
-    const screenHeight = height - HEADER_HEIGHT;
+    const scrollHeight = height - HEADER_HEIGHT;
 
     this.state = {
-      keyboardSpace: new Animated.Value(screenHeight),
+      keyboardSpace: new Animated.Value(scrollHeight),
+      scrollHeight,
       isConnected: null,
+      size: null,
     };
   }
+
+  input = []
 
   componentWillMount() {
     Keyboard.addListener('keyboardWillShow', this.keyboardShowRef = this._keyboardWillShow.bind(this));
@@ -46,7 +51,9 @@ export default class AddView extends Component {
   render() {
     const { keyboardSpace, isConnected } = this.state;
 
-    if (!isConnected) return <Loading description="Ooops, no connection. I'm trying to get back asap!" />;
+    if (!isConnected) {
+      return <Loading description="Ooops, no connection. I'm trying to get back asap!" />;
+    }
 
     return (
       <View style={{ flex: 1 }}>
@@ -54,15 +61,48 @@ export default class AddView extends Component {
 
         <Animated.View style={{ height: keyboardSpace }}>
           <ScrollView
+            ref={c => (this.scrollView = c)}
             style={[global.layout, style.addContainer]}
             keyboardShouldPersistTaps="always"
             keyboardDismissMode="interactive"
+            onScroll={this._contentSize}
+            scrollEventThrottle={400}
           >
-            {NETWORKS.map(item => <Input network={item} key={`addView-${item}`} />)}
+            {NETWORKS.map(item =>
+              <Input
+                key={`addView-${item}`}
+                internalRef={c => (this.input[item] = c)}
+                network={item}
+                onPress={() => this.input[item].measure(this._scrollToInput)}
+              />,
+            )}
           </ScrollView>
         </Animated.View>
       </View>
     );
+  }
+
+  _contentSize = ({ nativeEvent }) => {
+    const { size } = this.state;
+    const { contentSize } = nativeEvent;
+
+    if (get(contentSize, 'height') === get(size, 'height')) {
+      return;
+    }
+
+    this.setState({ size: nativeEvent.contentSize });
+  }
+
+  _scrollToInput = (ox, oy, width, height, px, py) => { // eslint-disable-line
+    const { scrollHeight, size } = this.state;
+    const max = get(size, 'height') - scrollHeight;
+    const y = oy > max ? max : oy;
+
+    this.scrollView.scrollTo({
+      x: 0,
+      y,
+      animated: true,
+    });
   }
 
   _checkConnectivity = () => {
@@ -80,12 +120,14 @@ export default class AddView extends Component {
 
   _keyboardWillShow(e) {
     const { keyboardSpace } = this.state;
-    const newHeight = (height - HEADER_HEIGHT) - e.endCoordinates.height;
+    const scrollHeight = (height - HEADER_HEIGHT) - e.endCoordinates.height;
+
+    this.setState({ scrollHeight });
 
     Animated.timing(keyboardSpace, {
       easing: Easing.inOut(Easing.ease),
       duration: 250,
-      toValue: newHeight,
+      toValue: scrollHeight,
     }).start();
   }
 

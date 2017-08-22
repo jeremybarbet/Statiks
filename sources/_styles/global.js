@@ -3,10 +3,6 @@ import { StyleSheet } from 'react-native';
 import _variables from './variables';
 
 export default StyleSheet.create({
-  /*
-  * Commons styles
-  */
-
   // Layout
   layout: {
     flex: 1,
@@ -48,5 +44,4 @@ export default StyleSheet.create({
     textAlign: 'right',
     alignSelf: 'flex-end',
   },
-
 });

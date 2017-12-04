@@ -7,6 +7,7 @@ import apiUtils from './_utils/apiUtils';
 const networks = [];
 
 export function fetchy(uri, username, network, details, current, sync, total) {
+
   const obj = {
     network: {},
     history: {},
@@ -24,6 +25,7 @@ export function fetchy(uri, username, network, details, current, sync, total) {
 }
 
 export default api = { // eslint-disable-line
+
   /**
   * Dribbble API connection
   */

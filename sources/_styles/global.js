@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import _variables from './variables';
 
 export default StyleSheet.create({
+
   // Layout
   layout: {
     flex: 1,

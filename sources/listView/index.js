@@ -23,6 +23,7 @@ const Icon = createIconSetFromFontello(fontelloConfig);
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
 export default class List extends Component {
+
   state = {
     data: '',
     isRefreshing: false,

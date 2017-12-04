@@ -5,6 +5,7 @@ import _variables from '../_styles/variables';
 const { width } = Dimensions.get('window');
 
 export default StyleSheet.create({
+
   // Default illustration style
   defaultContainer: {
     flexDirection: 'column',

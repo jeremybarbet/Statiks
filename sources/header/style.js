@@ -6,6 +6,7 @@ const NAV_BAR_HEIGHT = 39;
 const STATUS_BAR_HEIGHT = 20;
 
 export default StyleSheet.create({
+
   /*
   * Global styles
   */

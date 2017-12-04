@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
 export default Storage = { // eslint-disable-line
+
   /**
   * Get a one or more value for a key or array of keys from AsyncStorage
   */

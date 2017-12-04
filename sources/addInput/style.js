@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import _variables from '../_styles/variables';
 
 export default StyleSheet.create({
+
   // Item container
   itemContainer: {
     marginHorizontal: 15,

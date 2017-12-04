@@ -5,6 +5,7 @@ import { diff } from './diff';
 import Storage from './storage';
 
 const ApiUtils = {
+
   checkStatus(response, username, network) {
     if (response.status >= 200 && response.status < 300) {
       return response;

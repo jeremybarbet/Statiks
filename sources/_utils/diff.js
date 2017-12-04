@@ -1,4 +1,5 @@
 export function diff(a, b) { // eslint-disable-line
+
   if (a === b) {
     return {
       changed: 'equal',

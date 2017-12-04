@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import _variables from '../_styles/variables';
 
 export default StyleSheet.create({
+
   detailGlobal: {
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,

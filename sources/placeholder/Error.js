@@ -5,6 +5,7 @@ import global from '../_styles/global';
 import style from './style';
 
 export default class Error extends Component {
+
   render() {
     return (
       <View style={[global.layout, style.defaultContainer]}>

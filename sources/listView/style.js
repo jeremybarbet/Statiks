@@ -3,6 +3,7 @@ import { PixelRatio, StyleSheet } from 'react-native';
 import _variables from '../_styles/variables';
 
 export default StyleSheet.create({
+
   listContainer: {
     paddingTop: 10,
   },

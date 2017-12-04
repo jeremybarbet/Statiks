@@ -5,6 +5,7 @@ import _variables from '../_styles/variables';
 const { width } = Dimensions.get('window');
 
 export default StyleSheet.create({
+
   // Item container
   itemContainer: {
     marginHorizontal: 15,

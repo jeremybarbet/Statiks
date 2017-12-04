@@ -6,6 +6,7 @@ const hasProp = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop);
 * Function to retrieve to last change into history of a network
 */
 export function getLastChange(obj, data) {
+
   const lastChange = Object.keys(obj).filter(item => obj[item].changed !== 'equal').last();
 
   if (lastChange !== undefined) {
@@ -18,6 +19,7 @@ export function getLastChange(obj, data) {
 * Namespace to manage total object
 */
 const objTotal = {
+
   result: {},
 
   /**

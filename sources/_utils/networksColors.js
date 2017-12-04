@@ -1,6 +1,7 @@
 import _variables from '../_styles/variables';
 
 export function luminosity(hex, value) {
+
   let hexValue = hex;
   hexValue = String(hexValue).replace(/[^0-9a-f]/gi, '');
 
@@ -22,6 +23,7 @@ export function luminosity(hex, value) {
 }
 
 export function colors(network) {
+
   const list = {
     total: _variables.graySaturate,
     dribbble: '#ea4c89',

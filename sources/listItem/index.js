@@ -42,7 +42,6 @@ export default class ListItem extends Component {
 
     return (
       <TouchableWithoutFeedback
-        onLongPress={() => this._onLongPress(networkName)}
         onPressIn={() => this._handlePressIn(networkName)}
         onPressOut={() => this._handlePressOut(networkName)}
         onPress={() => this._handlePress(networkName, data, sync, history)}
@@ -77,10 +76,6 @@ export default class ListItem extends Component {
         </View>
       </TouchableWithoutFeedback>
     );
-  }
-
-  _onLongPress = () => {
-    // Re-order
   }
 
   _handlePressIn = () => {

@@ -14,8 +14,6 @@ import { capitalize, convertToHttps } from '../_utils/utils';
 import { colors } from '../_utils/networksColors';
 import fontelloConfig from '../config.json';
 import Stats from '../detailBlock/Stats';
-// import Graph from '../detailBlock/Graph';
-// import Activity from '../detailBlock/Activity';
 
 const Icon = createIconSetFromFontello(fontelloConfig);
 
@@ -96,18 +94,6 @@ export default class DetailView extends Component {
               data={data.stats}
               history={history}
             />
-
-            {/*
-            <Graph
-              network={network}
-              data={data.stats}
-            />
-
-            <Activity
-              network={network}
-              data={data.stats}
-            />
-            */}
 
             {syncDate}
           </ScrollView>

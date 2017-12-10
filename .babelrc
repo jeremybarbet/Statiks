@@ -1,0 +1,11 @@
+{
+  "presets": [
+    "react-native-stage-0/decorator-support",
+  ],
+  "plugins": [[
+    "module-resolver", {
+      "extensions": [".js", ".ios.js", ".android.js", ".json"],
+      "root": ["./src"],
+    },
+  ]],
+}

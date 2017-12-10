@@ -1,0 +1,28 @@
+From 343ce36c1c34438f2ce6964e8d2fcfb7fb62e254 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=A9r=C3=A9my=20Barbet?= <jeremgraph@gmail.com>
+Date: Sun, 26 Nov 2017 09:25:44 +0000
+Subject: [PATCH] requiresMainQueueSetup
+
+---
+ ios/RCCManagerModule.m | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/ios/RCCManagerModule.m b/ios/RCCManagerModule.m
+index 86aa9eeb..e8e4162a 100755
+--- a/ios/RCCManagerModule.m
++++ b/ios/RCCManagerModule.m
+@@ -73,6 +73,11 @@ RCT_EXPORT_MODULE(RCCManager);
+     return dispatch_get_main_queue();
+ }
+
+++ (BOOL)requiresMainQueueSetup
++{
++    return YES;
++}
++
+ #pragma mark - helper methods
+
+ +(UIViewController*)modalPresenterViewControllers:(NSMutableArray*)returnAllPresenters
+--
+2.14.2
+

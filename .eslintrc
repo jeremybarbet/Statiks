@@ -1,0 +1,7 @@
+{
+  "extends": "@ueno/eslint-config/react-native",
+  "rules": {
+    "import/extensions": 0,
+    "function-paren-newline": 0,
+  },
+}

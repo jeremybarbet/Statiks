@@ -1,48 +1,27 @@
 import { Navigation } from 'react-native-navigation';
-import { useStrict } from 'mobx';
 
-import Permission from './permission';
-import Welcome from './welcome';
-import Counter from './counter';
+import List from './list';
+import Detail from './detail';
+import Settings from './settings';
 
 // Contains screen modules
 export const Screens = new Map();
 
 // Create unique const screen keys
-export const PERMISSION = 'countie.Permission';
-export const WELCOME = 'countie.Welcome';
-export const COUNTER = 'countie.Counter';
+export const LIST = 'statiks.List';
+export const DETAIL = 'statiks.Detail';
+export const SETTINGS = 'statiks.Settings';
 
 // Map screen consts to their representive module
-Screens.set(PERMISSION, () => Permission);
-Screens.set(WELCOME, () => Welcome);
-Screens.set(COUNTER, () => Counter);
+Screens.set(LIST, () => List);
+Screens.set(DETAIL, () => Detail);
+Screens.set(SETTINGS, () => Settings);
 
-export const startApp = (data) => {
-  useStrict(true);
-
-  if (data.permission === null) {
-    startPermission();
-  } else if (data.active) {
-    startWelcome({ showModal: true });
-  } else {
-    startWelcome();
-  }
+export const startApp = () => {
+  Navigation.startSingleScreenApp({
+    screen: {
+      screen: LIST,
+      navigatorStyle: { navBarHidden: true },
+    },
+  });
 };
-
-export const startPermission = () =>
-  Navigation.startSingleScreenApp({
-    screen: {
-      screen: PERMISSION,
-      navigatorStyle: { navBarHidden: true },
-    },
-  });
-
-export const startWelcome = props =>
-  Navigation.startSingleScreenApp({
-    screen: {
-      screen: WELCOME,
-      navigatorStyle: { navBarHidden: true },
-    },
-    passProps: props,
-  });

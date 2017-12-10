@@ -4,4 +4,7 @@
     "import/extensions": 0,
     "function-paren-newline": 0,
   },
+  "globals": {
+    "__DEV__": true,
+  },
 }

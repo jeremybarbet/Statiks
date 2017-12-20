@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Image, TextInput, View, AlertIOS } from 'react-native';
+import { StyleSheet, Image, TextInput, View, AlertIOS, Platform } from 'react-native';
 import { inject, observer } from 'mobx-react/native';
 import { decorate } from 'react-mixin';
 import TimerMixin from 'react-native-timer-mixin';
 import { observable } from 'mobx';
 
-import { Loading, Remove, Success } from 'components/Indicators';
-
 import { fonts } from 'styles/variables';
 import { colors } from 'utils/colors';
 import { icons } from 'Api';
+
+import { Loading, Remove, Success } from './Indicators';
 
 @inject('stats')
 @observer
@@ -77,6 +77,7 @@ export default class Input extends Component {
             autoCorrect={false}
             autoCapitalize="none"
             selectionColor="rgba(255, 255, 255, 0.8)"
+            underlineColorAndroid="transparent"
           />
 
           {remove}
@@ -89,7 +90,11 @@ export default class Input extends Component {
 
   async removeItem(network) {
     this.props.stats.delete(network);
-    this.setState({ showRemoveIcon: false });
+
+    this.setState({
+      value: '',
+      showRemoveIcon: false,
+    });
   }
 
   handleChange = (text) => {
@@ -132,7 +137,7 @@ const s = StyleSheet.create({
     marginHorizontal: 15,
     marginBottom: 15,
     paddingLeft: 20,
-    paddingVertical: 15,
+    paddingVertical: Platform.OS === 'ios' ? 20 : 10,
 
     borderRadius: 4,
   },
@@ -154,7 +159,8 @@ const s = StyleSheet.create({
   input__info: {
     alignSelf: 'flex-end',
 
-    height: 40,
+    top: Platform.OS === 'ios' ? -2 : 0,
+
     width: 240,
 
     ...fonts.regular,

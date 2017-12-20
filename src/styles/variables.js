@@ -12,17 +12,17 @@ export const v = {
 
 export const fonts = {
   regular: {
-    fontFamily: 'DIN',
+    fontFamily: 'DIN-Regular',
     fontWeight: Platform.select({ android: '300', ios: '400' }),
   },
 
   medium: {
-    fontFamily: 'DIN',
+    fontFamily: 'DIN-Medium',
     fontWeight: Platform.select({ android: '400', ios: '500' }),
   },
 
   bold: {
-    fontFamily: 'DIN',
+    fontFamily: 'DIN-Bold',
     fontWeight: Platform.select({ android: '600', ios: '700' }),
   },
 };

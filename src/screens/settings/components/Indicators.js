@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Image, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, ActivityIndicator, TouchableOpacity, Platform } from 'react-native';
 
 import { colors } from 'utils/colors';
 
@@ -41,7 +41,7 @@ class Remove extends Component {
       >
         <Image
           style={[s.indicator__icon, s.indicator__removeIcon, { tintColor: colors(network) }]}
-          source={require('../assets/images/cross.png')}
+          source={require('../../../assets/images/cross.png')}
           resizeMode="contain"
         />
       </TouchableOpacity>
@@ -65,7 +65,7 @@ class Success extends Component {
       >
         <Image
           style={[s.indicator__icon, s.indicator__successIcon, { tintColor: colors(network) }]}
-          source={require('../assets/images/check.png')}
+          source={require('../../../assets/images/check.png')}
           resizeMode="contain"
         />
       </TouchableOpacity>
@@ -85,12 +85,12 @@ const s = StyleSheet.create({
   },
 
   indicator__loading: {
-    top: 10,
+    top: Platform.OS === 'ios' ? 4 : 16,
     left: 45,
   },
 
   indicator__success: {
-    top: 6,
+    top: Platform.OS === 'ios' ? 1 : 12,
     left: 45,
 
     width: 26,
@@ -108,7 +108,7 @@ const s = StyleSheet.create({
   },
 
   indicator__remove: {
-    top: 10,
+    top: Platform.OS === 'ios' ? 5 : 16,
     right: 18,
 
     width: 18,

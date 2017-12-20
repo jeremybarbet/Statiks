@@ -43,8 +43,8 @@ export default class Detail extends Component {
     const { network, data, history } = this.props;
     const { user } = data;
 
-    const source = get(data, 'user.Avatar')
-      ? { uri: convertToHttps(user.Avatar) }
+    const source = get(data, 'user.avatar')
+      ? { uri: convertToHttps(user.avatar) }
       : require('../../assets/images/avatar-placeholder.png');
 
     return (
@@ -82,9 +82,12 @@ export default class Detail extends Component {
             <View style={s.detail__user}>
               <Image style={s.detail__userAvatar} source={source} />
 
-              {get(data, 'user.Name') && <Text style={s.detail__username}>{user.Name}</Text>}
-              {get(data, 'user.Location') && <Text style={s.detail__userText}>{user.Location}</Text>}
-              {get(data, 'user.Bio') && <Text style={[s.detail__userText, s.detail__userAbout]}>{user.Bio}</Text>}
+              {get(data, 'user.name') && <Text style={s.detail__username}>{user.name}</Text>}
+              {get(data, 'user.location') && <Text style={s.detail__userText}>{user.location}</Text>}
+
+              <Text style={[s.detail__userText, s.detail__userAbout]}>
+                {get(data, 'user.bio') ? user.bio : 'The total view let you see all your stats added up together!'}
+              </Text>
             </View>
 
             <Stats

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, ScrollView, Text, Image, View, TouchableOpacity, StatusBar } from 'react-native';
 import get from 'lodash/get';
 
-import v from 'styles/variables';
+import { v, fonts } from 'styles/variables';
 import { capitalize, convertToHttps } from 'utils/utils';
 import { colors } from 'utils/colors';
 import { navigatorTypes } from 'utils/types';
@@ -170,7 +170,7 @@ const s = StyleSheet.create({
   detail__name: {
     marginLeft: 4,
 
-    fontFamily: v.dinBold,
+    ...fonts.bold,
     fontSize: 16,
 
     backgroundColor: 'transparent',
@@ -192,7 +192,7 @@ const s = StyleSheet.create({
   detail__username: {
     marginTop: 20,
 
-    fontFamily: v.dinBold,
+    ...fonts.bold,
     fontSize: 18,
     color: v.dark,
     textAlign: 'center',
@@ -204,7 +204,7 @@ const s = StyleSheet.create({
     marginTop: 6,
     paddingHorizontal: 40,
 
-    fontFamily: v.din,
+    ...fonts.regular,
     fontSize: 16,
     color: v.lightBlue,
     textAlign: 'center',

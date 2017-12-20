@@ -8,7 +8,7 @@ import { observable } from 'mobx';
 
 import { Loading, Remove, Success } from 'components/Indicators';
 
-import v from 'styles/variables';
+import { fonts } from 'styles/variables';
 import { colors } from 'utils/colors';
 import { icons } from 'Api';
 
@@ -157,7 +157,7 @@ const s = StyleSheet.create({
     height: 40,
     width: 240,
 
-    fontFamily: v.din,
+    ...fonts.regular,
     fontSize: 22,
     color: '#fff',
     textAlign: 'right',

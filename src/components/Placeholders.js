@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Dimensions, View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 
-import v from 'styles/variables';
+import { v, fonts } from 'styles/variables';
 import { navigatorTypes } from 'utils/types';
 
 import { SETTINGS } from '../screens';
@@ -117,7 +117,7 @@ const s = StyleSheet.create({
   container__title: {
     marginTop: 60,
 
-    fontFamily: v.dinBold,
+    ...fonts.bold,
     fontSize: 16,
     color: v.dark,
     letterSpacing: 2,
@@ -128,7 +128,7 @@ const s = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 50,
 
-    fontFamily: v.din,
+    ...fonts.regular,
     fontSize: 14,
     color: v.lightBlue,
     lineHeight: 22,
@@ -149,16 +149,16 @@ const s = StyleSheet.create({
   empty__buttonText: {
     paddingVertical: 18,
 
-    color: '#fff',
+    ...fonts.medium,
     fontSize: 16,
-    fontFamily: v.dinMedium,
+    color: '#fff',
     textAlign: 'center',
 
     backgroundColor: 'transparent',
   },
 
   error__link: {
-    fontFamily: v.dinMedium,
+    ...fonts.medium,
     color: v.green,
   },
 
@@ -178,7 +178,7 @@ const s = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 115,
 
-    fontFamily: v.din,
+    ...fonts.regular,
     fontSize: 14,
     color: v.lightBlue,
     lineHeight: 22,

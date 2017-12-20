@@ -67,19 +67,19 @@ export const handleResponse = {
   dribbble(res) {
     return {
       stats: {
-        Followers: res.followers_count,
-        Following: res.followings_count,
-        Likes: res.likes_count,
-        'Likes received': res.likes_received_count,
-        Shots: res.shots_count,
-        Projects: res.projects_count,
+        followers: res.followers_count,
+        following: res.followings_count,
+        likes: res.likes_count,
+        'likes received': res.likes_received_count,
+        shots: res.shots_count,
+        projects: res.projects_count,
       },
       user: {
-        Username: res.username,
-        Avatar: res.avatar_url,
-        Location: res.location,
-        Bio: removeTag(res.bio),
-        Name: res.name,
+        username: res.username,
+        avatar: res.avatar_url,
+        location: res.location,
+        bio: removeTag(res.bio),
+        name: res.name,
       },
     };
   },
@@ -93,18 +93,18 @@ export const handleResponse = {
 
     return {
       stats: {
-        Followers: parseInt((/\"followers_count\":([\d]+)/g).exec(data)[1], 10),
-        Following: parseInt((/\"friends_count\":([\d]+)/g).exec(data)[1], 10),
-        Tweets: parseInt((/\"statuses_count\":([\d]+)/g).exec(data)[1], 10),
-        Favorites: parseInt((/\"favourites_count\":([\d]+)/g).exec(data)[1], 10),
-        Listed: parseInt((/\"listed_count\":([\d]+)/g).exec(data)[1], 10),
+        followers: parseInt((/\"followers_count\":([\d]+)/g).exec(data)[1], 10),
+        following: parseInt((/\"friends_count\":([\d]+)/g).exec(data)[1], 10),
+        tweets: parseInt((/\"statuses_count\":([\d]+)/g).exec(data)[1], 10),
+        favorites: parseInt((/\"favourites_count\":([\d]+)/g).exec(data)[1], 10),
+        listed: parseInt((/\"listed_count\":([\d]+)/g).exec(data)[1], 10),
       },
       user: {
-        Username: (((/\"screen_name\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, '')).replace(/_normal/g, ''),
-        Avatar: (((/\"profile_image_url\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, '')).replace(/_normal/g, ''),
-        Location: decode((/\"location\":"(.*?)"/g).exec(data)[1]),
-        Bio: decode(((/\"description\":"(.*?)"/g).exec(lastMatch(description))[1]).replace(/\\n/g, ' ')).replace(/\\/g, ''),
-        Name: decode((/\"name\":"(.*?)"/g).exec(lastMatch(name))[1]),
+        username: (((/\"screen_name\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, '')).replace(/_normal/g, ''),
+        avatar: (((/\"profile_image_url\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, '')).replace(/_normal/g, ''),
+        location: decode((/\"location\":"(.*?)"/g).exec(data)[1]),
+        bio: decode(((/\"description\":"(.*?)"/g).exec(lastMatch(description))[1]).replace(/\\n/g, ' ')).replace(/\\/g, ''),
+        name: decode((/\"name\":"(.*?)"/g).exec(lastMatch(name))[1]),
       },
     };
   },
@@ -113,18 +113,18 @@ export const handleResponse = {
   behance(res) {
     return {
       stats: {
-        Followers: res.user.stats.followers,
-        Following: res.user.stats.following,
-        Likes: res.user.stats.appreciations,
-        Comments: res.user.stats.comments,
-        Views: res.user.stats.views,
+        followers: res.user.stats.followers,
+        following: res.user.stats.following,
+        likes: res.user.stats.appreciations,
+        comments: res.user.stats.comments,
+        views: res.user.stats.views,
       },
       user: {
-        Username: res.user.username,
-        Avatar: res.user.images['230'],
-        Location: res.user.location,
-        Bio: res.user.sections.About,
-        Name: res.user.display_name,
+        username: res.user.username,
+        avatar: res.user.images['230'],
+        location: res.user.location,
+        bio: res.user.sections.About,
+        name: res.user.display_name,
       },
     };
   },
@@ -133,19 +133,19 @@ export const handleResponse = {
   fivehundredpx(res) {
     return {
       stats: {
-        Followers: res.user.followers_count,
-        Following: res.user.friends_count,
-        Affection: res.user.affection,
-        Favorites: res.user.in_favorites_count,
-        Photos: res.user.photos_count,
+        followers: res.user.followers_count,
+        following: res.user.friends_count,
+        affection: res.user.affection,
+        favorites: res.user.in_favorites_count,
+        photos: res.user.photos_count,
       },
       user: {
-        Username: res.user.username,
-        Avatar: res.user.userpic_url,
-        City: res.user.city,
-        Country: res.user.country,
-        Bio: res.user.about,
-        Name: res.user.fullname,
+        username: res.user.username,
+        avatar: res.user.userpic_url,
+        city: res.user.city,
+        country: res.user.country,
+        bio: res.user.about,
+        name: res.user.fullname,
       },
     };
   },
@@ -154,17 +154,17 @@ export const handleResponse = {
   github(res) {
     return {
       stats: {
-        Followers: res.followers,
-        Following: res.following,
-        Repository: res.public_repos,
-        Gist: res.public_gists,
+        followers: res.followers,
+        following: res.following,
+        repository: res.public_repos,
+        gist: res.public_gists,
       },
       user: {
-        Username: res.login,
-        Avatar: res.avatar_url,
-        Location: res.location,
-        Bio: res.bio,
-        Name: res.name,
+        username: res.login,
+        avatar: res.avatar_url,
+        location: res.location,
+        bio: res.bio,
+        name: res.name,
       },
     };
   },
@@ -173,19 +173,19 @@ export const handleResponse = {
   vimeo(res, u) {
     return {
       stats: {
-        Followers: res.total_contacts,
-        // Following: res.following,
-        Videos: res.total_videos_uploaded,
-        Channels: res.total_channels,
-        Likes: res.total_videos_liked,
-        Albums: res.total_albums,
+        followers: res.total_contacts,
+        // following: res.following,
+        videos: res.total_videos_uploaded,
+        channels: res.total_channels,
+        likes: res.total_videos_liked,
+        albums: res.total_albums,
       },
       user: {
-        Username: u,
-        Avatar: res.portrait_huge,
-        Location: res.location,
-        Bio: res.bio,
-        Name: res.display_name,
+        username: u,
+        avatar: res.portrait_huge,
+        location: res.location,
+        bio: res.bio,
+        name: res.display_name,
       },
     };
   },
@@ -194,15 +194,15 @@ export const handleResponse = {
   instagram(res) {
     return {
       stats: {
-        Followers: parseInt((/\"followed_by\": {\"count\": ([\d]+)/g).exec(res)[1], 10),
-        Following: parseInt((/\"follows\": {\"count\": ([\d]+)/g).exec(res)[1], 10),
-        Medias: parseInt((/\}}], \"count\": ([\d]+)/g).exec(res)[1], 10),
+        followers: parseInt((/\"followed_by\": {\"count\": ([\d]+)/g).exec(res)[1], 10),
+        following: parseInt((/\"follows\": {\"count\": ([\d]+)/g).exec(res)[1], 10),
+        medias: parseInt((/\}}], \"count\": ([\d]+)/g).exec(res)[1], 10),
       },
       user: {
-        Username: ((/\"username\": "(.*?)"/g).exec(res)[1]).replace(/\\/g, ''),
-        Avatar: ((/\"profile_pic_url\": "(.*?)"/g).exec(res)[1]).replace(/\\/g, ''),
-        Bio: decode(((/\"biography\": "(.*?)"/g).exec(res)[1]).replace(/\\n/g, ' ')).replace(/\\/g, ''),
-        Name: decode((/\"full_name\": "(.*?)"/g).exec(res)[1]),
+        username: ((/\"username\": "(.*?)"/g).exec(res)[1]).replace(/\\/g, ''),
+        avatar: ((/\"profile_pic_url\": "(.*?)"/g).exec(res)[1]).replace(/\\/g, ''),
+        bio: decode(((/\"biography\": "(.*?)"/g).exec(res)[1]).replace(/\\n/g, ' ')).replace(/\\/g, ''),
+        name: decode((/\"full_name\": "(.*?)"/g).exec(res)[1]),
       },
     };
   },
@@ -211,16 +211,16 @@ export const handleResponse = {
   pinterest(res) {
     return {
       stats: {
-        Followers: (/followers" content="([\d]+)"/g).exec(res)[1],
-        Following: (/following" content="([\d]+)"/g).exec(res)[1],
-        Pins: (/pins" content="([\d]+)"/g).exec(res)[1],
-        Boards: (/boards" content="([\d]+)"/g).exec(res)[1],
+        followers: (/followers" content="([\d]+)"/g).exec(res)[1],
+        following: (/following" content="([\d]+)"/g).exec(res)[1],
+        pins: (/pins" content="([\d]+)"/g).exec(res)[1],
+        boards: (/boards" content="([\d]+)"/g).exec(res)[1],
       },
       user: {
-        Username: (/og:title" content="(?:(.*)) \((.*)\)"/g).exec(res)[2],
-        Avatar: (/image:src" content="(.*?)"/g).exec(res)[1],
-        Bio: (/about" content="(.*?)"/g).exec(res)[1],
-        Name: ((/og:title" content="(.*?)"/g).exec(res)[1]).replace(/\s*\(.*?\)\s*/g, ''),
+        username: (/og:title" content="(?:(.*)) \((.*)\)"/g).exec(res)[2],
+        avatar: (/image:src" content="(.*?)"/g).exec(res)[1],
+        bio: (/about" content="(.*?)"/g).exec(res)[1],
+        name: ((/og:title" content="(.*?)"/g).exec(res)[1]).replace(/\s*\(.*?\)\s*/g, ''),
       },
     };
   },
@@ -229,19 +229,19 @@ export const handleResponse = {
   soundcloud(res) {
     return {
       stats: {
-        Followers: res.followers_count,
-        Following: res.followings_count,
-        Tracks: res.track_count,
-        Playlist: res.playlist_count,
-        Favorites: res.public_favorites_count,
+        followers: res.followers_count,
+        following: res.followings_count,
+        tracks: res.track_count,
+        playlist: res.playlist_count,
+        favorites: res.public_favorites_count,
       },
       user: {
-        Username: res.username,
-        Avatar: res.avatar_url,
-        City: res.city,
-        Country: res.country,
-        Bio: res.description,
-        Name: res.full_name,
+        username: res.username,
+        avatar: res.avatar_url,
+        city: res.city,
+        country: res.country,
+        bio: res.description,
+        name: res.full_name,
       },
     };
   },
@@ -250,18 +250,18 @@ export const handleResponse = {
   producthunt(res) {
     return {
       stats: {
-        Followers: res.user.followers_count,
-        Following: res.user.followings_count,
-        Votes: res.user.votes_count,
-        Posts: res.user.posts_count,
-        Maker: res.user.maker_of_count,
-        Collections: res.user.collections_count,
+        followers: res.user.followers_count,
+        following: res.user.followings_count,
+        votes: res.user.votes_count,
+        posts: res.user.posts_count,
+        maker: res.user.maker_of_count,
+        collections: res.user.collections_count,
       },
       user: {
-        Username: res.username,
-        Avatar: res.user.image_url['220px'],
-        Bio: res.user.headline,
-        Name: res.user.name,
+        username: res.username,
+        avatar: res.user.image_url['220px'],
+        bio: res.user.headline,
+        name: res.user.name,
       },
     };
   },

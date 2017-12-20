@@ -30,20 +30,20 @@ export default class Stats {
 
   @computed
   get total() {
-    const Followers = this.values
-      .filter(c => !isNil(c.stats.Followers))
-      .map(c => c.stats.Followers)
+    const followers = this.values
+      .filter(c => !isNil(c.stats.followers))
+      .map(c => c.stats.followers)
       .reduce((a, b) => Number(a) + Number(b), 0);
 
-    const Following = this.values
-      .filter(c => !isNil(c.stats.Following))
-      .map(c => c.stats.Following)
+    const following = this.values
+      .filter(c => !isNil(c.stats.following))
+      .map(c => c.stats.following)
       .reduce((a, b) => Number(a) + Number(b), 0);
 
     return {
       stats: {
-        Followers,
-        Following,
+        followers,
+        following,
       },
     };
   }
@@ -56,7 +56,7 @@ export default class Stats {
 
   getUsername = (n) => {
     if (this.data.has(n)) {
-      return this.data.get(n).user.Username;
+      return this.data.get(n).user.username;
     }
   }
 
@@ -92,7 +92,7 @@ export default class Stats {
 
     await Promise.all(
       Object.keys(parsed).map(network =>
-        this.fetch(parsed[network].user.Username, network),
+        this.fetch(parsed[network].user.username, network),
       ),
     );
   }

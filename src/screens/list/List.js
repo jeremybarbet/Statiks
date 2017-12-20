@@ -155,7 +155,6 @@ export default class List extends Component {
           <Item
             network={network}
             data={stats}
-            followers={stats.stats.Followers}
             navigator={navigator}
           />
         </AnimatedScrollView>

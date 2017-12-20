@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 // import isNil from 'lodash/isNil';
 
 import v from 'styles/variables';
-import { format, getRatio } from 'utils/utils';
+import { format, getRatio, capitalize } from 'utils/utils';
 import { colors } from 'utils/colors';
 
 class Stats extends PureComponent {
@@ -16,13 +16,13 @@ class Stats extends PureComponent {
 
   render() {
     const { data, network } = this.props;
-    const { Followers, Following } = data;
+    const { followers, following } = data;
 
     return (
       <View style={s.item}>
         <Text style={s.item__title}>{'User statistics'.toUpperCase()}</Text>
         {Object.keys(data).map(item => this.renderRow(item, data[item], network))}
-        <Ratio ratio={getRatio(Followers, Following)} />
+        <Ratio ratio={getRatio(followers, following)} />
       </View>
     );
   }
@@ -31,7 +31,7 @@ class Stats extends PureComponent {
     <View key={`detail-row-${item}`} style={s.item__row}>
       <View>
         <Text style={[s.item__text, s.item__number]}>{format(detail)}</Text>
-        <Text style={[s.item__text, s.item__label]}>{item}</Text>
+        <Text style={[s.item__text, s.item__label]}>{capitalize(item)}</Text>
       </View>
 
       {/* !isNil(diff) && <Diff network={network} diff={diff} /> */}
@@ -107,6 +107,9 @@ const s = StyleSheet.create({
   },
 
   item__ratio: {
+    marginTop: 8,
+    paddingVertical: 8,
+
     borderTopWidth: 1,
     borderColor: '#e1ebf5',
   },

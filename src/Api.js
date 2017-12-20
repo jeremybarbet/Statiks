@@ -67,12 +67,12 @@ export const handleResponse = {
   dribbble(res) {
     return {
       stats: {
-        followers: res.followers_count,
-        following: res.followings_count,
-        likes: res.likes_count,
-        'likes received': res.likes_received_count,
-        shots: res.shots_count,
-        projects: res.projects_count,
+        followers: { count: res.followers_count, diff: 0 },
+        following: { count: res.followings_count, diff: 0 },
+        likes: { count: res.likes_count, diff: 0 },
+        'likes received': { count: res.likes_received_count, diff: 0 },
+        shots: { count: res.shots_count, diff: 0 },
+        projects: { count: res.projects_count, diff: 0 },
       },
       user: {
         username: res.username,
@@ -89,15 +89,15 @@ export const handleResponse = {
     const data = res.replace(/&quot;/g, '"').match(/<input type="hidden" id="init-data".+>/g)[0];
     const name = data.match(/\"name\":"(.*?)"/g);
     const description = data.match(/\"description\":"(.*?)"/g);
-    const lastMatch = value => value[value.length - 1];
+    const lastMatch = v => v[v.length - 1];
 
     return {
       stats: {
-        followers: parseInt((/\"followers_count\":([\d]+)/g).exec(data)[1], 10),
-        following: parseInt((/\"friends_count\":([\d]+)/g).exec(data)[1], 10),
-        tweets: parseInt((/\"statuses_count\":([\d]+)/g).exec(data)[1], 10),
-        favorites: parseInt((/\"favourites_count\":([\d]+)/g).exec(data)[1], 10),
-        listed: parseInt((/\"listed_count\":([\d]+)/g).exec(data)[1], 10),
+        followers: { count: parseInt((/\"followers_count\":([\d]+)/g).exec(data)[1], 10), diff: 0 },
+        following: { count: parseInt((/\"friends_count\":([\d]+)/g).exec(data)[1], 10), diff: 0 },
+        tweets: { count: parseInt((/\"statuses_count\":([\d]+)/g).exec(data)[1], 10), diff: 0 },
+        favorites: { count: parseInt((/\"favourites_count\":([\d]+)/g).exec(data)[1], 10), diff: 0 },
+        listed: { count: parseInt((/\"listed_count\":([\d]+)/g).exec(data)[1], 10), diff: 0 },
       },
       user: {
         username: (((/\"screen_name\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, '')).replace(/_normal/g, ''),
@@ -113,11 +113,11 @@ export const handleResponse = {
   behance(res) {
     return {
       stats: {
-        followers: res.user.stats.followers,
-        following: res.user.stats.following,
-        likes: res.user.stats.appreciations,
-        comments: res.user.stats.comments,
-        views: res.user.stats.views,
+        followers: { count: res.user.stats.followers, diff: 0 },
+        following: { count: res.user.stats.following, diff: 0 },
+        likes: { count: res.user.stats.appreciations, diff: 0 },
+        comments: { count: res.user.stats.comments, diff: 0 },
+        views: { count: res.user.stats.views, diff: 0 },
       },
       user: {
         username: res.user.username,
@@ -133,11 +133,11 @@ export const handleResponse = {
   fivehundredpx(res) {
     return {
       stats: {
-        followers: res.user.followers_count,
-        following: res.user.friends_count,
-        affection: res.user.affection,
-        favorites: res.user.in_favorites_count,
-        photos: res.user.photos_count,
+        followers: { count: res.user.followers_count, diff: 0 },
+        following: { count: res.user.friends_count, diff: 0 },
+        affection: { count: res.user.affection, diff: 0 },
+        favorites: { count: res.user.in_favorites_count, diff: 0 },
+        photos: { count: res.user.photos_count, diff: 0 },
       },
       user: {
         username: res.user.username,
@@ -154,10 +154,10 @@ export const handleResponse = {
   github(res) {
     return {
       stats: {
-        followers: res.followers,
-        following: res.following,
-        repository: res.public_repos,
-        gist: res.public_gists,
+        followers: { count: res.followers, diff: 0 },
+        following: { count: res.following, diff: 0 },
+        repository: { count: res.public_repos, diff: 0 },
+        gist: { count: res.public_gists, diff: 0 },
       },
       user: {
         username: res.login,
@@ -173,12 +173,12 @@ export const handleResponse = {
   vimeo(res, u) {
     return {
       stats: {
-        followers: res.total_contacts,
-        // following: res.following,
-        videos: res.total_videos_uploaded,
-        channels: res.total_channels,
-        likes: res.total_videos_liked,
-        albums: res.total_albums,
+        followers: { count: res.total_contacts, diff: 0 },
+        // following: { count: res.following, diff: 0 },
+        videos: { count: res.total_videos_uploaded, diff: 0 },
+        channels: { count: res.total_channels, diff: 0 },
+        likes: { count: res.total_videos_liked, diff: 0 },
+        albums: { count: res.total_albums, diff: 0 },
       },
       user: {
         username: u,
@@ -194,9 +194,9 @@ export const handleResponse = {
   instagram(res) {
     return {
       stats: {
-        followers: parseInt((/\"followed_by\": {\"count\": ([\d]+)/g).exec(res)[1], 10),
-        following: parseInt((/\"follows\": {\"count\": ([\d]+)/g).exec(res)[1], 10),
-        medias: parseInt((/\}}], \"count\": ([\d]+)/g).exec(res)[1], 10),
+        followers: { count: parseInt((/\"followed_by\": {\"count\": ([\d]+)/g).exec(res)[1], 10), diff: 0 },
+        following: { count: parseInt((/\"follows\": {\"count\": ([\d]+)/g).exec(res)[1], 10), diff: 0 },
+        medias: { count: parseInt((/\}}], \"count\": ([\d]+)/g).exec(res)[1], 10), diff: 0 },
       },
       user: {
         username: ((/\"username\": "(.*?)"/g).exec(res)[1]).replace(/\\/g, ''),
@@ -211,10 +211,10 @@ export const handleResponse = {
   pinterest(res) {
     return {
       stats: {
-        followers: (/followers" content="([\d]+)"/g).exec(res)[1],
-        following: (/following" content="([\d]+)"/g).exec(res)[1],
-        pins: (/pins" content="([\d]+)"/g).exec(res)[1],
-        boards: (/boards" content="([\d]+)"/g).exec(res)[1],
+        followers: { count: (/followers" content="([\d]+)"/g).exec(res)[1], diff: 0 },
+        following: { count: (/following" content="([\d]+)"/g).exec(res)[1], diff: 0 },
+        pins: { count: (/pins" content="([\d]+)"/g).exec(res)[1], diff: 0 },
+        boards: { count: (/boards" content="([\d]+)"/g).exec(res)[1], diff: 0 },
       },
       user: {
         username: (/og:title" content="(?:(.*)) \((.*)\)"/g).exec(res)[2],
@@ -229,11 +229,11 @@ export const handleResponse = {
   soundcloud(res) {
     return {
       stats: {
-        followers: res.followers_count,
-        following: res.followings_count,
-        tracks: res.track_count,
-        playlist: res.playlist_count,
-        favorites: res.public_favorites_count,
+        followers: { count: res.followers_count, diff: 0 },
+        following: { count: res.followings_count, diff: 0 },
+        tracks: { count: res.track_count, diff: 0 },
+        playlist: { count: res.playlist_count, diff: 0 },
+        favorites: { count: res.public_favorites_count, diff: 0 },
       },
       user: {
         username: res.username,
@@ -250,12 +250,12 @@ export const handleResponse = {
   producthunt(res) {
     return {
       stats: {
-        followers: res.user.followers_count,
-        following: res.user.followings_count,
-        votes: res.user.votes_count,
-        posts: res.user.posts_count,
-        maker: res.user.maker_of_count,
-        collections: res.user.collections_count,
+        followers: { count: res.user.followers_count, diff: 0 },
+        following: { count: res.user.followings_count, diff: 0 },
+        votes: { count: res.user.votes_count, diff: 0 },
+        posts: { count: res.user.posts_count, diff: 0 },
+        maker: { count: res.user.maker_of_count, diff: 0 },
+        collections: { count: res.user.collections_count, diff: 0 },
       },
       user: {
         username: res.username,

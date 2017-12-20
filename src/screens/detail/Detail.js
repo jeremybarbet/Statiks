@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, ScrollView, Text, Image, View, TouchableOpacity, StatusBar } from 'react-native';
+import { StyleSheet, ScrollView, Text, Image, View, TouchableOpacity, StatusBar, Platform } from 'react-native';
 import get from 'lodash/get';
 
 import { v, fonts } from 'styles/variables';
@@ -32,11 +32,15 @@ export default class Detail extends Component {
   }
 
   componentDidMount() {
-    StatusBar.setHidden(true, 'fade');
+    if (Platform.OS === 'ios') {
+      StatusBar.setHidden(true, 'fade');
+    }
   }
 
   componentWillUnmount() {
-    StatusBar.setHidden(false, 'fade');
+    if (Platform.OS === 'ios') {
+      StatusBar.setHidden(false, 'fade');
+    }
   }
 
   render() {

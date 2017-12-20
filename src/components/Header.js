@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Image, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, View, Text, TouchableOpacity, Platform } from 'react-native';
 
 import { v, fonts } from 'styles/variables';
 
@@ -65,13 +65,14 @@ export default class Header extends Component {
 
 const s = StyleSheet.create({
   header: {
-    paddingBottom: 5,
+    paddingTop: Platform.OS === 'ios' ? 0 : 15,
+    paddingBottom: Platform.OS === 'ios' ? 5 : 15,
 
     backgroundColor: v.bgBlue,
   },
 
   header__status: {
-    height: STATUS_BAR_HEIGHT,
+    height: Platform.OS === 'ios' ? STATUS_BAR_HEIGHT : 0,
   },
 
   header__nav: {

@@ -4,7 +4,6 @@ import { StyleSheet, ScrollView, Text, Image, View, TouchableOpacity, StatusBar 
 import get from 'lodash/get';
 
 import v from 'styles/variables';
-import g from 'styles/global';
 import { capitalize, convertToHttps } from 'utils/utils';
 import { colors } from 'utils/colors';
 import { navigatorTypes } from 'utils/types';
@@ -50,7 +49,7 @@ export default class Detail extends Component {
 
     return (
       <View style={s.detail}>
-        <View style={[g.layout, s.detail__container]}>
+        <View style={s.detail__container}>
           <View style={s.detail__header}>
             <TouchableOpacity
               onPress={this.hideModal}
@@ -81,11 +80,11 @@ export default class Detail extends Component {
 
           <ScrollView>
             <View style={s.detail__user}>
-              <Image style={s.detail__useravatar} source={source} />
+              <Image style={s.detail__userAvatar} source={source} />
 
               {get(data, 'user.Name') && <Text style={s.detail__username}>{user.Name}</Text>}
-              {get(data, 'user.Location') && <Text style={s.detail__usertext}>{user.Location}</Text>}
-              {get(data, 'user.Bio') && <Text style={[s.detail__usertext, s.detail__userabout]}>{user.Bio}</Text>}
+              {get(data, 'user.Location') && <Text style={s.detail__userText}>{user.Location}</Text>}
+              {get(data, 'user.Bio') && <Text style={[s.detail__userText, s.detail__userAbout]}>{user.Bio}</Text>}
             </View>
 
             <Stats
@@ -116,6 +115,7 @@ const s = StyleSheet.create({
   },
 
   detail__container: {
+    flex: 1,
     overflow: 'hidden',
 
     borderTopLeftRadius: 4,
@@ -177,7 +177,7 @@ const s = StyleSheet.create({
     paddingVertical: 40,
   },
 
-  detail__useravatar: {
+  detail__userAvatar: {
     alignSelf: 'center',
 
     width: 64,
@@ -197,7 +197,7 @@ const s = StyleSheet.create({
     backgroundColor: 'transparent',
   },
 
-  detail__usertext: {
+  detail__userText: {
     marginTop: 6,
     paddingHorizontal: 40,
 
@@ -209,7 +209,7 @@ const s = StyleSheet.create({
     backgroundColor: 'transparent',
   },
 
-  detail__userabout: {
+  detail__userAbout: {
     marginTop: 20,
 
     fontSize: 14,

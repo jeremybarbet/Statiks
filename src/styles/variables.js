@@ -1,4 +1,4 @@
-module.exports = {
+const variables = {
   bgBlue: '#f0f6fa',
 
   dark: '#143d66',
@@ -12,3 +12,5 @@ module.exports = {
   dinMedium: 'DIN-Medium',
   dinBold: 'DIN-Bold',
 };
+
+export default variables;

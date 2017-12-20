@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Dimensions, View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 
-import g from 'styles/global';
 import v from 'styles/variables';
 import { navigatorTypes } from 'utils/types';
 
@@ -22,7 +21,7 @@ class Empty extends PureComponent {
 
   render() {
     return (
-      <View style={[g.layout, s.container]}>
+      <View style={s.container}>
         <Image
           style={s.container__illustration}
           source={require('../assets/images/welcome-illu.png')}
@@ -53,7 +52,7 @@ class Error extends PureComponent {
 
   render() {
     return (
-      <View style={[g.layout, s.error]}>
+      <View style={s.container}>
         <Image
           style={s.container__illustration}
           source={require('../assets/images/error-illu.png')}
@@ -85,7 +84,7 @@ class Loading extends PureComponent {
     const { description } = this.props;
 
     return (
-      <View style={[g.layout, s.container]}>
+      <View style={s.container}>
         <Image
           style={s.loading__illustration}
           source={require('../assets/images/emoji-loading.gif')}
@@ -99,8 +98,11 @@ class Loading extends PureComponent {
 
 const s = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
+
+    backgroundColor: v.bgBlue,
   },
 
   container__illustration: {
@@ -153,11 +155,6 @@ const s = StyleSheet.create({
     textAlign: 'center',
 
     backgroundColor: 'transparent',
-  },
-
-  error: {
-    flexDirection: 'column',
-    justifyContent: 'center',
   },
 
   error__link: {

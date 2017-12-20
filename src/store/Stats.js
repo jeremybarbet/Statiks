@@ -32,18 +32,18 @@ export default class Stats {
   get total() {
     const followers = this.values
       .filter(c => !isNil(c.stats.followers))
-      .map(c => c.stats.followers)
+      .map(c => c.stats.followers.count)
       .reduce((a, b) => Number(a) + Number(b), 0);
 
     const following = this.values
       .filter(c => !isNil(c.stats.following))
-      .map(c => c.stats.following)
+      .map(c => c.stats.following.count)
       .reduce((a, b) => Number(a) + Number(b), 0);
 
     return {
       stats: {
-        followers,
-        following,
+        followers: { count: followers, diff: 0 },
+        following: { count: following, diff: 0 },
       },
     };
   }
@@ -74,9 +74,16 @@ export default class Stats {
           error: false,
         };
 
-        this.data.set(n, res);
-
-        return res;
+        if (this.data.has(n)) {
+          this.data.set(n, {
+            ...res,
+            ...Object.keys(res.stats).forEach(v => // eslint-disable-line
+              res.stats[v].diff = res.stats[v].count - this.data.get(n).stats[v].count,
+            ),
+          });
+        } else {
+          this.data.set(n, res);
+        }
       })
       .catch((err) => {
         this.status = {

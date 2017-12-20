@@ -75,8 +75,6 @@ export default class List extends Component {
 
     if (data.size <= 0) return <Empty navigator={navigator} />;
 
-    const networkConnected = `${data.size} network${data.size === 1 ? '' : 's'} connected`;
-
     return (
       <View style={{ flex: 1 }}>
         <Header navigator={navigator} title="Statiks" />
@@ -94,7 +92,7 @@ export default class List extends Component {
           {stats.total && (
             <Item
               title="total"
-              description={networkConnected}
+              description={`${data.size} network${data.size === 1 ? '' : 's'} connected`}
               data={stats.total}
               navigator={navigator}
             />

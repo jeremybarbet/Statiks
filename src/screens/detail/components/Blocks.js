@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
-// import isNil from 'lodash/isNil';
 
 import v from 'styles/variables';
 import { format, getRatio, capitalize } from 'utils/utils';
@@ -22,19 +21,19 @@ class Stats extends PureComponent {
       <View style={s.item}>
         <Text style={s.item__title}>{'User statistics'.toUpperCase()}</Text>
         {Object.keys(data).map(item => this.renderRow(item, data[item], network))}
-        <Ratio ratio={getRatio(followers, following)} />
+        <Ratio ratio={getRatio(followers.count, following.count)} />
       </View>
     );
   }
 
-  renderRow = (item, detail/* , network */) => (
-    <View key={`detail-row-${item}`} style={s.item__row}>
+  renderRow = (value, stat, network) => (
+    <View key={`detail-row-${value}`} style={s.item__row}>
       <View>
-        <Text style={[s.item__text, s.item__number]}>{format(detail)}</Text>
-        <Text style={[s.item__text, s.item__label]}>{capitalize(item)}</Text>
+        <Text style={[s.item__text, s.item__number]}>{format(stat.count)}</Text>
+        <Text style={[s.item__text, s.item__label]}>{capitalize(value)}</Text>
       </View>
 
-      {/* !isNil(diff) && <Diff network={network} diff={diff} /> */}
+      {stat.diff !== 0 && <Diff network={network} diff={stat.diff} />}
     </View>
   )
 }
@@ -76,7 +75,9 @@ class Diff extends PureComponent {
 
     return (
       <View style={[s.item__growth, { backgroundColor: colors(network) }]}>
-        <Text style={s.item__growthNumber}>{(diff > 0) ? `+${diff}` : diff}</Text>
+        <Text style={s.item__growthNumber}>
+          {diff > 0 ? `+${diff}` : diff}
+        </Text>
       </View>
     );
   }

@@ -4,7 +4,6 @@ import { Image, StyleSheet, Dimensions, Text, View, TouchableWithoutFeedback } f
 import get from 'lodash/get';
 
 import v from 'styles/variables';
-import g from 'styles/global';
 import { luminosity, colors } from 'utils/colors';
 
 import { icons } from 'Api';
@@ -49,7 +48,7 @@ export default class Item extends Component {
             />
           </View>
 
-          <View style={g.inlineBlock}>
+          <View style={s.item__inline}>
             <View style={s.item__left}>
               <Text style={s.item__info}>
                 {networkName === 'fivehundredpx' ? '500px' : networkName}
@@ -61,8 +60,8 @@ export default class Item extends Component {
             </View>
 
             <View style={s.item__right}>
-              <Text style={[s.item__info, g.alignRight]}>{data.stats.Followers}</Text>
-              <Text style={[s.item__text, g.alignRight]}>followers</Text>
+              <Text style={[s.item__info, s.item__infoRight]}>{data.stats.Followers}</Text>
+              <Text style={[s.item__text, s.item__infoRight]}>followers</Text>
             </View>
           </View>
         </View>
@@ -125,6 +124,11 @@ const s = StyleSheet.create({
     color: '#fff',
   },
 
+  item__infoRight: {
+    textAlign: 'right',
+    alignSelf: 'flex-end',
+  },
+
   item__text: {
     opacity: 0.75,
 
@@ -133,6 +137,13 @@ const s = StyleSheet.create({
     fontFamily: v.din,
     fontSize: 16,
     color: '#fff',
+  },
+
+  item__inline: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 
   item__left: {

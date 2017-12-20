@@ -4,7 +4,6 @@ import { inject, observer } from 'mobx-react/native';
 import { observable, toJS } from 'mobx';
 
 import v from 'styles/variables';
-import g from 'styles/global';
 import { navigatorTypes } from 'utils/types';
 
 import { Empty } from 'components/Placeholders';
@@ -83,7 +82,7 @@ export default class List extends Component {
         <Header navigator={navigator} title="Statiks" />
 
         <ScrollView
-          style={[g.layout, s.list]}
+          style={s.list}
           refreshControl={<RefreshControl
             refreshing={this.isRefreshing}
             onRefresh={this.onRefresh}
@@ -143,7 +142,7 @@ export default class List extends Component {
           style={[s.list__delete, this.scaleDeleteIcon()]}
           {...this.panResponder.panHandlers}
         >
-          <Image style={s.list__deleteicon} source={require('../../assets/images/cross.png')} />
+          <Image style={s.list__deleteIcon} source={require('../../assets/images/cross.png')} />
         </Animated.View>
 
         <AnimatedScrollView
@@ -167,7 +166,11 @@ export default class List extends Component {
 
 const s = StyleSheet.create({
   list: {
+    flex: 1,
+
     paddingTop: 10,
+
+    backgroundColor: v.bgBlue,
   },
 
   list__delete: {
@@ -185,7 +188,7 @@ const s = StyleSheet.create({
     borderRadius: 50,
   },
 
-  list__deleteicon: {
+  list__deleteIcon: {
     width: 18,
     height: 18,
 

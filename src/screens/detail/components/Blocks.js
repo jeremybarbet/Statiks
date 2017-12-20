@@ -76,7 +76,7 @@ class Diff extends PureComponent {
 
     return (
       <View style={[s.item__growth, { backgroundColor: colors(network) }]}>
-        <Text style={s.item__growthnumber}>{(diff > 0) ? `+${diff}` : diff}</Text>
+        <Text style={s.item__growthNumber}>{(diff > 0) ? `+${diff}` : diff}</Text>
       </View>
     );
   }
@@ -147,7 +147,7 @@ const s = StyleSheet.create({
     borderRadius: 4,
   },
 
-  item__growthnumber: {
+  item__growthNumber: {
     fontFamily: v.dinMedium,
     fontSize: 14,
     color: '#fff',

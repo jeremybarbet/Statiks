@@ -5,7 +5,7 @@ import get from 'lodash/get';
 
 import Header from 'components/Header';
 
-import g from 'styles/global';
+import v from 'styles/variables';
 import { navigatorTypes } from 'utils/types';
 import { api } from 'Api';
 
@@ -62,7 +62,7 @@ export default class Settings extends Component {
         <Animated.View style={{ height: keyboardSpace }}>
           <ScrollView
             ref={(c) => { this.scrollView = c; }}
-            style={[g.layout, s.settings]}
+            style={s.settings}
             keyboardShouldPersistTaps="always"
             keyboardDismissMode="interactive"
             onScroll={this.contentSize}
@@ -132,6 +132,10 @@ export default class Settings extends Component {
 
 const s = StyleSheet.create({
   settings: {
+    flex: 1,
+
     paddingTop: 10,
+
+    backgroundColor: v.bgBlue,
   },
 });

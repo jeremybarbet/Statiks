@@ -9,7 +9,6 @@ import { observable } from 'mobx';
 import { Loading, Remove, Success } from 'components/Indicators';
 
 import v from 'styles/variables';
-import g from 'styles/global';
 import { colors } from 'utils/colors';
 import { icons } from 'Api';
 
@@ -54,35 +53,33 @@ export default class Input extends Component {
         style={[s.input, { backgroundColor: colors(network) }]}
         ref={internalRef}
       >
-        <View>
-          <View style={g.inlineBlock}>
-            <Image
-              style={s.input__icon}
-              resizeMode="contain"
-              source={this.getIcon(network)}
-            />
+        <View style={s.input__inline}>
+          <Image
+            style={s.input__icon}
+            resizeMode="contain"
+            source={this.getIcon(network)}
+          />
 
-            {loading}
-            {success}
+          {loading}
+          {success}
 
-            <TextInput
-              ref={(c) => { this.input = c; }}
-              style={[s.input__info, g.alignRight, { marginRight: hasText ? 46 : 20 }]}
-              onFocus={onPress}
-              onChangeText={text => this.handleChange(text)}
-              onEndEditing={() => this.handleSubmit(inputValue, network)}
-              value={inputValue}
-              returnKeyType="done"
-              enablesReturnKeyAutomatically
-              placeholder={network === 'fivehundredpx' ? '500px' : network}
-              placeholderTextColor="rgba(255, 255, 255, 0.25)"
-              autoCorrect={false}
-              autoCapitalize="none"
-              selectionColor="rgba(255, 255, 255, 0.8)"
-            />
+          <TextInput
+            ref={(c) => { this.input = c; }}
+            style={[s.input__info, { marginRight: hasText ? 46 : 20 }]}
+            onFocus={onPress}
+            onChangeText={text => this.handleChange(text)}
+            onEndEditing={() => this.handleSubmit(inputValue, network)}
+            value={inputValue}
+            returnKeyType="done"
+            enablesReturnKeyAutomatically
+            placeholder={network === 'fivehundredpx' ? '500px' : network}
+            placeholderTextColor="rgba(255, 255, 255, 0.25)"
+            autoCorrect={false}
+            autoCapitalize="none"
+            selectionColor="rgba(255, 255, 255, 0.8)"
+          />
 
-            {remove}
-          </View>
+          {remove}
         </View>
       </View>
     );
@@ -140,6 +137,13 @@ const s = StyleSheet.create({
     borderRadius: 4,
   },
 
+  input__inline: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
   input__icon: {
     height: 28,
     width: 28,
@@ -148,12 +152,15 @@ const s = StyleSheet.create({
   },
 
   input__info: {
+    alignSelf: 'flex-end',
+
     height: 40,
     width: 240,
 
     fontFamily: v.din,
     fontSize: 22,
     color: '#fff',
+    textAlign: 'right',
 
     backgroundColor: 'transparent',
   },

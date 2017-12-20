@@ -82,7 +82,7 @@ export default class Detail extends Component {
             </View>
           </View>
 
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <View style={s.detail__user}>
               <Image style={s.detail__userAvatar} source={source} />
 

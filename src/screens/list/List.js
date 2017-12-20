@@ -81,11 +81,14 @@ export default class List extends Component {
 
         <ScrollView
           style={s.list}
-          refreshControl={<RefreshControl
-            refreshing={this.isRefreshing}
-            onRefresh={this.onRefresh}
-            tintColor={v.graySaturateLighter}
-          />}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.isRefreshing}
+              onRefresh={this.onRefresh}
+              tintColor={v.graySaturateLighter}
+            />
+          }
         >
           {Object.keys(parsed).map(network => this.renderRow(network, parsed[network]))}
 

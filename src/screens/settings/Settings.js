@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Animated, Easing, Dimensions, View, ScrollView, Keyboard } from 'react-native';
+import { StyleSheet, Animated, Easing, Dimensions, View, ScrollView, Keyboard, Platform } from 'react-native';
 import { inject, observer } from 'mobx-react/native';
 import get from 'lodash/get';
 
@@ -63,10 +63,12 @@ export default class Settings extends Component {
           <ScrollView
             ref={(c) => { this.scrollView = c; }}
             style={s.settings}
+            contentContainerStyle={s.settings__scrollview}
             keyboardShouldPersistTaps="always"
             keyboardDismissMode="interactive"
             onScroll={this.contentSize}
             scrollEventThrottle={400}
+            showsVerticalScrollIndicator={false}
           >
             {NETWORKS.map(item =>
               <Input
@@ -137,5 +139,9 @@ const s = StyleSheet.create({
     paddingTop: 10,
 
     backgroundColor: v.bgBlue,
+  },
+
+  settings__scrollview: {
+    paddingBottom: Platform.OS === 'ios' ? 10 : 40,
   },
 });

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Image, StyleSheet, Dimensions, Text, View, TouchableWithoutFeedback } from 'react-native';
 import get from 'lodash/get';
 
-import v from 'styles/variables';
+import { fonts } from 'styles/variables';
 import { luminosity, colors } from 'utils/colors';
 
 import { icons } from 'Api';
@@ -119,7 +119,7 @@ const s = StyleSheet.create({
   item__info: {
     marginBottom: 4,
 
-    fontFamily: v.dinMedium,
+    ...fonts.medium,
     fontSize: 22,
     color: '#fff',
   },
@@ -134,7 +134,7 @@ const s = StyleSheet.create({
 
     paddingBottom: 9,
 
-    fontFamily: v.din,
+    ...fonts.regular,
     fontSize: 16,
     color: '#fff',
   },

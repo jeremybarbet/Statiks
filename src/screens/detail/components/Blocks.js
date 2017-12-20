@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 
-import v from 'styles/variables';
+import { v, fonts } from 'styles/variables';
 import { format, getRatio, capitalize } from 'utils/utils';
 import { colors } from 'utils/colors';
 
@@ -101,7 +101,7 @@ const s = StyleSheet.create({
     marginTop: 30,
     marginBottom: 20,
 
-    fontFamily: v.dinMedium,
+    ...fonts.medium,
     fontSize: 14,
     color: v.lightBlue,
     letterSpacing: 0.75,
@@ -129,13 +129,13 @@ const s = StyleSheet.create({
   item__label: {
     marginTop: 4,
 
-    fontFamily: v.din,
+    ...fonts.regular,
     fontSize: 14,
     color: v.lightBlue,
   },
 
   item__number: {
-    fontFamily: v.din,
+    ...fonts.regular,
     fontSize: 24,
     color: v.dark,
   },
@@ -152,7 +152,7 @@ const s = StyleSheet.create({
   },
 
   item__growthNumber: {
-    fontFamily: v.dinMedium,
+    ...fonts.medium,
     fontSize: 14,
     color: '#fff',
     textAlign: 'center',

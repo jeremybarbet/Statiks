@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Image, View, Text, TouchableOpacity } from 'react-native';
 
-import v from 'styles/variables';
+import { v, fonts } from 'styles/variables';
 
 import { SETTINGS } from '../screens';
 
@@ -87,7 +87,7 @@ const s = StyleSheet.create({
     right: 0,
     bottom: 7,
 
-    fontFamily: v.dinMedium,
+    ...fonts.medium,
     fontSize: 16,
     color: v.graySaturate,
     letterSpacing: 0.25,

@@ -3,7 +3,7 @@ import { StyleSheet, Image, ScrollView, View, Animated, PanResponder, RefreshCon
 import { inject, observer } from 'mobx-react/native';
 import { observable, toJS } from 'mobx';
 
-import v from 'styles/variables';
+import { v } from 'styles/variables';
 import { navigatorTypes } from 'utils/types';
 
 import { Empty } from 'components/Placeholders';

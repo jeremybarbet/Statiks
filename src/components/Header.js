@@ -65,14 +65,14 @@ export default class Header extends Component {
 
 const s = StyleSheet.create({
   header: {
-    paddingTop: Platform.OS === 'ios' ? 0 : 15,
-    paddingBottom: Platform.OS === 'ios' ? 5 : 15,
+    paddingTop: Platform.select({ ios: 0, android: 10 }),
+    paddingBottom: Platform.select({ ios: 5, android: 14 }),
 
     backgroundColor: v.bgBlue,
   },
 
   header__status: {
-    height: Platform.OS === 'ios' ? STATUS_BAR_HEIGHT : 0,
+    height: Platform.select({ ios: STATUS_BAR_HEIGHT, android: 0 }),
   },
 
   header__nav: {
@@ -86,7 +86,7 @@ const s = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 7,
+    bottom: Platform.select({ ios: 9, android: 7 }),
 
     ...fonts.medium,
     fontSize: 16,
@@ -103,6 +103,8 @@ const s = StyleSheet.create({
 
   header__left: {
     marginLeft: 14,
+
+    marginTop: Platform.select({ ios: 6, android: 10 }),
   },
 
   header__arrow: {
@@ -122,5 +124,7 @@ const s = StyleSheet.create({
   header__right: {
     position: 'absolute',
     right: 14,
+
+    marginTop: Platform.select({ ios: 6, android: 10 }),
   },
 });

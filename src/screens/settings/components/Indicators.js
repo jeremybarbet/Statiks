@@ -85,12 +85,12 @@ const s = StyleSheet.create({
   },
 
   indicator__loading: {
-    top: Platform.OS === 'ios' ? 4 : 16,
+    top: Platform.select({ ios: 4, android: 16 }),
     left: 45,
   },
 
   indicator__success: {
-    top: Platform.OS === 'ios' ? 1 : 12,
+    top: Platform.select({ ios: 1, android: 12 }),
     left: 45,
 
     width: 26,
@@ -108,7 +108,7 @@ const s = StyleSheet.create({
   },
 
   indicator__remove: {
-    top: Platform.OS === 'ios' ? 5 : 16,
+    top: Platform.select({ ios: 5, android: 16 }),
     right: 18,
 
     width: 18,

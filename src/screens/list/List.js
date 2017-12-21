@@ -35,7 +35,7 @@ export default class List extends Component {
 
   componentWillMount() {
     this.animatedValueX = 0;
-    this.state.pan.x.addListener(value => this.animatedValueX = value.value); // eslint-disable-line
+    this.state.pan.x.addListener(v => this.animatedValueX = v.value); // eslint-disable-line
 
     this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -45,13 +45,13 @@ export default class List extends Component {
         this.state.pan.setValue({ x: 0 });
       },
 
-      onPanResponderMove: Animated.event([
-        null, { dx: this.state.pan.x },
-      ]),
+      onPanResponderMove: Animated.event([null, { dx: this.state.pan.x }]),
 
       onPanResponderRelease: () => {
         // Remove item if x value is enough
-        if (this.state.pan.x._value < -150) this.deleteItem(this.state.currentSwipeItem); // eslint-disable-line
+        if (this.state.pan.x._value < -150) { // eslint-disable-line
+          this.deleteItem(this.state.currentSwipeItem);
+        }
 
         // Reset to default value
         Animated.spring(this.state.pan, { toValue: 0 }).start();
@@ -110,7 +110,7 @@ export default class List extends Component {
     this.props.stats.delete(network);
   }
 
-  scaleDeleteIcon = () => {
+  get scaleDeleteIcon() {
     const { pan } = this.state;
 
     return [{
@@ -141,7 +141,7 @@ export default class List extends Component {
     return (
       <View key={network}>
         <Animated.View
-          style={[s.list__delete, this.scaleDeleteIcon()]}
+          style={[s.list__delete, this.scaleDeleteIcon]}
           {...this.panResponder.panHandlers}
         >
           <Image style={s.list__deleteIcon} source={require('../../assets/images/cross.png')} />
@@ -183,7 +183,7 @@ const s = StyleSheet.create({
     alignItems: 'center',
 
     position: 'absolute',
-    right: 45,
+    right: 40,
     top: 30,
 
     width: 50,

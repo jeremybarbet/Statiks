@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Image, StyleSheet, Dimensions, Text, View, TouchableWithoutFeedback } from 'react-native';
 import get from 'lodash/get';
 
-import { fonts } from 'styles/variables';
 import { luminosity, colors } from 'utils/colors';
+import { fonts } from 'Theme';
 
 import { icons } from 'Api';
 import { DETAIL } from 'screens';

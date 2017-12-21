@@ -1,4 +1,4 @@
-import { v } from 'styles/variables';
+import { v } from 'Theme';
 
 export function luminosity(hex, value) {
   let hexValue = hex;

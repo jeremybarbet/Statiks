@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { v, fonts } from 'styles/variables';
 import { format, getRatio, capitalize } from 'utils/utils';
 import { colors } from 'utils/colors';
+import { v, fonts } from 'Theme';
 
 class Stats extends PureComponent {
 

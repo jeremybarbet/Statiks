@@ -5,9 +5,9 @@ import get from 'lodash/get';
 
 import Header from 'components/Header';
 
-import { v } from 'styles/variables';
 import { navigatorTypes } from 'utils/types';
 import { api } from 'Api';
+import { v } from 'Theme';
 
 import Input from './components/Input';
 

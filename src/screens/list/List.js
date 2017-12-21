@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, ScrollView, View, Animated, PanResponder, RefreshControl, StatusBar } from 'react-native';
+import { StyleSheet, Image, ScrollView, View, Animated, PanResponder, RefreshControl, StatusBar, Platform } from 'react-native';
 import { inject, observer } from 'mobx-react/native';
 import { observable, toJS } from 'mobx';
 
-import { v } from 'styles/variables';
 import { navigatorTypes } from 'utils/types';
+import { v } from 'Theme';
 
 import { Empty } from 'components/Placeholders';
 import Header from 'components/Header';
@@ -81,6 +81,7 @@ export default class List extends Component {
 
         <ScrollView
           style={s.list}
+          contentContainerStyle={s.list__scrollview}
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl
@@ -171,6 +172,10 @@ const s = StyleSheet.create({
     paddingTop: 10,
 
     backgroundColor: v.bgBlue,
+  },
+
+  list__scrollview: {
+    paddingBottom: Platform.OS === 'ios' ? 10 : 40,
   },
 
   list__delete: {

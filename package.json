@@ -8,7 +8,10 @@
     "lint": "eslint src",
     "version": "sh scripts/bump-ios.sh",
     "run-ios": "react-native run-ios --simulator='iPhone 8'",
-    "run-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android"
+    "run-ios-release": "react-native run-ios --configuration Release",
+    "run-android": "react-native run-android",
+    "run-android-release": "react-native run-android --variant=release",
+    "release-android": "npm run run-android && find android/app/build -name *release*.apk -delete; cd android && ./gradlew assembleRelease && find ./app/build -name *release*.apk | xargs ls -l"
   },
   "dependencies": {
     "@ueno/eslint-config": "1.2.7",

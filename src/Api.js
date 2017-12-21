@@ -258,7 +258,7 @@ export const handleResponse = {
         collections: { count: res.user.collections_count, diff: 0 },
       },
       user: {
-        username: res.username,
+        username: res.user.username,
         avatar: res.user.image_url['220px'],
         bio: res.user.headline,
         name: res.user.name,

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { StyleSheet, ScrollView, Text, Image, View, TouchableOpacity, StatusBar, Platform } from 'react-native';
 import get from 'lodash/get';
 
-import { v, fonts } from 'styles/variables';
 import { capitalize, convertToHttps } from 'utils/utils';
 import { colors } from 'utils/colors';
 import { navigatorTypes } from 'utils/types';
 import { icons } from 'Api';
+import { v, fonts } from 'Theme';
 
 import { Stats } from './components/Blocks';
 

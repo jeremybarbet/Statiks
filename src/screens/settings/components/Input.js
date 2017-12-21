@@ -6,9 +6,9 @@ import { decorate } from 'react-mixin';
 import TimerMixin from 'react-native-timer-mixin';
 import { observable } from 'mobx';
 
-import { fonts } from 'styles/variables';
 import { colors } from 'utils/colors';
 import { icons } from 'Api';
+import { fonts } from 'Theme';
 
 import { Loading, Remove, Success } from './Indicators';
 
@@ -108,6 +108,7 @@ export default class Input extends Component {
     const { stats } = this.props;
 
     if (!username) return;
+    if (username === stats.getUsername(network)) return;
 
     this.isLoading = true;
 

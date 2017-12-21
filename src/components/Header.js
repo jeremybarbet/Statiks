@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Image, View, Text, TouchableOpacity, Platform } from 'react-native';
 
-import { v, fonts } from 'styles/variables';
+import { v, fonts } from 'Theme';
 
 import { SETTINGS } from '../screens';
 

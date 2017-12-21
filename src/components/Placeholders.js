@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Dimensions, View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 
-import { v, fonts } from 'styles/variables';
 import { navigatorTypes } from 'utils/types';
+import { v, fonts } from 'Theme';
 
 import { SETTINGS } from '../screens';
 

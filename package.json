@@ -6,7 +6,7 @@
     "postinstall": "sh scripts/postinstall.sh",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "lint": "eslint src",
-    "version": "sh scripts/bump-ios.sh",
+    "version": "sh scripts/bump-versions.sh",
     "run-ios": "react-native run-ios --simulator='iPhone 8'",
     "run-ios-release": "react-native run-ios --configuration Release",
     "run-android": "react-native run-android",

@@ -124,7 +124,7 @@ def getPassword(String currentUser, String keyChain) {
     stdout.toString().trim()
 }
 
-def pass = getPassword("jeremy", "statiks_keystore")
+def pass = getPassword("jeremy", "statiks")
 
 android {
     compileSdkVersion 25

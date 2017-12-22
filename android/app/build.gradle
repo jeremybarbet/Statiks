@@ -1,7 +1,6 @@
 apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
-import groovy.json.JsonSlurper
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -94,20 +93,6 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
-/**
- * Generate build versions
- */
-def npmVers() {
-    def inputFile = new File("../package.json")
-    def packageJson = new JsonSlurper().parseText(inputFile.text)
-    return packageJson["version"]
-}
-
-def buildVers() {
-    def process = "git rev-list master --first-parent --count".execute()
-    return process.text.toInteger()
-}
-
 /*
  * Get password from Keychain Access
  */
@@ -134,8 +119,8 @@ android {
         applicationId "com.statiks"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode buildVers()
-        versionName npmVers()
+        versionCode 31
+        versionName "2.0.7"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }

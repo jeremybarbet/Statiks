@@ -119,8 +119,8 @@ android {
         applicationId "com.statiks"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 31
-        versionName "2.0.7"
+        versionCode 32
+        versionName "2.0.8"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }

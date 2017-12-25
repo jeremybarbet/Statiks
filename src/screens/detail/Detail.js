@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, ScrollView, Text, Image, View, TouchableOpacity, StatusBar, Platform } from 'react-native';
 import get from 'lodash/get';
 
-import { capitalize, convertToHttps } from 'utils/utils';
+import { capitalize, convertToHttps, isIphoneX } from 'utils/utils';
 import { colors } from 'utils/colors';
 import { navigatorTypes } from 'utils/types';
 import { icons } from 'Api';
@@ -114,6 +114,30 @@ export default class Detail extends Component {
   }
 }
 
+function header() {
+  if (isIphoneX()) {
+    return {
+      paddingTop: 25,
+
+      height: 89,
+    };
+  }
+
+  return {
+    marginTop: 0,
+
+    height: 64,
+  };
+}
+
+function arrow() {
+  if (isIphoneX()) {
+    return { top: 53 };
+  }
+
+  return { top: 28 };
+}
+
 const s = StyleSheet.create({
   detail: {
     flex: 1,
@@ -131,7 +155,7 @@ const s = StyleSheet.create({
   },
 
   detail__header: {
-    height: 64,
+    ...header(),
 
     shadowColor: 'rgb(23, 24, 26)',
     shadowOffset: { height: 1 },
@@ -144,8 +168,9 @@ const s = StyleSheet.create({
   },
 
   detail__arrow: {
+    ...arrow(),
+
     position: 'absolute',
-    top: 28,
     left: 22,
 
     backgroundColor: 'transparent',

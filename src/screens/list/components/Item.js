@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Image, StyleSheet, Dimensions, Text, View, TouchableWithoutFeedback } from 'react-native';
+import { computed } from 'mobx';
 import get from 'lodash/get';
 
 import { luminosity, colors } from 'utils/colors';
@@ -22,6 +23,17 @@ export default class Item extends Component {
 
   state = {
     imPressed: false,
+  }
+
+  @computed
+  get someUpdate() {
+    const { stats } = this.props.data;
+
+    const diff = Object.keys(stats)
+      .map(c => stats[c].diff !== 0)
+      .filter(c => c !== false);
+
+    return Boolean(diff.length > 0);
   }
 
   render() {
@@ -47,6 +59,8 @@ export default class Item extends Component {
               source={this.getIcon(networkName)}
             />
           </View>
+
+          {this.someUpdate && <View style={s.item__unread} />}
 
           <View style={s.item__inline}>
             <View style={s.item__left}>
@@ -137,6 +151,18 @@ const s = StyleSheet.create({
     ...fonts.regular,
     fontSize: 16,
     color: '#fff',
+  },
+
+  item__unread: {
+    position: 'absolute',
+    top: 28,
+    right: 20,
+
+    width: 6,
+    height: 6,
+
+    borderRadius: 6,
+    backgroundColor: '#fff',
   },
 
   item__inline: {

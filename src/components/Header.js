@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Image, View, Text, TouchableOpacity, Platform } from 'react-native';
 
+import { isIphoneX } from 'utils/utils';
 import { v, fonts } from 'Theme';
 
 import { SETTINGS } from '../screens';
@@ -63,9 +64,17 @@ export default class Header extends Component {
   }
 }
 
+function padding() {
+  if (isIphoneX()) {
+    return { paddingTop: 20 };
+  }
+
+  return { paddingTop: Platform.select({ ios: 0, android: 10 }) };
+}
+
 const s = StyleSheet.create({
   header: {
-    paddingTop: Platform.select({ ios: 0, android: 10 }),
+    ...padding(),
     paddingBottom: Platform.select({ ios: 5, android: 14 }),
 
     backgroundColor: v.bgBlue,

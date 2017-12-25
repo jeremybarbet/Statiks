@@ -1,4 +1,13 @@
-// Return the ratio of a division of two number
+import { Dimensions, Platform } from 'react-native';
+
+const X_WIDTH = 375;
+const X_HEIGHT = 812;
+const { height, width } = Dimensions.get('window');
+
+export function isIphoneX() {
+  return Platform.OS === 'ios' && ((height === X_HEIGHT && width === X_WIDTH) || (height === X_WIDTH && width === X_HEIGHT));
+}
+
 export function getRatio(a, b) {
   const x = Number(a);
   const y = Number(b);
@@ -14,7 +23,6 @@ export function getRatio(a, b) {
   return `1:${Math.round(y / x)}`;
 }
 
-// Make images src from API with https uri
 export function convertToHttps(uri) {
   const protocol = uri.split('://')[0];
   const path = uri.split('://')[1];
@@ -26,12 +34,10 @@ export function convertToHttps(uri) {
   return uri;
 }
 
-// Put the first letter of network name in uppercase
 export function capitalize(s) {
   return s && s[0].toUpperCase() + s.slice(1);
 }
 
-// Formatting big numbers
 export function format(nbr) {
   return String(nbr).replace(/.(?=(?:.{3})+$)/g, '$& ');
 }

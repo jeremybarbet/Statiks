@@ -65,7 +65,6 @@ export default class List extends Component {
 
   componentWillUnmount() {
     this.state.pan.x.removeAllListeners();
-    clearTimeout(this.refreshTimeout);
   }
 
   render() {

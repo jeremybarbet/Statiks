@@ -4,6 +4,13 @@ import isNil from 'lodash/isNil';
 
 import { api, checkStatus, getResponse, handleResponse } from 'Api';
 
+function reduceVal(arr, val, type) {
+  return arr
+    .filter(c => !isNil(c.stats[val]))
+    .map(c => c.stats[val][type])
+    .reduce((a, b) => Number(a) + Number(b), 0);
+}
+
 export default class Stats {
 
   @persist('map')
@@ -30,20 +37,18 @@ export default class Stats {
 
   @computed
   get total() {
-    const followers = this.values
-      .filter(c => !isNil(c.stats.followers))
-      .map(c => c.stats.followers.count)
-      .reduce((a, b) => Number(a) + Number(b), 0);
-
-    const following = this.values
-      .filter(c => !isNil(c.stats.following))
-      .map(c => c.stats.following.count)
-      .reduce((a, b) => Number(a) + Number(b), 0);
+    const val = this.values;
 
     return {
       stats: {
-        followers: { count: followers, diff: 0 },
-        following: { count: following, diff: 0 },
+        followers: {
+          count: reduceVal(val, 'followers', 'count'),
+          diff: reduceVal(val, 'followers', 'diff'),
+        },
+        following: {
+          count: reduceVal(val, 'following', 'count'),
+          diff: reduceVal(val, 'following', 'diff'),
+        },
       },
     };
   }

@@ -87,7 +87,10 @@ export default class Stats {
             ),
           });
         } else {
-          this.data.set(n, res);
+          this.data.set(n, {
+            ...res,
+            ...Object.keys(res.stats).forEach(v => res.stats[v].diff = 0), // eslint-disable-line
+          });
         }
       })
       .catch((err) => {

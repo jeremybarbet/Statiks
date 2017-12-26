@@ -18,9 +18,14 @@ IOS_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${INFOPLI
 IOS_BUILD_NUMBER=$(($IOS_BUILD_NUMBER + 1))
 
 # Android build version
-ANDROID_BUILD_VERSION=$(cat android/app/build.gradle | grep versionCode | head -1 | sed 's/versionCode//g' | tr -d '[[:space:]]')
-ANDROID_BUILD_VERSION=$(($ANDROID_BUILD_VERSION + 1))
+# ANDROID_BUILD_VERSION=$(cat android/app/build.gradle | grep versionCode | head -1 | sed 's/versionCode//g' | tr -d '[[:space:]]')
+# ANDROID_BUILD_VERSION=$(($ANDROID_BUILD_VERSION + 1))
 ANDROID_VERSION_CODE=`grep versionCode $ANDROID_MANIFEST | sed 's/.*versionCode="//;s/".*//'`
+
+MAJOR=$(echo $PACKAGE_VERSION | cut -d. -f1)
+MINOR=$(echo $PACKAGE_VERSION | cut -d. -f2)
+PATCH=$(echo $PACKAGE_VERSION | cut -d. -f3)
+ANDROID_BUILD_VERSION=$(($MAJOR * 10000 + $MINOR * 100 + $PATCH))
 
 echo "🔥  Updating build informations for Android and iOS..."
 echo "\n Version name: $PACKAGE_VERSION"

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Image, View, Text, TouchableOpacity, Platform } from 'react-native';
 
+import { navigatorTypes } from 'utils/types';
 import { isIphoneX } from 'utils/utils';
 import { v, fonts } from 'Theme';
 
@@ -13,6 +14,7 @@ const STATUS_BAR_HEIGHT = 20;
 export default class Header extends Component {
 
   static propTypes = {
+    ...navigatorTypes,
     title: PropTypes.string,
   }
 

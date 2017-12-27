@@ -27,9 +27,9 @@ export default class Input extends Component {
   isSuccess = false
 
   static propTypes = {
+    stats: PropTypes.object,
+    username: PropTypes.string,
     network: PropTypes.string,
-    onPress: PropTypes.func,
-    internalRef: PropTypes.func,
   }
 
   state = {
@@ -38,7 +38,7 @@ export default class Input extends Component {
   }
 
   render() {
-    const { network, onPress, internalRef, username } = this.props;
+    const { network, username } = this.props;
     const { value, showRemoveIcon } = this.state;
 
     const hasText = showRemoveIcon || username;
@@ -49,10 +49,7 @@ export default class Input extends Component {
     const remove = hasText && <Remove onPress={() => this.removeItem(network)} network={network} />;
 
     return (
-      <View
-        style={[s.input, { backgroundColor: colors(network) }]}
-        ref={internalRef}
-      >
+      <View style={[s.input, { backgroundColor: colors(network) }]}>
         <View style={s.input__inline}>
           <Image
             style={s.input__icon}
@@ -64,9 +61,7 @@ export default class Input extends Component {
           {success}
 
           <TextInput
-            ref={(c) => { this.input = c; }}
             style={[s.input__info, { marginRight: hasText ? 46 : 20 }]}
-            onFocus={onPress}
             onChangeText={text => this.handleChange(text)}
             onEndEditing={() => this.handleSubmit(inputValue, network)}
             value={inputValue}

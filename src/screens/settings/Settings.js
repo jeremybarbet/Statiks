@@ -42,13 +42,13 @@ export default class Settings extends Component {
   input = []
 
   componentWillMount() {
-    Keyboard.addListener('keyboardWillShow', this.keyboardShowRef = this.keyboardWillShow.bind(this));
-    Keyboard.addListener('keyboardWillHide', this.keyboardHideRef = this.keyboardWillHide.bind(this));
+    Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
+    Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
   }
 
   componentWillUnmount() {
-    Keyboard.removeListener('keyboardWillShow', this.keyboardShowRef);
-    Keyboard.removeListener('keyboardWillHide', this.keyboardHideRef);
+    Keyboard.removeListener('keyboardWillShow', this.keyboardWillShow);
+    Keyboard.removeListener('keyboardWillHide', this.keyboardWillHide);
   }
 
   render() {
@@ -108,7 +108,7 @@ export default class Settings extends Component {
     });
   }
 
-  keyboardWillShow(e) {
+  keyboardWillShow = (e) => {
     const { keyboardSpace } = this.state;
     const scrollHeight = (height - HEADER_HEIGHT) - e.endCoordinates.height;
 
@@ -142,6 +142,6 @@ const s = StyleSheet.create({
   },
 
   settings__scrollview: {
-    paddingBottom: Platform.OS === 'ios' ? 10 : 40,
+    paddingBottom: Platform.select({ ios: 10, android: 40 }),
   },
 });

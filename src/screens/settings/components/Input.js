@@ -71,13 +71,13 @@ export default class Input extends Component {
             onEndEditing={() => this.handleSubmit(inputValue, network)}
             value={inputValue}
             returnKeyType="done"
-            enablesReturnKeyAutomatically
             placeholder={network === 'fivehundredpx' ? '500px' : network}
             placeholderTextColor="rgba(255, 255, 255, 0.25)"
             autoCorrect={false}
             autoCapitalize="none"
             selectionColor="rgba(255, 255, 255, 0.8)"
             underlineColorAndroid="transparent"
+            enablesReturnKeyAutomatically
           />
 
           {remove}
@@ -138,7 +138,7 @@ const s = StyleSheet.create({
     marginHorizontal: 15,
     marginBottom: 15,
     paddingLeft: 20,
-    paddingVertical: Platform.OS === 'ios' ? 20 : 10,
+    paddingVertical: Platform.select({ ios: 20, android: 10 }),
 
     borderRadius: 4,
   },
@@ -160,7 +160,7 @@ const s = StyleSheet.create({
   input__info: {
     alignSelf: 'flex-end',
 
-    top: Platform.OS === 'ios' ? -2 : 0,
+    top: Platform.select({ ios: -2, android: 0 }),
 
     width: 240,
 

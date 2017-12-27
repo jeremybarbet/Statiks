@@ -174,7 +174,7 @@ const s = StyleSheet.create({
   },
 
   list__scrollview: {
-    paddingBottom: Platform.OS === 'ios' ? 10 : 0,
+    paddingBottom: Platform.select({ ios: 10, android: 0 }),
   },
 
   list__delete: {

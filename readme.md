@@ -4,7 +4,9 @@ Statiks
 Statiks is a mobile application to your social networks and retrieve your details stats.
 You can reload your networks and consult for each network how many followers you gained (or lost).
 
-__[Download on the App Store](https://itunes.apple.com/app/statiks/id1082528737)__
+**iOS: [Download on the App Store](https://itunes.apple.com/app/statiks/id1082528737)**
+
+**Android: Coming soon**
 
 Development
 -----------
@@ -21,7 +23,8 @@ Statiks run with react-native npm dependencies.
 
 On another tab
 
-* `react-native run-ios`
+* `yarn run-ios`
+* `yarn run-android`
 
 __First install?__
 

@@ -4,6 +4,7 @@ import { Image, StyleSheet, Dimensions, Text, View, TouchableWithoutFeedback } f
 import { computed } from 'mobx';
 import get from 'lodash/get';
 
+import { navigatorTypes } from 'utils/types';
 import { luminosity, colors } from 'utils/colors';
 import { fonts } from 'Theme';
 
@@ -15,6 +16,7 @@ const { width } = Dimensions.get('window');
 export default class Item extends Component {
 
   static propTypes = {
+    ...navigatorTypes,
     network: PropTypes.string,
     data: PropTypes.object,
     title: PropTypes.string,

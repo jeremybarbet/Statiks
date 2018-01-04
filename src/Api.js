@@ -3,10 +3,10 @@
 import { removeTag, decode } from 'utils/api';
 
 export function checkStatus(res, n, u) {
-  if (res.status >= 200 && res.status < 300) {
-    return res;
-  } else if (res.status === 404) {
+  if (res.status === 404 || res.url.includes('show_error=true')) {
     throw `${u} not found on ${n}.`; // eslint-disable-line
+  } else if (res.status >= 200 && res.status < 300) {
+    return res;
   } else {
     throw 'It seems something went wrong !'; // eslint-disable-line
   }

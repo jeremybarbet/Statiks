@@ -51,12 +51,7 @@ export default class Settings extends Component {
     return NETWORKS.map(key => ({ key }));
   }
 
-  renderItem = ({ item: { key } }) => (
-    <Input
-      username={this.props.stats.getUsername(key)}
-      network={key}
-    />
-  )
+  renderItem = ({ item: { key } }) => <Input network={key} />
 }
 
 const s = StyleSheet.create({

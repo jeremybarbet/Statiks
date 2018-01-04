@@ -28,7 +28,6 @@ export default class Input extends Component {
 
   static propTypes = {
     stats: PropTypes.object,
-    username: PropTypes.string,
     network: PropTypes.string,
   }
 
@@ -38,8 +37,9 @@ export default class Input extends Component {
   }
 
   render() {
-    const { network, username } = this.props;
+    const { network } = this.props;
     const { value, showRemoveIcon } = this.state;
+    const username = this.getUsername(network);
 
     const hasText = showRemoveIcon || username;
     const inputValue = value === '' ? username : value;
@@ -82,6 +82,8 @@ export default class Input extends Component {
   }
 
   getIcon = name => icons.find(n => n.name === name).icon;
+
+  getUsername = network => this.props.stats.getUsername(network);
 
   async removeItem(network) {
     this.props.stats.delete(network);

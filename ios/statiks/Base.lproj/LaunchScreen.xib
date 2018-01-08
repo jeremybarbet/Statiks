@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,12 +15,19 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="cmx-jM-YZF">
-                    <rect key="frame" x="97" y="267" width="181" height="96"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="Atc-7S-cVU">
+                    <rect key="frame" x="142" y="279" width="91" height="108"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="91" id="J9t-RX-KMe"/>
+                        <constraint firstAttribute="height" constant="108" id="LQy-Ry-Leu"/>
+                    </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="0.94901960784313721" green="0.96862745098039216" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Atc-7S-cVU" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="e7y-g2-TnT"/>
+                <constraint firstItem="Atc-7S-cVU" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="o9k-7I-iEF"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <point key="canvasLocation" x="547.5" y="454.5"/>
         </view>

@@ -17,10 +17,10 @@ export function getRatio(a, b) {
   }
 
   if (x > y) {
-    return `${Math.ceil(x / y)}:1`;
+    return `${format(Math.ceil(x / y))}:1`;
   }
 
-  return `1:${Math.round(y / x)}`;
+  return `1:${format(Math.round(y / x))}`;
 }
 
 export function convertToHttps(uri) {

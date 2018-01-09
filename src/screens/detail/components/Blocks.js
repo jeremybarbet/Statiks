@@ -6,6 +6,10 @@ import { format, getRatio, capitalize } from 'utils/utils';
 import { colors } from 'utils/colors';
 import { v, fonts } from 'Theme';
 
+const isValidRatio = (frs, fng) => {
+  return (frs && frs.count > 0) && (fng && fng.count > 0);
+}
+
 class Stats extends PureComponent {
 
   static propTypes = {
@@ -21,7 +25,10 @@ class Stats extends PureComponent {
       <View style={s.item}>
         <Text style={s.item__title}>{'User statistics'.toUpperCase()}</Text>
         {Object.keys(data).map(item => this.renderRow(item, data[item], network))}
-        <Ratio ratio={getRatio(followers.count, following.count)} />
+
+        {isValidRatio(followers, following) && (
+          <Ratio ratio={getRatio(followers.count, following.count)} />
+        )}
       </View>
     );
   }

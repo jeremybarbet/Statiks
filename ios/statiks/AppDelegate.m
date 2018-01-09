@@ -18,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [RNSentry installWithBridge:[[RCCManager sharedInstance] getBridge]];
+  [RNSentry installWithRootView:rootView];
 
   NSURL *jsCodeLocation;
 

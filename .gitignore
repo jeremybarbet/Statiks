@@ -44,6 +44,8 @@ buck-out/
 # Projects
 src/assets/fonts
 android/app/*.jks
+android/sentry.properties
+ios/sentry.properties
 .env
 
 # fastlane

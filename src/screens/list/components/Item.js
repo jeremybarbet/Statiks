@@ -77,7 +77,10 @@ export default class Item extends Component {
             </View>
 
             <View style={s.item__right}>
-              <Text style={[s.item__info, s.item__infoRight]}>{format(data.stats.followers.count)}</Text>
+              <Text style={[s.item__info, s.item__infoRight]}>
+                {format(data.stats.followers.count)}
+              </Text>
+
               <Text style={[s.item__text, s.item__infoRight]}>followers</Text>
             </View>
           </View>

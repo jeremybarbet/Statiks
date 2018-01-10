@@ -6,9 +6,7 @@ import { format, getRatio, capitalize } from 'utils/utils';
 import { colors } from 'utils/colors';
 import { v, fonts } from 'Theme';
 
-const isValidRatio = (frs, fng) => {
-  return (frs && frs.count > 0) && (fng && fng.count > 0);
-}
+const isValidRatio = (frs, fng) => (frs && frs.count > 0) && (fng && fng.count > 0);
 
 class Stats extends PureComponent {
 

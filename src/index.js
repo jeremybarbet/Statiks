@@ -5,8 +5,6 @@ import config from 'react-native-config';
 import { Screens, startApp } from 'screens';
 import Store, { StoreProvider } from 'store';
 
-console.log('-config', config.SENTRY_DSN);
-
 if (!__DEV__) {
   Sentry.config(config.SENTRY_DSN).install();
 }

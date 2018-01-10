@@ -9,16 +9,16 @@
 
 #import "AppDelegate.h"
 #import "RCCManager.h"
-#import "RNSentry.h"
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import <React/RNSentry.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [RNSentry installWithRootView:rootView];
+  [RNSentry installWithBridge:[[RCCManager sharedInstance] getBridge]];
 
   NSURL *jsCodeLocation;
 

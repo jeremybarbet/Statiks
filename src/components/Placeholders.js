@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Dimensions, View, Text, Image, TouchableOpacity, Linking } from 'react-native';
+import { Sentry, SentrySeverity } from 'react-native-sentry';
 
 import { navigatorTypes } from 'utils/types';
 import { v, fonts } from 'Theme';
@@ -16,6 +17,12 @@ class Empty extends PureComponent {
   }
 
   handlePress = () => {
+    // Sentry.nativeCrash();
+
+    // Promise.reject('Boom promise');
+
+    throw new Error('handlePress Error');
+
     this.props.navigator.push({ screen: SETTINGS });
   }
 

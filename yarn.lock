@@ -3983,7 +3983,7 @@ react-mixin@4.0.0:
     object-assign "^4.0.1"
     smart-mixin "^2.0.0"
 
-react-native-config@^0.11.5:
+react-native-config@0.11.5:
   version "0.11.5"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.11.5.tgz#516cb7b6ec437c7739236ca075971db3aabdcb95"
 
@@ -3993,7 +3993,7 @@ react-native-navigation@1.1.295:
   dependencies:
     lodash "4.x.x"
 
-react-native-sentry@^0.32.1:
+react-native-sentry@0.32.1:
   version "0.32.1"
   resolved "https://registry.yarnpkg.com/react-native-sentry/-/react-native-sentry-0.32.1.tgz#ea9c545b219f56fc7c28e3a08a2aa31860a13ec5"
   dependencies:

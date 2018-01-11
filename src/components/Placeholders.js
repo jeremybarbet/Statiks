@@ -1,32 +1,24 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Dimensions, View, Text, Image, TouchableOpacity, Linking } from 'react-native';
-import { Sentry, SentrySeverity } from 'react-native-sentry';
 
-import { navigatorTypes } from 'utils/types';
 import { v, fonts } from 'Theme';
-
-import { SETTINGS } from '../screens';
 
 const { width } = Dimensions.get('window');
 
 class Empty extends PureComponent {
 
   static propTypes = {
-    ...navigatorTypes,
+    onPress: PropTypes.func,
   }
 
   handlePress = () => {
-    // Sentry.nativeCrash();
-
-    // Promise.reject('Boom promise');
-
     throw new Error('handlePress Error');
-
-    this.props.navigator.push({ screen: SETTINGS });
   }
 
   render() {
+    const { onPress } = this.props;
+
     return (
       <View style={s.container}>
         <Image
@@ -55,7 +47,7 @@ class Empty extends PureComponent {
   }
 }
 
-class Error extends PureComponent {
+class Critical extends PureComponent {
 
   render() {
     return (
@@ -194,6 +186,6 @@ const s = StyleSheet.create({
 
 export {
   Empty,
-  Error,
+  Critical,
   Loading,
 };

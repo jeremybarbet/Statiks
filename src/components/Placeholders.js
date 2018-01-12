@@ -12,10 +12,6 @@ class Empty extends PureComponent {
     onPress: PropTypes.func,
   }
 
-  handlePress = () => {
-    throw new Error('handlePress Error');
-  }
-
   render() {
     const { onPress } = this.props;
 
@@ -38,7 +34,7 @@ class Empty extends PureComponent {
         <TouchableOpacity
           activeOpacity={0.85}
           style={s.empty__button}
-          onPress={this.handlePress}
+          onPress={onPress}
         >
           <Text style={s.empty__buttonText}>Let’s start</Text>
         </TouchableOpacity>

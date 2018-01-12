@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
 
@@ -76,7 +77,12 @@ project.ext.react = [
     entryFile: "index.js"
 ]
 
+project.ext.sentryCli = [
+    logLevel: "debug"
+]
+
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-sentry/sentry.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -92,24 +98,6 @@ def enableSeparateBuildPerCPUArchitecture = false
  * Run Proguard to shrink the Java bytecode in release builds.
  */
 def enableProguardInReleaseBuilds = false
-
-/*
- * Get password from Keychain Access
- */
-def getPassword(String currentUser, String keyChain) {
-    def stdout = new ByteArrayOutputStream()
-    def stderr = new ByteArrayOutputStream()
-    exec {
-       commandLine 'security', '-q', 'find-generic-password', '-a', currentUser, '-s', keyChain, '-w'
-       standardOutput = stdout
-       errorOutput = stderr
-       ignoreExitValue true
-    }
-    // noinspection GroovyAssignabilityCheck
-    stdout.toString().trim()
-}
-
-def pass = getPassword("jeremy", "statiks")
 
 android {
     compileSdkVersion 25
@@ -129,9 +117,9 @@ android {
         release {
             if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
                 storeFile file(MYAPP_RELEASE_STORE_FILE)
-                storePassword pass
-                keyAlias MYAPP_RELEASE_KEY_ALIAS
-                keyPassword pass
+                storePassword project.env.get("ANDROID_KEYSTORE_PASSWORD")
+                keyAlias project.env.get("ANDROID_KEYSTORE_ALIAS")
+                keyPassword project.env.get("ANDROID_KEYSTORE_PASSWORD")
             }
         }
     }
@@ -166,6 +154,8 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-config')
+    compile project(':react-native-sentry')
     compile project(':react-native-navigation')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"

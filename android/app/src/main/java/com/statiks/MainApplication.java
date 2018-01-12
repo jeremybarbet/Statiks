@@ -3,6 +3,8 @@ package com.statiks;
 import com.reactnativenavigation.NavigationApplication;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import io.sentry.RNSentryPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +21,8 @@ public class MainApplication extends NavigationApplication {
     // Add additional packages you require here
     // No need to add RnnPackage and MainReactPackage
     return Arrays.<ReactPackage>asList(
-
+      new ReactNativeConfigPackage(),
+      new RNSentryPackage(MainApplication.this)
     );
   }
 

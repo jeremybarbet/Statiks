@@ -2,24 +2,23 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Dimensions, View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 
-import { navigatorTypes } from 'utils/types';
 import { v, fonts } from 'Theme';
-
-import { SETTINGS } from '../screens';
 
 const { width } = Dimensions.get('window');
 
 class Empty extends PureComponent {
 
   static propTypes = {
-    ...navigatorTypes,
+    onPress: PropTypes.func,
   }
 
   handlePress = () => {
-    this.props.navigator.push({ screen: SETTINGS });
+    throw new Error('handlePress Error');
   }
 
   render() {
+    const { onPress } = this.props;
+
     return (
       <View style={s.container}>
         <Image
@@ -48,7 +47,7 @@ class Empty extends PureComponent {
   }
 }
 
-class Error extends PureComponent {
+class Critical extends PureComponent {
 
   render() {
     return (
@@ -187,6 +186,6 @@ const s = StyleSheet.create({
 
 export {
   Empty,
-  Error,
+  Critical,
   Loading,
 };

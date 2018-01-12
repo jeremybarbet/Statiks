@@ -5,6 +5,7 @@ import { observable, toJS } from 'mobx';
 
 import { navigatorTypes } from 'utils/types';
 import { v } from 'Theme';
+import { SETTINGS } from 'screens';
 
 import { Empty } from 'components/Placeholders';
 import Header from 'components/Header';
@@ -67,12 +68,18 @@ export default class List extends Component {
     this.state.pan.x.removeAllListeners();
   }
 
+  handleClick() {
+    this.props.navigator.push({ screen: SETTINGS });
+  }
+
   render() {
     const { navigator, stats } = this.props;
     const { data } = stats;
     const parsed = toJS(data);
 
-    if (data.size <= 0) return <Empty navigator={navigator} />;
+    if (data.size <= 0) {
+      return <Empty onPress={this.handleClick} />;
+    }
 
     return (
       <View style={{ flex: 1 }}>

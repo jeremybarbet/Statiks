@@ -68,7 +68,7 @@ export default class List extends Component {
     this.state.pan.x.removeAllListeners();
   }
 
-  handleClick() {
+  handleClick = () => {
     this.props.navigator.push({ screen: SETTINGS });
   }
 

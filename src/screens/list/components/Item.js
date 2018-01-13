@@ -5,23 +5,21 @@ import { computed } from 'mobx';
 import get from 'lodash/get';
 
 import { format } from 'utils/utils';
-import { navigatorTypes } from 'utils/types';
 import { luminosity, colors } from 'utils/colors';
 import { fonts } from 'Theme';
 
 import { icons } from 'Api';
-import { DETAIL } from 'screens';
 
 const { width } = Dimensions.get('window');
 
 export default class Item extends Component {
 
   static propTypes = {
-    ...navigatorTypes,
     network: PropTypes.string,
     data: PropTypes.object,
     title: PropTypes.string,
     description: PropTypes.string,
+    onPress: PropTypes.func,
   }
 
   state = {
@@ -39,8 +37,18 @@ export default class Item extends Component {
     return Boolean(diff.length > 0);
   }
 
+  getIcon = name => icons.find(n => n.name === name).icon;
+
+  handlePressIn = () => {
+    this.setState({ imPressed: !this.state.imPressed });
+  }
+
+  handlePressOut = () => {
+    this.setState({ imPressed: !this.state.imPressed });
+  }
+
   render() {
-    const { network, data, title, description } = this.props;
+    const { network, data, title, description, onPress } = this.props;
     const { imPressed } = this.state;
 
     const networkName = network || title;
@@ -52,7 +60,7 @@ export default class Item extends Component {
       <TouchableWithoutFeedback
         onPressIn={this.handlePressIn}
         onPressOut={this.handlePressOut}
-        onPress={() => this.handlePress(networkName, data)}
+        onPress={() => onPress(networkName, data)}
       >
         <View style={[s.item, { backgroundColor: pressColor }]}>
           <View style={s.item__network}>
@@ -87,28 +95,6 @@ export default class Item extends Component {
         </View>
       </TouchableWithoutFeedback>
     );
-  }
-
-  getIcon = name => icons.find(n => n.name === name).icon;
-
-  handlePressIn = () => {
-    this.setState({ imPressed: !this.state.imPressed });
-  }
-
-  handlePressOut = () => {
-    this.setState({ imPressed: !this.state.imPressed });
-  }
-
-  handlePress = (network, data) => {
-    const { navigator } = this.props;
-
-    navigator.showModal({
-      screen: DETAIL,
-      passProps: {
-        network,
-        data,
-      },
-    });
   }
 }
 

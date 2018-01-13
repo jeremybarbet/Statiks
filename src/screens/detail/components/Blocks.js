@@ -15,6 +15,17 @@ class Stats extends PureComponent {
     network: PropTypes.string,
   }
 
+  renderRow = (value, stat, network) => (
+    <View key={`detail-row-${value}`} style={s.item__row}>
+      <View>
+        <Text style={[s.item__text, s.item__number]}>{format(stat.count)}</Text>
+        <Text style={[s.item__text, s.item__label]}>{capitalize(value)}</Text>
+      </View>
+
+      {stat.diff !== 0 && <Diff network={network} diff={stat.diff} />}
+    </View>
+  )
+
   render() {
     const { data, network } = this.props;
     const { followers, following } = data;
@@ -30,17 +41,6 @@ class Stats extends PureComponent {
       </View>
     );
   }
-
-  renderRow = (value, stat, network) => (
-    <View key={`detail-row-${value}`} style={s.item__row}>
-      <View>
-        <Text style={[s.item__text, s.item__number]}>{format(stat.count)}</Text>
-        <Text style={[s.item__text, s.item__label]}>{capitalize(value)}</Text>
-      </View>
-
-      {stat.diff !== 0 && <Diff network={network} diff={stat.diff} />}
-    </View>
-  )
 }
 
 class Ratio extends PureComponent {

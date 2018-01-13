@@ -43,6 +43,12 @@ export default class Detail extends Component {
     }
   }
 
+  getIcon = name => icons.find(n => n.name === name).icon;
+
+  hideModal = () => {
+    this.props.navigator.dismissModal();
+  }
+
   render() {
     const { network, data, history } = this.props;
     const { user } = data;
@@ -103,14 +109,6 @@ export default class Detail extends Component {
         </View>
       </View>
     );
-  }
-
-  getIcon = name => icons.find(n => n.name === name).icon;
-
-  hideModal = () => {
-    const { navigator } = this.props;
-
-    navigator.dismissModal();
   }
 }
 

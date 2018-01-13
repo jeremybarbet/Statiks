@@ -1,3 +1,4 @@
+import { Sentry } from 'react-native-sentry';
 import { observable, ObservableMap, computed, toJS } from 'mobx';
 import { persist } from 'mobx-persist';
 import isNil from 'lodash/isNil';
@@ -94,10 +95,12 @@ export default class Stats {
         }
       })
       .catch((err) => {
+        Sentry.captureMessage(err);
+
         this.status = {
           loading: false,
           success: false,
-          error: err,
+          error: true,
         };
       });
   }

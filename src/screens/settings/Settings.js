@@ -24,13 +24,22 @@ export default class Settings extends Component {
     navBarHidden: true,
   }
 
+  handlePrev = () => {
+    this.props.navigator.pop();
+  }
+
+  get networks() {
+    return NETWORKS.map(key => ({ key }));
+  }
+
+  renderItem = ({ item: { key } }) => <Input network={key} />
+
   render() {
-    const { navigator } = this.props;
     const behavior = Platform.OS === 'ios' ? 'padding' : null;
 
     return (
       <View style={s.settings}>
-        <Header navigator={navigator} title="Options" />
+        <Header onPrev={this.handlePrev} title="Options" />
 
         <KeyboardAvoidingView behavior={behavior} style={s.settings}>
           <FlatList
@@ -46,12 +55,6 @@ export default class Settings extends Component {
       </View>
     );
   }
-
-  get networks() {
-    return NETWORKS.map(key => ({ key }));
-  }
-
-  renderItem = ({ item: { key } }) => <Input network={key} />
 }
 
 const s = StyleSheet.create({

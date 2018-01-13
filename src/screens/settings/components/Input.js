@@ -36,51 +36,6 @@ export default class Input extends Component {
     showRemoveIcon: false,
   }
 
-  render() {
-    const { network } = this.props;
-    const { value, showRemoveIcon } = this.state;
-    const username = this.getUsername(network);
-
-    const hasText = showRemoveIcon || username;
-    const inputValue = value === '' ? username : value;
-
-    const loading = this.isLoading && <Loading loaded={this.isLoading} />;
-    const success = this.isSuccess && <Success network={network} />;
-    const remove = hasText && <Remove onPress={() => this.removeItem(network)} network={network} />;
-
-    return (
-      <View style={[s.input, { backgroundColor: colors(network) }]}>
-        <View style={s.input__inline}>
-          <Image
-            style={s.input__icon}
-            resizeMode="contain"
-            source={this.getIcon(network)}
-          />
-
-          {loading}
-          {success}
-
-          <TextInput
-            style={[s.input__info, { marginRight: hasText ? 46 : 20 }]}
-            onChangeText={text => this.handleChange(text)}
-            onEndEditing={() => this.handleSubmit(inputValue, network)}
-            value={inputValue}
-            returnKeyType="done"
-            placeholder={network === 'fivehundredpx' ? '500px' : network}
-            placeholderTextColor="rgba(255, 255, 255, 0.25)"
-            autoCorrect={false}
-            autoCapitalize="none"
-            selectionColor="rgba(255, 255, 255, 0.8)"
-            underlineColorAndroid="transparent"
-            enablesReturnKeyAutomatically
-          />
-
-          {remove}
-        </View>
-      </View>
-    );
-  }
-
   getIcon = name => icons.find(n => n.name === name).icon;
 
   getUsername = network => this.props.stats.getUsername(network);
@@ -127,6 +82,51 @@ export default class Input extends Component {
     this.setTimeout(() => {
       this.isSuccess = false;
     }, 1400);
+  }
+
+  render() {
+    const { network } = this.props;
+    const { value, showRemoveIcon } = this.state;
+    const username = this.getUsername(network);
+
+    const hasText = showRemoveIcon || username;
+    const inputValue = value === '' ? username : value;
+
+    const loading = this.isLoading && <Loading loaded={this.isLoading} />;
+    const success = this.isSuccess && <Success network={network} />;
+    const remove = hasText && <Remove onPress={() => this.removeItem(network)} network={network} />;
+
+    return (
+      <View style={[s.input, { backgroundColor: colors(network) }]}>
+        <View style={s.input__inline}>
+          <Image
+            style={s.input__icon}
+            resizeMode="contain"
+            source={this.getIcon(network)}
+          />
+
+          {loading}
+          {success}
+
+          <TextInput
+            style={[s.input__info, { marginRight: hasText ? 46 : 20 }]}
+            onChangeText={text => this.handleChange(text)}
+            onEndEditing={() => this.handleSubmit(inputValue, network)}
+            value={inputValue}
+            returnKeyType="done"
+            placeholder={network === 'fivehundredpx' ? '500px' : network}
+            placeholderTextColor="rgba(255, 255, 255, 0.25)"
+            autoCorrect={false}
+            autoCapitalize="none"
+            selectionColor="rgba(255, 255, 255, 0.8)"
+            underlineColorAndroid="transparent"
+            enablesReturnKeyAutomatically
+          />
+
+          {remove}
+        </View>
+      </View>
+    );
   }
 }
 

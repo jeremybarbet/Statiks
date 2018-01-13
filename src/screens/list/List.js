@@ -5,9 +5,9 @@ import { observable, toJS } from 'mobx';
 
 import { navigatorTypes } from 'utils/types';
 import { v } from 'Theme';
-import { SETTINGS } from 'screens';
+import { SETTINGS, DETAIL } from 'screens';
 
-import { Empty } from 'components/Placeholders';
+import { Empty, Critical } from 'components/Placeholders';
 import Header from 'components/Header';
 
 import Item from './components/Item';
@@ -68,48 +68,22 @@ export default class List extends Component {
     this.state.pan.x.removeAllListeners();
   }
 
-  handleClick = () => {
+  handlePress = () => {
     this.props.navigator.push({ screen: SETTINGS });
   }
 
-  render() {
-    const { navigator, stats } = this.props;
-    const { data } = stats;
-    const parsed = toJS(data);
+  handleClearPress = () => {
+    this.props.stats.data.clear();
+  }
 
-    if (data.size <= 0) {
-      return <Empty onPress={this.handleClick} />;
-    }
-
-    return (
-      <View style={{ flex: 1 }}>
-        <Header navigator={navigator} title="Statiks" />
-
-        <ScrollView
-          style={s.list}
-          contentContainerStyle={s.list__scrollview}
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.isRefreshing}
-              onRefresh={this.onRefresh}
-              tintColor={v.graySaturateLighter}
-            />
-          }
-        >
-          {Object.keys(parsed).map(network => this.renderRow(network, parsed[network]))}
-
-          {stats.total && (
-            <Item
-              title="total"
-              description={`${data.size} network${data.size === 1 ? '' : 's'} connected`}
-              data={stats.total}
-              navigator={navigator}
-            />
-          )}
-        </ScrollView>
-      </View>
-    );
+  handleMorePress = (network, data) => {
+    this.props.navigator.showModal({
+      screen: DETAIL,
+      passProps: {
+        network,
+        data,
+      },
+    });
   }
 
   deleteItem = (network) => {
@@ -141,31 +115,70 @@ export default class List extends Component {
     this.setState({ currentSwipeItem: item });
   }
 
-  renderRow = (network, stats) => {
-    const { navigator } = this.props;
+  renderRow = (network, stats) => (
+    <View key={network}>
+      <Animated.View
+        style={[s.list__delete, this.scaleDeleteIcon]}
+        {...this.panResponder.panHandlers}
+      >
+        <Image style={s.list__deleteIcon} source={require('../../assets/images/cross.png')} />
+      </Animated.View>
+
+      <AnimatedScrollView
+        horizontal
+        directionalLockEnabled
+        onScroll={() => this.onSwipe(network)}
+        scrollEventThrottle={32}
+        {...this.panResponder.panHandlers}
+      >
+        <Item
+          network={network}
+          data={stats}
+          onPress={this.handleMorePress}
+        />
+      </AnimatedScrollView>
+    </View>
+  )
+
+  render() {
+    const { data, status, total } = this.props.stats;
+    const parsed = toJS(data);
+
+    if (status.error) {
+      return <Critical onPress={this.handleClearPress} />;
+    }
+
+    if (data.size <= 0) {
+      return <Empty onPress={this.handlePress} />;
+    }
 
     return (
-      <View key={network}>
-        <Animated.View
-          style={[s.list__delete, this.scaleDeleteIcon]}
-          {...this.panResponder.panHandlers}
-        >
-          <Image style={s.list__deleteIcon} source={require('../../assets/images/cross.png')} />
-        </Animated.View>
+      <View style={{ flex: 1 }}>
+        <Header onAdd={this.handlePress} title="Statiks" />
 
-        <AnimatedScrollView
-          horizontal
-          directionalLockEnabled
-          onScroll={() => this.onSwipe(network)}
-          scrollEventThrottle={32}
-          {...this.panResponder.panHandlers}
+        <ScrollView
+          style={s.list}
+          contentContainerStyle={s.list__scrollview}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.isRefreshing}
+              onRefresh={this.onRefresh}
+              tintColor={v.graySaturateLighter}
+            />
+          }
         >
-          <Item
-            network={network}
-            data={stats}
-            navigator={navigator}
-          />
-        </AnimatedScrollView>
+          {Object.keys(parsed).map(network => this.renderRow(network, parsed[network]))}
+
+          {total && (
+            <Item
+              title="total"
+              description={`${data.size} network${data.size === 1 ? '' : 's'} connected`}
+              data={total}
+              onPress={this.handleMorePress}
+            />
+          )}
+        </ScrollView>
       </View>
     );
   }

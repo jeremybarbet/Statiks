@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Image, View, Text, TouchableOpacity, Platform } from 'react-native';
 
-import { navigatorTypes } from 'utils/types';
 import { isIphoneX } from 'utils/utils';
 import { v, fonts } from 'Theme';
-
-import { SETTINGS } from '../screens';
 
 const NAV_BAR_HEIGHT = 39;
 const STATUS_BAR_HEIGHT = 20;
@@ -14,25 +11,18 @@ const STATUS_BAR_HEIGHT = 20;
 export default class Header extends Component {
 
   static propTypes = {
-    ...navigatorTypes,
     title: PropTypes.string,
-  }
-
-  handlePrev = () => {
-    this.props.navigator.pop();
-  }
-
-  handleAdd = () => {
-    this.props.navigator.push({ screen: SETTINGS });
+    onPrev: PropTypes.func,
+    onAdd: PropTypes.func,
   }
 
   render() {
-    const { title } = this.props;
+    const { title, onPrev, onAdd } = this.props;
 
     const prevButton = title !== 'Statiks' && (
       <TouchableOpacity
         activeOpacity={0.85}
-        onPress={this.handlePrev}
+        onPress={onPrev}
         style={[s.header__button, s.header__left]}
       >
         <Image style={s.header__arrow} source={require('../assets/images/arrow-left.png')} />
@@ -42,7 +32,7 @@ export default class Header extends Component {
     const addNetwork = title === 'Statiks' && (
       <TouchableOpacity
         activeOpacity={0.85}
-        onPress={this.handleAdd}
+        onPress={onAdd}
         style={[s.header__button, s.header__right]}
       >
         <Image style={s.header__add} source={require('../assets/images/add.png')} />

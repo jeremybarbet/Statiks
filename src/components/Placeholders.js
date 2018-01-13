@@ -45,7 +45,13 @@ class Empty extends PureComponent {
 
 class Critical extends PureComponent {
 
+  static propTypes = {
+    onPress: PropTypes.func,
+  }
+
   render() {
+    const { onPress } = this.props;
+
     return (
       <View style={s.container}>
         <Image
@@ -57,13 +63,21 @@ class Critical extends PureComponent {
           <Text style={s.container__title}>{'There is a problem!'.toUpperCase()}</Text>
 
           <Text style={s.container__paragraph}>
-            I’m so sorry buddy, but something went wrong! Keep calm and reload the app.
+            I’m so sorry buddy, but something went wrong! Keep calm and restart the app.
           </Text>
 
           <Text style={s.container__paragraph}>
-            Hit me up at <Text style={s.error__link} onPress={() => Linking.openURL('https://twitter.com/JeremDsgn')}>@JeremDsgn</Text> if issues remaining.
+            Hit me up at <Text style={s.error__link} onPress={() => Linking.openURL('https://twitter.com/JeremDsgn')}>@JeremDsgn</Text> if the issue remains.
           </Text>
         </View>
+
+        <TouchableOpacity
+          activeOpacity={0.85}
+          style={[s.empty__button, s.empty__clear]}
+          onPress={onPress}
+        >
+          <Text style={s.empty__buttonText}>Clear data</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -141,6 +155,10 @@ const s = StyleSheet.create({
     borderRadius: 4,
   },
 
+  empty__clear: {
+    backgroundColor: v.buttonRed,
+  },
+
   empty__buttonText: {
     paddingVertical: 18,
 
@@ -154,7 +172,7 @@ const s = StyleSheet.create({
 
   error__link: {
     ...fonts.medium,
-    color: v.green,
+    color: v.dark,
   },
 
   loading__illustration: {

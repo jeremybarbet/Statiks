@@ -8,6 +8,7 @@ export const v = {
   lightBlue: '#adc3d9',
   green: '#46c340',
   buttonGreen: '#67d861',
+  buttonRed: '#db5151',
 };
 
 export const fonts = {

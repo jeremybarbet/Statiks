@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image, ScrollView, View, Animated, PanResponder, RefreshControl, StatusBar, Platform } from 'react-native';
 import { inject, observer } from 'mobx-react/native';
+import { Sentry } from 'react-native-sentry';
 import { observable, toJS } from 'mobx';
+import BackgroundFetch from "react-native-background-fetch";
 
 import { navigatorTypes } from 'utils/types';
 import { v } from 'Theme';
@@ -62,6 +64,15 @@ export default class List extends Component {
 
   componentDidMount() {
     StatusBar.setHidden(false);
+
+    if (Platform.OS === 'ios') {
+      BackgroundFetch.configure({ stopOnTerminate: false }, async () => {
+        await this.props.stats.updateAll();
+        BackgroundFetch.finish();
+      }, (error) => {
+        Sentry.captureMessage(`[js] RNBackgroundFetch failed to start: ${error}`);
+      });
+    }
   }
 
   componentWillUnmount() {

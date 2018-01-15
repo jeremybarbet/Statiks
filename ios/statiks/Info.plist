@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>121</string>
+	<string>126</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -42,6 +42,10 @@
 		<string>din-bold.ttf</string>
 		<string>din-medium.ttf</string>
 		<string>din-regular.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

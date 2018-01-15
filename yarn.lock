@@ -1062,6 +1062,10 @@ base64-js@1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.1.2.tgz#d6400cac1c4c660976d90d07a04351d89395f5e8"
 
+base64-js@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.2.0.tgz#a39992d723584811982be5e290bb6a53d86700f1"
+
 base64-js@^1.0.2, base64-js@^1.1.2:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.2.1.tgz#a91947da1f4a516ea38e5b4ec0ec3773675e0886"
@@ -2144,6 +2148,10 @@ fast-json-stable-stringify@^2.0.0:
 fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
+
+fast-plist@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/fast-plist/-/fast-plist-0.1.2.tgz#a45aff345196006d406ca6cdcd05f69051ef35b8"
 
 fb-watchman@^2.0.0:
   version "2.0.0"
@@ -3808,6 +3816,14 @@ plist@^1.2.0:
     xmlbuilder "4.0.0"
     xmldom "0.1.x"
 
+plist@^2.0.1:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/plist/-/plist-2.1.0.tgz#57ccdb7a0821df21831217a3cad54e3e146a1025"
+  dependencies:
+    base64-js "1.2.0"
+    xmlbuilder "8.2.2"
+    xmldom "0.1.x"
+
 pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
@@ -3982,6 +3998,14 @@ react-mixin@4.0.0:
   dependencies:
     object-assign "^4.0.1"
     smart-mixin "^2.0.0"
+
+react-native-background-fetch@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.2.1.tgz#58eca4da671de857eef1446107ed5d29a0bca989"
+  dependencies:
+    fast-plist "^0.1.2"
+    plist "^2.0.1"
+    xcode "^0.9.1"
 
 react-native-config@0.11.5:
   version "0.11.5"

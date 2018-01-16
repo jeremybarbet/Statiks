@@ -3,7 +3,8 @@ import { StyleSheet, Image, ScrollView, View, Animated, PanResponder, RefreshCon
 import { inject, observer } from 'mobx-react/native';
 import { Sentry } from 'react-native-sentry';
 import { observable, toJS } from 'mobx';
-import BackgroundFetch from "react-native-background-fetch";
+import BackgroundFetch from 'react-native-background-fetch';
+import PushNotification from 'react-native-push-notification';
 
 import { navigatorTypes } from 'utils/types';
 import { v } from 'Theme';
@@ -68,6 +69,18 @@ export default class List extends Component {
     if (Platform.OS === 'ios') {
       BackgroundFetch.configure({ stopOnTerminate: false }, async () => {
         await this.props.stats.updateAll();
+
+        const { stats } = this.props.stats.total;
+        const newFollower = stats.followers.diff;
+        const message = `You have ${newFollower > 0 ? 'won' : 'lost'} ${Math.abs(newFollower)} follower${Math.abs(newFollower) === 1 ? '' : 's'}.`;
+
+        if (newFollower !== 0) {
+          PushNotification.localNotification({
+            title: 'Your stats have been updated! 👌',
+            message,
+          });
+        }
+
         BackgroundFetch.finish();
       }, (error) => {
         Sentry.captureMessage(`[js] RNBackgroundFetch failed to start: ${error}`);
@@ -164,11 +177,11 @@ export default class List extends Component {
     }
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={s.list}>
         <Header onAdd={this.handlePress} title="Statiks" />
 
         <ScrollView
-          style={s.list}
+          style={s.list__style}
           contentContainerStyle={s.list__scrollview}
           showsVerticalScrollIndicator={false}
           refreshControl={
@@ -197,6 +210,10 @@ export default class List extends Component {
 
 const s = StyleSheet.create({
   list: {
+    flex: 1,
+  },
+
+  list__style: {
     flex: 1,
 
     paddingTop: 10,

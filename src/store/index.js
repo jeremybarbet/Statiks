@@ -18,7 +18,10 @@ export default class Store {
 
   async init() {
     await hydrate('store', this.stats);
-    return true;
+
+    return {
+      permission: this.stats.permission,
+    };
   }
 }
 

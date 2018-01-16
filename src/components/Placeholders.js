@@ -43,6 +43,46 @@ class Empty extends PureComponent {
   }
 }
 
+class Permission extends PureComponent {
+
+  static propTypes = {
+    onEnable: PropTypes.func,
+    onDisable: PropTypes.func,
+  }
+
+  render() {
+    const { onEnable, onDisable } = this.props;
+
+    return (
+      <View style={s.container}>
+        <Image
+          style={s.container__gif}
+          source={require('../assets/images/emoji-loading.gif')}
+        />
+
+        <View>
+          <Text style={s.container__title}>{'Enable notifications'.toUpperCase()}</Text>
+
+          <Text style={s.container__paragraph}>
+            If you want to receive updates each time your networks stats changes,
+            you should enable notifications buddy! It’s so good!
+          </Text>
+        </View>
+
+        <TouchableOpacity
+          activeOpacity={0.85}
+          style={s.empty__button}
+          onPress={onEnable}
+        >
+          <Text style={s.empty__buttonText}>Yes sir!</Text>
+        </TouchableOpacity>
+
+        <Text style={s.container__paragraph} onPress={onDisable}>nope</Text>
+      </View>
+    );
+  }
+}
+
 class Critical extends PureComponent {
 
   static propTypes = {
@@ -95,7 +135,7 @@ class Loading extends PureComponent {
     return (
       <View style={s.container}>
         <Image
-          style={s.loading__illustration}
+          style={[s.container__gif, s.loading__illustration]}
           source={require('../assets/images/emoji-loading.gif')}
         />
 
@@ -175,14 +215,15 @@ const s = StyleSheet.create({
     color: v.dark,
   },
 
-  loading__illustration: {
+  container__gif: {
     alignSelf: 'center',
-
-    marginLeft: 0,
-    marginTop: 320,
 
     width: 80,
     height: 97,
+  },
+
+  loading__illustration: {
+    marginTop: 320,
   },
 
   loading__paragraph: {
@@ -200,6 +241,7 @@ const s = StyleSheet.create({
 
 export {
   Empty,
+  Permission,
   Critical,
   Loading,
 };

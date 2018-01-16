@@ -4017,6 +4017,10 @@ react-native-navigation@1.1.295:
   dependencies:
     lodash "4.x.x"
 
+react-native-push-notification@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.0.2.tgz#3fa7d654cfd915436597b0dd5ba8b0f898c4b0f5"
+
 react-native-sentry@0.32.1:
   version "0.32.1"
   resolved "https://registry.yarnpkg.com/react-native-sentry/-/react-native-sentry-0.32.1.tgz#ea9c545b219f56fc7c28e3a08a2aa31860a13ec5"

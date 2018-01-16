@@ -21,4 +21,4 @@ Array.from(Screens.entries()).forEach(([screenConst, screenModule]) =>
   ),
 );
 
-store.init().then(startApp);
+store.init().then(data => startApp(data));

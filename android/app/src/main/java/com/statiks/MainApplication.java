@@ -1,5 +1,6 @@
 package com.statiks;
 
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.reactnativenavigation.NavigationApplication;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -21,6 +22,7 @@ public class MainApplication extends NavigationApplication {
     // Add additional packages you require here
     // No need to add RnnPackage and MainReactPackage
     return Arrays.<ReactPackage>asList(
+      new ReactNativePushNotificationPackage(),
       new ReactNativeConfigPackage(),
       new RNSentryPackage(MainApplication.this)
     );

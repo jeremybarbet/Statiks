@@ -26,6 +26,9 @@ export default class Stats {
     success: false,
   }
 
+  @persist
+  permission = 'waiting';
+
   @computed
   get all() {
     return this.data.entries();

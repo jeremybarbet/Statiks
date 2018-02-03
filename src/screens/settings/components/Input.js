@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Image, TextInput, View, AlertIOS, Platform } from 'react-native';
+import { StyleSheet, Image, TextInput, View, Alert, Platform } from 'react-native';
 import { inject, observer } from 'mobx-react/native';
 import { decorate } from 'react-mixin';
 import TimerMixin from 'react-native-timer-mixin';
@@ -71,7 +71,7 @@ export default class Input extends Component {
     this.isSuccess = stats.status.success;
 
     if (this.hasError) {
-      AlertIOS.alert(this.hasError);
+      Alert.alert('An error occured', this.hasError);
 
       this.setState({
         value: '',

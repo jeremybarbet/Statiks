@@ -98,12 +98,14 @@ export default class Stats {
         }
       })
       .catch((err) => {
-        Sentry.captureMessage(err);
+        if (!__DEV__) {
+          Sentry.captureMessage(err);
+        }
 
         this.status = {
           loading: false,
           success: false,
-          error: true,
+          error: err,
         };
       });
   }

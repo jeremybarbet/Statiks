@@ -98,6 +98,12 @@ export default class List extends Component {
 
   handleClearPress = () => {
     this.props.stats.data.clear();
+
+    this.props.stats.status = {
+      loading: false,
+      error: false,
+      success: false,
+    };
   }
 
   handleMorePress = (network, data) => {

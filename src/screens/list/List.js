@@ -66,26 +66,26 @@ export default class List extends Component {
   componentDidMount() {
     StatusBar.setHidden(false);
 
-    if (Platform.OS === 'ios') {
-      BackgroundFetch.configure({ stopOnTerminate: false }, async () => {
-        await this.props.stats.updateAll();
+    BackgroundFetch.configure({ minimumFetchInterval: 60 }, async () => {
+      await this.props.stats.updateAll();
 
-        const { stats } = this.props.stats.total;
-        const newFollower = stats.followers.diff;
-        const message = `You have ${newFollower > 0 ? 'won' : 'lost'} ${Math.abs(newFollower)} follower${Math.abs(newFollower) === 1 ? '' : 's'}.`;
+      const { stats } = this.props.stats.total;
+      const newFollower = stats.followers.diff;
+      const message = `You have ${newFollower > 0 ? 'won' : 'lost'} ${Math.abs(newFollower)} follower${Math.abs(newFollower) === 1 ? '' : 's'}.`;
 
-        if (newFollower !== 0) {
-          PushNotification.localNotification({
-            title: 'Your stats have been updated! 👌',
-            message,
-          });
-        }
+      if (newFollower !== 0) {
+        PushNotification.localNotification({
+          title: 'Your stats have been updated! 👌',
+          message,
+        });
+      }
 
-        BackgroundFetch.finish();
-      }, (error) => {
+      BackgroundFetch.finish();
+    }, (error) => {
+      if (!__DEV__) {
         Sentry.captureMessage(`[js] RNBackgroundFetch failed to start: ${error}`);
-      });
-    }
+      }
+    });
   }
 
   componentWillUnmount() {

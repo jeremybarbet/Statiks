@@ -204,15 +204,15 @@ export const handleResponse = {
   instagram(res) {
     return {
       stats: {
-        followers: { count: parseInt((/\"followed_by\": {\"count\": ([\d]+)/g).exec(res)[1], 10) },
-        following: { count: parseInt((/\"follows\": {\"count\": ([\d]+)/g).exec(res)[1], 10) },
-        medias: { count: parseInt((/\}}], \"count\": ([\d]+)/g).exec(res)[1], 10) },
+        followers: { count: parseInt((/\"followed_by\":{\"count\":([\d]+)/g).exec(res)[1], 10) },
+        following: { count: parseInt((/\"follows\":{\"count\":([\d]+)/g).exec(res)[1], 10) },
+        medias: { count: parseInt((/\}}],\"count\":([\d]+)/g).exec(res)[1], 10) },
       },
       user: {
-        username: ((/\"username\": "(.*?)"/g).exec(res)[1]).replace(/\\/g, ''),
-        avatar: ((/\"profile_pic_url\": "(.*?)"/g).exec(res)[1]).replace(/\\/g, ''),
-        bio: decode(((/\"biography\": "(.*?)"/g).exec(res)[1]).replace(/\\n/g, ' ')).replace(/\\/g, ''),
-        name: decode((/\"full_name\": "(.*?)"/g).exec(res)[1]),
+        username: ((/\"username\":"(.*?)"/g).exec(res)[1]).replace(/\\/g, ''),
+        avatar: ((/\"profile_pic_url\":"(.*?)"/g).exec(res)[1]).replace(/\\/g, ''),
+        bio: decode(((/\"biography\":"(.*?)"/g).exec(res)[1]).replace(/\\n/g, ' ')).replace(/\\/g, ''),
+        name: decode((/\"full_name\":"(.*?)"/g).exec(res)[1]),
       },
     };
   },

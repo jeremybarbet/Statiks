@@ -3999,9 +3999,9 @@ react-mixin@4.0.0:
     object-assign "^4.0.1"
     smart-mixin "^2.0.0"
 
-react-native-background-fetch@2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.2.1.tgz#58eca4da671de857eef1446107ed5d29a0bca989"
+react-native-background-fetch@2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.3.0.tgz#aa99f8f635999dc3cae1080d323222688c075991"
   dependencies:
     fast-plist "^0.1.2"
     plist "^2.0.1"

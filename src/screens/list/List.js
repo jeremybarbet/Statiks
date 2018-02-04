@@ -66,7 +66,11 @@ export default class List extends Component {
   componentDidMount() {
     StatusBar.setHidden(false);
 
-    BackgroundFetch.configure({ minimumFetchInterval: 60 }, async () => {
+    BackgroundFetch.configure({
+      minimumFetchInterval: 240,
+      stopOnTerminate: false,
+      startOnBoot: true,
+    }, async () => {
       await this.props.stats.updateAll();
 
       const { stats } = this.props.stats.total;

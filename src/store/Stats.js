@@ -90,7 +90,10 @@ export default class Stats {
         } else {
           this.data.set(n, {
             ...res,
-            ...Object.keys(res.stats).forEach(v => res.stats[v].diff = 0), // eslint-disable-line
+            ...Object.keys(res.stats).forEach(v => { // eslint-disable-line
+              res.stats[v].count = parseInt(res.stats[v].count, 10);
+              res.stats[v].diff = 0;
+            }),
           });
         }
       })

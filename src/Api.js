@@ -12,6 +12,17 @@ const {
   PRODUCTHUNT_TOKEN,
 } = config;
 
+function rgxFn(rgx, data, index = 1, placeholer = '—') {
+  const regex = RegExp(rgx, 'g');
+  const res = regex.exec(data);
+
+  if (!res) {
+    return placeholer;
+  }
+
+  return res[index];
+}
+
 export function checkStatus(res, n, u) {
   if (res.status === 404 || res.url.includes('show_error=true')) {
     throw `${u} not found on ${n}.`; // eslint-disable-line
@@ -103,18 +114,18 @@ export const handleResponse = {
 
     return {
       stats: {
-        followers: { count: parseInt((/\"followers_count\":([\d]+)/g).exec(data)[1], 10) },
-        following: { count: parseInt((/\"friends_count\":([\d]+)/g).exec(data)[1], 10) },
-        tweets: { count: parseInt((/\"statuses_count\":([\d]+)/g).exec(data)[1], 10) },
-        favorites: { count: parseInt((/\"favourites_count\":([\d]+)/g).exec(data)[1], 10) },
-        listed: { count: parseInt((/\"listed_count\":([\d]+)/g).exec(data)[1], 10) },
+        followers: { count: rgxFn('\\"followers_count\\":([\\d]+)', data) },
+        following: { count: rgxFn('\\"friends_count\\":([\\d]+)', data) },
+        tweets: { count: rgxFn('\\"statuses_count\\":([\\d]+)', data) },
+        favorites: { count: rgxFn('\\"favourites_count\\":([\\d]+)', data) },
+        listed: { count: rgxFn('\\"listed_count\\":([\\d]+)', data) },
       },
       user: {
-        username: (((/\"screen_name\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, '')).replace(/_normal/g, ''),
-        avatar: (((/\"profile_image_url\":"(.*?)"/g).exec(data)[1]).replace(/\\/g, '')).replace(/_normal/g, ''),
-        location: decode((/\"location\":"(.*?)"/g).exec(data)[1]),
-        bio: decode(((/\"description\":"(.*?)"/g).exec(lastMatch(description))[1]).replace(/\\n/g, ' ')).replace(/\\/g, ''),
-        name: decode((/\"name\":"(.*?)"/g).exec(lastMatch(name))[1]),
+        username: decode(rgxFn('\\"screen_name\\":"(.*?)"', data)).replace(/\\/g, '').replace(/_normal/g, ''),
+        avatar: rgxFn('\\"profile_image_url\\":"(.*?)"', data).replace(/\\/g, '').replace(/_normal/g, ''),
+        location: decode(rgxFn('\\"location\\":"(.*?)"', data)).replace(/\\/g, ''),
+        bio: decode(rgxFn('\\"description\\":"(.*?)"', lastMatch(description)).replace(/\\n/g, ' ')).replace(/\\/g, ''),
+        name: decode(rgxFn('\\"name\\":"(.*?)"', lastMatch(name))).replace(/\\/g, ''),
       },
     };
   },
@@ -204,15 +215,15 @@ export const handleResponse = {
   instagram(res) {
     return {
       stats: {
-        followers: { count: parseInt((/\"followed_by\":{\"count\":([\d]+)/g).exec(res)[1], 10) },
-        following: { count: parseInt((/\"follows\":{\"count\":([\d]+)/g).exec(res)[1], 10) },
-        medias: { count: parseInt((/\}}],\"count\":([\d]+)/g).exec(res)[1], 10) },
+        followers: { count: rgxFn('\\"followed_by\\":{\\"count\\":([\\d]+)', res).replace(/\\/g, '') },
+        following: { count: rgxFn('\\"follows\\":{\\"count\\":([\\d]+)', res).replace(/\\/g, '') },
+        medias: { count: rgxFn('\\}}],\\"count\\":([\\d]+)', res).replace(/\\/g, '') },
       },
       user: {
-        username: ((/\"username\":"(.*?)"/g).exec(res)[1]).replace(/\\/g, ''),
-        avatar: ((/\"profile_pic_url\":"(.*?)"/g).exec(res)[1]).replace(/\\/g, ''),
-        bio: decode(((/\"biography\":"(.*?)"/g).exec(res)[1]).replace(/\\n/g, ' ')).replace(/\\/g, ''),
-        name: decode((/\"full_name\":"(.*?)"/g).exec(res)[1]),
+        username: rgxFn('\\"username\\":"(.*?)"', res).replace(/\\/g, ''),
+        avatar: rgxFn('\\"profile_pic_url\\":"(.*?)"', res).replace(/\\/g, ''),
+        bio: decode(rgxFn('\\"biography\\":"(.*?)"', res).replace(/\\n/g, ' ')).replace(/\\/g, ''),
+        name: decode(rgxFn('\\"full_name\\":"(.*?)"', res)),
       },
     };
   },
@@ -221,16 +232,16 @@ export const handleResponse = {
   pinterest(res) {
     return {
       stats: {
-        followers: { count: (/followers" content="([\d]+)"/g).exec(res)[1] },
-        following: { count: (/following" content="([\d]+)"/g).exec(res)[1] },
-        pins: { count: (/pins" content="([\d]+)"/g).exec(res)[1] },
-        boards: { count: (/boards" content="([\d]+)"/g).exec(res)[1] },
+        followers: { count: rgxFn('followers" content="([\\d]+)"', res) },
+        following: { count: rgxFn('following" content="([\\d]+)"', res) },
+        pins: { count: rgxFn('pins" content="([\\d]+)"', res) },
+        boards: { count: rgxFn('boards" content="([\\d]+)"', res) },
       },
       user: {
-        username: (/og:title" content="(?:(.*)) \((.*)\)"/g).exec(res)[2],
-        avatar: (/image:src" content="(.*?)"/g).exec(res)[1],
-        bio: (/about" content="(.*?)"/g).exec(res)[1],
-        name: ((/og:title" content="(.*?)"/g).exec(res)[1]).replace(/\s*\(.*?\)\s*/g, ''),
+        username: rgxFn('og:title" content="(?:(.*)) \\((.*)\\)"', res, 2),
+        avatar: rgxFn('image:src" content="(.*?)"', res),
+        bio: rgxFn('about" content="(.*?)"', res),
+        name: rgxFn('og:title" content="(.*?)"', res).replace(/\s*\(.*?\)\s*/g, ''),
       },
     };
   },

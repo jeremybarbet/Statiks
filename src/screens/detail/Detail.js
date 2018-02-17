@@ -6,7 +6,7 @@ import get from 'lodash/get';
 import { capitalize, convertToHttps, isIphoneX } from 'utils/utils';
 import { colors } from 'utils/colors';
 import { navigatorTypes } from 'utils/types';
-import { icons } from 'Api';
+import icons from 'utils/icons';
 import { v, fonts } from 'Theme';
 
 import { Stats } from './components/Blocks';

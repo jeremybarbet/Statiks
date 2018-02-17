@@ -1,9 +1,8 @@
 import { Sentry } from 'react-native-sentry';
 import { observable, ObservableMap, computed, toJS } from 'mobx';
 import { persist } from 'mobx-persist';
+import config from 'react-native-config';
 import isNil from 'lodash/isNil';
-
-import { api, checkStatus, getResponse, handleResponse } from 'Api';
 
 function reduceVal(arr, val, type) {
   return arr
@@ -72,10 +71,9 @@ export default class Stats {
   fetch = (u, n) => {
     this.status.loading = true;
 
-    return fetch(api[n](u))
-      .then(res => checkStatus(res, n, u))
-      .then(res => getResponse(res))
-      .then(res => handleResponse[n](res, u))
+    const url = `${config.API_URL}/${n}/${u}`;
+
+    return fetch(url)
       .then((res) => {
         this.status = {
           loading: false,

@@ -6,9 +6,9 @@ import get from 'lodash/get';
 
 import { format } from 'utils/utils';
 import { luminosity, colors } from 'utils/colors';
-import { fonts } from 'Theme';
+import icons from 'utils/icons';
 
-import { icons } from 'Api';
+import { fonts } from 'Theme';
 
 const { width } = Dimensions.get('window');
 

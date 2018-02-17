@@ -5,12 +5,10 @@ import { inject, observer } from 'mobx-react/native';
 import Header from 'components/Header';
 
 import { navigatorTypes } from 'utils/types';
-import { api } from 'Api';
+import icons from 'utils/icons';
 import { v } from 'Theme';
 
 import Input from './components/Input';
-
-const NETWORKS = Object.keys(api);
 
 @inject('stats')
 @observer
@@ -29,7 +27,7 @@ export default class Settings extends Component {
   }
 
   get networks() {
-    return NETWORKS.map(key => ({ key }));
+    return icons.map(key => ({ key: key.name }));
   }
 
   renderItem = ({ item: { key } }) => <Input network={key} />

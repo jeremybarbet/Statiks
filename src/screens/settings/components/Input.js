@@ -7,7 +7,7 @@ import TimerMixin from 'react-native-timer-mixin';
 import { observable } from 'mobx';
 
 import { colors } from 'utils/colors';
-import { icons } from 'Api';
+import icons from 'utils/icons';
 import { fonts } from 'Theme';
 
 import { Loading, Remove, Success } from './Indicators';

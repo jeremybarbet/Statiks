@@ -27,7 +27,9 @@ export default class Settings extends Component {
   }
 
   get networks() {
-    return icons.map(key => ({ key: key.name }));
+    return icons
+      .filter(key => key.name !== 'total')
+      .map(key => ({ key: key.name }));
   }
 
   renderItem = ({ item: { key } }) => <Input network={key} />

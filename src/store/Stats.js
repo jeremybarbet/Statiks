@@ -71,9 +71,15 @@ export default class Stats {
   fetch = (u, n) => {
     this.status.loading = true;
 
-    const url = `${config.API_URL}/${n}/${u}`;
-
-    return fetch(url)
+    return fetch(`${config.API_URL}/${n}?username=${u}`)
+      .then(res => res.json())
+      .then(res => {
+        if (res.statusCode === 404) {
+          throw `${u} not found on ${n}.`; // eslint-disable-line
+        } else {
+          return res;
+        }
+      })
       .then((res) => {
         this.status = {
           loading: false,

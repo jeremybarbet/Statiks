@@ -71,7 +71,12 @@ export default class Input extends Component {
     this.isSuccess = stats.status.success;
 
     if (this.hasError) {
-      Alert.alert('An error occured', this.hasError);
+      Alert.alert('An error occured', this.hasError, [{
+        text: 'OK',
+        onPress: () => {
+          this.props.stats.status.error = false;
+        },
+      }]);
 
       this.setState({
         value: '',

@@ -71,7 +71,7 @@ export default class Stats {
   fetch = (u, n) => {
     this.status.loading = true;
 
-    return fetch(`${config.API_URL}/${n}?username=${u}`)
+    return fetch(`${config.API_URL}/${n}/${u}`)
       .then(res => res.json())
       .then(res => {
         if (res.statusCode === 404) {

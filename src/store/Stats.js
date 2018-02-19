@@ -2,6 +2,7 @@ import { Sentry } from 'react-native-sentry';
 import { observable, ObservableMap, computed, toJS } from 'mobx';
 import { persist } from 'mobx-persist';
 import config from 'react-native-config';
+import DeviceInfo from 'react-native-device-info';
 import isNil from 'lodash/isNil';
 
 function reduceVal(arr, val, type) {
@@ -69,9 +70,12 @@ export default class Stats {
   }
 
   fetch = (u, n) => {
+    // Use to store user's data on server side
+    const id = DeviceInfo.getUniqueID();
+
     this.status.loading = true;
 
-    return fetch(`${config.API_URL}/${n}/${u}`)
+    return fetch(`${config.API_URL}/${n}/${u}/${id}`)
       .then(res => res.json())
       .then(res => {
         if (res.statusCode === 404) {
